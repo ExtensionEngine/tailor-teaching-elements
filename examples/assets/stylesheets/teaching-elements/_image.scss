@@ -1,0 +1,15 @@
+.te-image {
+  padding: 22px 0;
+}
+
+.col-xs-6 {
+  .te-image {
+    margin: 0 8px 0 0;
+  }
+}
+
+.col-xs-6 + .col-xs-6 {
+  .te-image {
+    margin: 0 0 0 8px;
+  }
+}

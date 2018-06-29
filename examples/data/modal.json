@@ -1,0 +1,30 @@
+{
+  "position": 1,
+  "type": "MODAL",
+  "data": {
+    "embeds": {
+      "cj2hkg9kt002p3j5zoh78yzye": {
+        "data": {
+          "content": "<p>modal text example</p>",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2hkg9kt002p3j5zoh78yzye",
+        "position": 2,
+        "type": "HTML"
+      },
+      "cj2hkko86002q3j5zzjj3v4f6": {
+        "data": {
+          "url": "http://lorempixel.com/800/600/",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2hkko86002q3j5zzjj3v4f6",
+        "position": 1,
+        "type": "IMAGE"
+      }
+    },
+    "title": "MODAL TITLE",
+    "width": 12
+  }
+}

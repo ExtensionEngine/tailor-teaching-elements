@@ -1,0 +1,59 @@
+{
+  "position": 1,
+  "type": "CAROUSEL",
+  "data": {
+    "embeds": {
+      "cj2g7ponm00353q5yt03njycd": {
+        "data": {
+          "content": "<p>Carousel text 1</p>",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2g7ponm00353q5yt03njycd",
+        "position": 1,
+        "type": "HTML"
+      },
+      "cj2g7ps4g00363q5yush552wl": {
+        "data": {
+          "url": "http://lorempixel.com/800/600/",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2g7ps4g00363q5yush552wl",
+        "position": 1,
+        "type": "IMAGE"
+      },
+      "cj2g7puau00373q5yce85vpf4": {
+        "data": {
+          "content": "<p>Carousel text 3</p>",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2g7puau00373q5yce85vpf4",
+        "position": 1,
+        "type": "HTML"
+      }
+    },
+    "height": 750,
+    "items": {
+      "1": {
+        "body": {
+          "cj2g7puau00373q5yce85vpf4": true
+        },
+        "id": 1
+      },
+      "2": {
+        "body": {
+          "cj2g7ps4g00363q5yush552wl": true
+        },
+        "id": 2
+      },
+      "3": {
+        "body": {
+          "cj2g7ponm00353q5yt03njycd": true
+        },
+        "id": 3
+      }
+    }
+  }
+}

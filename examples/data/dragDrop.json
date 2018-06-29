@@ -1,0 +1,78 @@
+{
+  "id": 3842,
+  "type": "ASSESSMENT",
+  "data": {
+    "type": "DD",
+    "question": [
+      {
+        "id": "cj3o46kcn002w3i61jm6dizw4",
+        "type": "HTML",
+        "data": {
+          "width": 12,
+          "content": "<p><span style=\"color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lacinia dui. Vestibulum gravida justo odio, dictum efficitur mi cursus vitae. Proin fringilla orci nec facilisis placerat. Maecenas consequat orci sit amet enim volutpat pellentesque eget non justo. Donec felis velit, feugiat vel felis id, condimentum maximus sapien.</span></p>"
+        },
+        "embedded": true
+      }
+    ],
+    "groups": {
+      "cj3o46kcn002s3i61uizi0yng": "Group 1",
+      "cj3o46kcn002u3i61h9cnwrqb": "Group 2",
+      "cj3o46plb002y3i61rkqi877s": "Group 3",
+      "cj3o46qti00303i61a5i8wo3q": "Group 4"
+    },
+    "answers": {
+      "cj3o46kcn002t3i612wd17f3v": "Group 1 -> Solution 1",
+      "cj3o46kcn002v3i616sokl52w": "Group 2 -> Solution 1",
+      "cj3o46plb002z3i613m9fzera": "Group 3 -> Solution 1",
+      "cj3o46qti00313i61ctovqd8i": "Group 4 -> Solution 1",
+      "cj3o46rup00323i61ts169i0s": "Group 4 -> Solution 2",
+      "cj3o46sgh00333i61u3qb005y": "Group 4 -> Solution 3",
+      "cj3o46tfi00343i61lza70ewb": "Group 3 -> Solution 2",
+      "cj3o46u5d00353i610f6l19uw": "Group 3 -> Solution 3",
+      "cj3o46urt00363i61lniyobvo": "Group 3 -> Solution 4",
+      "cj3o46vqq00373i618qw0xv18": "Group 2 -> Solution 2",
+      "cj3o46wfq00383i61kt8kzb5g": "Group 2 -> Solution 3",
+      "cj3o46xm300393i61zcvrn7c8": "Group 1 -> Solution 2",
+      "cj3o46y0a003a3i61rmtuvzaz": "Group 1 -> Solution 3",
+      "cj3o47180003b3i619zoeo9m8": "Group 4 -> Solution 4"
+    },
+    "correct": {
+      "cj3o46kcn002s3i61uizi0yng": [
+        "cj3o46kcn002t3i612wd17f3v",
+        "cj3o46xm300393i61zcvrn7c8",
+        "cj3o46y0a003a3i61rmtuvzaz"
+      ],
+      "cj3o46kcn002u3i61h9cnwrqb": [
+        "cj3o46kcn002v3i616sokl52w",
+        "cj3o46vqq00373i618qw0xv18",
+        "cj3o46wfq00383i61kt8kzb5g"
+      ],
+      "cj3o46plb002y3i61rkqi877s": [
+        "cj3o46plb002z3i613m9fzera",
+        "cj3o46tfi00343i61lza70ewb",
+        "cj3o46u5d00353i610f6l19uw",
+        "cj3o46urt00363i61lniyobvo"
+      ],
+      "cj3o46qti00303i61a5i8wo3q": [
+        "cj3o46qti00313i61ctovqd8i",
+        "cj3o46rup00323i61ts169i0s",
+        "cj3o46sgh00333i61u3qb005y",
+        "cj3o47180003b3i619zoeo9m8"
+      ]
+    },
+    "hint": "Etiam auctor luctus nisl, ut aliquet justo pharetra sed.",
+    "width": 12
+  },
+  "position": 1,
+  "createdAt": "2017-06-08T07:41:18.176Z",
+  "updatedAt": "2017-06-08T08:05:49.157Z",
+  "deletedAt": null,
+  "created_at": "2017-06-08T07:41:18.176Z",
+  "updated_at": "2017-06-08T08:05:49.157Z",
+  "deleted_at": null,
+  "activityId": 841,
+  "courseId": 8,
+  "_cid": "cj3o5bqth002k3i635htgy701",
+  "_synced": false,
+  "_version": 1496909671752
+}

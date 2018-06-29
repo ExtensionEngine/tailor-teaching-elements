@@ -1,0 +1,37 @@
+.drag-drop {
+  .answers {
+    .answer {
+      border: 2px solid #888;
+    }
+  }
+
+  .groups {
+    .group .box {
+      border: 1px solid #000;
+
+      &.drop {
+        border: 1px dashed #444;
+      }
+
+      .response {
+        border: 1px dashed lightcoral;
+      }
+    }
+  }
+
+  .chosen {
+    background-color: burlywood;
+  }
+
+  .drag {
+    background-color: cornsilk;
+  }
+
+  .te-correct {
+    border: 1px solid #008000 !important;
+  }
+
+  .te-incorrect {
+    border: 1px solid #ff0000 !important;
+  }
+}

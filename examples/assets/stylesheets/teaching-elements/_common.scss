@@ -1,0 +1,16 @@
+.disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.form-group {
+  text-align: left;
+  margin: 0 auto;
+  padding: 25px 20px 15px 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-label {
+  font-size: 20px;
+}

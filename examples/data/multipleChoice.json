@@ -1,0 +1,23 @@
+{
+  "data": {
+    "answers": ["answer 1 ","answer 2", "answer 3"],
+    "correct": [0, 2],
+    "hint": "multiple choice hint",
+    "feedback": {
+      "0": "answer 1 feedback",
+      "1": "answer 2 feedback",
+      "2": "answer 3 feedback"
+    },
+    "question": [{
+      "data": {
+        "content": "<p>multiple choice question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "cj3bamucr002r3k5yctir096c",
+      "type": "HTML"
+      }],
+    "type": "MC",
+    "width": 12
+  }
+}

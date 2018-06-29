@@ -1,0 +1,127 @@
+{
+  "position": 1,
+  "type": "ACCORDION",
+  "data": {
+    "embeds": {
+      "cj2952fj4002m3k5yt1yexkg4": {
+        "data": {
+          "content": "<p>aaa</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952fj4002m3k5yt1yexkg4",
+        "position": 1,
+        "type": "HTML"
+      },
+      "cj2952hfo002n3k5yoivv7c3t": {
+        "data": {
+          "content": "<p>bbb</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952hfo002n3k5yoivv7c3t",
+        "position": 2,
+        "type": "HTML"
+      },
+      "cj2952js7002o3k5yr4ezqajf": {
+        "data": {
+          "url": "http://lorempixel.com/800/600/",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2952js7002o3k5yr4ezqajf",
+        "position": 3,
+        "type": "IMAGE"
+      },
+      "cj2952fj4002m3k5yt1yexkg0": {
+        "data": {
+          "content": "<p>aaa</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952fj4002m3k5yt1yexkg4",
+        "position": 1,
+        "type": "HTML"
+      },
+      "cj2952hfo002n3k5yoivv7c30": {
+        "data": {
+          "content": "<p>bbb</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952hfo002n3k5yoivv7c3t",
+        "position": 2,
+        "type": "HTML"
+      },
+      "cj2952js7002o3k5yr4ezqaj0": {
+        "data": {
+          "url": "http://lorempixel.com/800/600/",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2952js7002o3k5yr4ezqajf",
+        "position": 3,
+        "type": "IMAGE"
+      },
+      "cj2952fj4002m3k5yt1yexkg9": {
+        "data": {
+          "content": "<p>aaa</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952fj4002m3k5yt1yexkg4",
+        "position": 1,
+        "type": "HTML"
+      },
+      "cj2952hfo002n3k5yoivv7c39": {
+        "data": {
+          "content": "<p>bbb</p>",
+          "width": 6
+        },
+        "embedded": true,
+        "id": "cj2952hfo002n3k5yoivv7c3t",
+        "position": 2,
+        "type": "HTML"
+      },
+      "cj2952js7002o3k5yr4ezqaj9": {
+        "data": {
+          "url": "http://lorempixel.com/800/600/",
+          "width": 12
+        },
+        "embedded": true,
+        "id": "cj2952js7002o3k5yr4ezqajf",
+        "position": 3,
+        "type": "IMAGE"
+      }
+    },
+    "items": {
+      "cj29285j0002k3k5yd2zb2qqc": {
+        "body": {
+          "cj2952fj4002m3k5yt1yexkg4": true,
+          "cj2952hfo002n3k5yoivv7c3t": true,
+          "cj2952js7002o3k5yr4ezqajf": true
+        },
+        "header": "Header 1",
+        "id": "cj29285j0002k3k5yd2zb2qqc"
+      },
+      "cj29285j0002k3k5yd2zb2qqb": {
+        "body": {
+          "cj2952fj4002m3k5yt1yexkg0": true,
+          "cj2952hfo002n3k5yoivv7c30": true,
+          "cj2952js7002o3k5yr4ezqaj0": true
+        },
+        "header": "Header 2",
+        "id": "cj29285j0002k3k5yd2zb2qqb"
+      },
+      "cj29285j0002k3k5yd2zb2qqd": {
+        "body": {
+          "cj2952fj4002m3k5yt1yexkg9": true,
+          "cj2952hfo002n3k5yoivv7c39": true,
+          "cj2952js7002o3k5yr4ezqaj9": true
+        },
+        "header": "Header 3",
+        "id": "cj29285j0002k3k5yd2zb2qqd"
+      }
+    }
+  }
+}

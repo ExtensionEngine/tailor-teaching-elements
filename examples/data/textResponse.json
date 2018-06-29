@@ -1,0 +1,17 @@
+{
+  "data": {
+    "correct": "Text response answer",
+    "hint": "Text response hint",
+    "question": [{
+      "data": {
+        "content": "<p>Text response question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "cj2zylorj002r3j5y0bcil5nk",
+      "type": "HTML"
+      }],
+    "type": "TR",
+    "width": 12
+  }
+}

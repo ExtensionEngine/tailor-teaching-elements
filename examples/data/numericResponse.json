@@ -1,0 +1,19 @@
+{
+  "data": {
+    "question": [{
+      "data": {
+        "width": 12,
+        "content": "<p>Numeric response question</p>"
+      },
+      "embedded": true,
+      "id": "cj6xke1a1002s3i68k75gr371",
+      "type": "HTML"
+    }],
+    "hint": "Numeric response hint",
+    "type": "NR",
+    "width": 12,
+    "prefixes": ["Pre 1", "Pre 2", "Pre 3"],
+    "suffixes": ["Suf 1", "Suf 2", "Suf 3"],
+    "correct": [33, 22.3, 11]
+  }
+}

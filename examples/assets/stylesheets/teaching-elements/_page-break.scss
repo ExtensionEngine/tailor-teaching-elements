@@ -1,0 +1,19 @@
+.te-break {
+  text-align: center;
+
+  &:not(.last) {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    background-color: #eaeaea;
+  }
+
+  .te-break-tooltip {
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 20px;
+    color: #000;
+    line-height: 22px;
+  }
+}

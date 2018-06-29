@@ -1,0 +1,54 @@
+{
+  "data": {
+    "question": [{
+      "data": {
+        "content": "<p>Matching question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "cj6yo2xsi002y3i68itwy6ycm",
+      "type": "HTML"
+    }],
+    "hint": "Matching question hint",
+    "premises": [
+      {
+        "key": "cj6yo2xsi002u3i68kvsqwwm0",
+        "value": "First premise"
+      },
+      {
+        "key": "cj6yo3gho00303i680vd5h4k3",
+        "value": "Third premise"
+      },
+      {
+        "key": "cj6yo2xsi002w3i68mukj5qt5",
+        "value": "Second premise"
+      }
+    ],
+    "responses": [
+      {
+        "key": "cj6yo3gho00313i68izeuh81i",
+        "value": "Third answer"
+      },
+      {
+        "key": "cj6yo2xsi002x3i6898lxs2k0",
+        "value": "Second answer"
+      },
+      {
+        "key": "cj6yo2xsi002v3i688zo6hyuc",
+        "value": "First answer"
+      }
+    ],
+    "correct": {
+      "cj6yo2xsi002u3i68kvsqwwm0": "cj6yo2xsi002v3i688zo6hyuc",
+      "cj6yo2xsi002w3i68mukj5qt5": "cj6yo2xsi002x3i6898lxs2k0",
+      "cj6yo3gho00303i680vd5h4k3": "cj6yo3gho00313i68izeuh81i"
+    },
+    "headings": {
+      "premise": "Premise",
+      "response": "Response"
+    },
+    "type": "MQ",
+    "width": 12,
+    "isTrusted": true
+  }
+}

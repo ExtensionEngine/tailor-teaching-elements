@@ -1,0 +1,22 @@
+{
+  "data": {
+    "answers": ["answer 1 ","answer 2"],
+    "correct": 1,
+    "hint": "Single choice hint",
+    "feedback": {
+      "0": "answer 1 feedback",
+      "1": "answer 2 feedback"
+    },
+    "question": [{
+      "data": {
+        "content": "<p>Single choice question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "cj2g2gn99002w3j5yahb9wgzz",
+      "type": "HTML"
+      }],
+    "type": "SC",
+    "width": 12
+  }
+}

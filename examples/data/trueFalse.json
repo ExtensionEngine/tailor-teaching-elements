@@ -1,0 +1,21 @@
+{
+  "data": {
+    "correct": true,
+    "hint": "true - false choice hint",
+    "feedback": {
+      "0": "true feedback",
+      "1": "false feedback"
+    },
+    "question": [{
+      "data": {
+        "content": "<p>true - false choice question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "cj3bq7emr002v3k5ytx7bga7o",
+      "type": "HTML"
+      }],
+    "type": "TF",
+    "width": 12
+  }
+}

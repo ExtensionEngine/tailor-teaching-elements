@@ -1,0 +1,21 @@
+.accordion {
+  border: 1px solid #ddd;
+  border-bottom: none;
+
+  .accordion-header {
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+
+    .title {
+      color: #555555 ;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .accordion-body {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+}
