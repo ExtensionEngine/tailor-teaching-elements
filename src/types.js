@@ -20,7 +20,8 @@ export const TE_TYPE = {
   CAROUSEL: 'te-carousel',
   MODAL: 'te-modal',
   TABLE: 'te-table',
-  PDF: 'te-pdf'
+  PDF: 'te-pdf',
+  BRIGHTCOVE_VIDEO: 'te-brightcove-video'
 };
 
 export const subTypeInfo = {

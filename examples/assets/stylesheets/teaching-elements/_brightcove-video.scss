@@ -1,0 +1,12 @@
+.te-brightcove-video {
+  .video-js {
+    width: 100%;
+    height: 450px;
+  }
+
+   .vjs-error .vjs-error-display:before {
+    font-size: 42px;
+    font-family: "Material Design Icons";
+    content: "\F026"; // alert
+  }
+}
