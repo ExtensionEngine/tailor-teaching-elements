@@ -25,6 +25,7 @@ import get from 'lodash/get';
 import TeAssessment from './Assessment/index.vue';
 import TeAccordion from './Accordion/index.vue';
 import TeBreak from './PageBreak.vue';
+import TeBrightcoveVideo from './BrightcoveVideo.vue';
 import TeCarousel from './Carousel/index.vue';
 import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
@@ -58,6 +59,7 @@ export default {
     TeAssessment,
     TeAccordion,
     TeBreak,
+    TeBrightcoveVideo,
     TeCarousel,
     TeEmbed,
     TeHtml,
