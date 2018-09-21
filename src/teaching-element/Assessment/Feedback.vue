@@ -1,12 +1,12 @@
 <template>
-  <div v-if="show" class="feedback">
+  <div v-if="show" class="ql-container feedback">
     <div class="form-label">{{ title }}</div>
     <div
       v-for="({ prefix, content }, index) in feedbacks"
       :key="index"
-      class="feedback-content">
+      class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span class="content-row">{{ content }}</span>
+      <span v-html="content" class="content-row">{{ content }}</span>
     </div>
   </div>
 </template>
