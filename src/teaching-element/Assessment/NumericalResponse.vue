@@ -19,7 +19,7 @@
     </ul>
     <span class="help-block">
       Only numerical input allowed, if decimal number is needed please
-      use '.' to separate numbers (e.g. '3.14').
+      use '.' to separate numbers (e.g. '3.14', '1000' not '1,000').
     </span>
   </div>
 </template>
@@ -41,7 +41,13 @@ export default {
   },
   methods: {
     update() {
-      const userAnswer = map(this.items, it => it.answer && toNumber(it.answer));
+      let isAnswerValid = true;
+      const userAnswer = map(this.items, it => {
+        const answer = toNumber(it.answer);
+        if (!answer || isNaN(answer)) isAnswerValid = false;
+        return answer;
+      });
+      this.$emit('validateAnswer', { isAnswerValid });
       this.$emit('update', { userAnswer });
     }
   },
