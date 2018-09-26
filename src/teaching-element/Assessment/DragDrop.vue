@@ -20,8 +20,8 @@
       <div
         v-for="{ id, group } in groupsCollection"
         :key="id"
-        :class="`col-xs-${colWidth}`">
-        <div>
+        :class="`col-xs-${colWidth} group-container`">
+        <div class="group-title">
           <h3>{{ group }}</h3>
         </div>
         <div class="group">
@@ -167,8 +167,6 @@ export default {
 }
 
 .group > .box {
-  min-height: 200px;
-
   .ghost, .response {
     cursor: default;
     display: inline-block;
@@ -199,5 +197,32 @@ export default {
 
 .ghost {
   opacity: .5;
+}
+
+.row.groups {
+ display: flex;
+ flex-wrap: wrap;
+
+  .group-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .group-title {
+      display: flex;
+      flex-grow: 2;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .group {
+      height: 250px;
+
+      .box {
+        height: 100%;
+        overflow: scroll;
+      }
+    }
+  }
 }
 </style>
