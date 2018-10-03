@@ -47,6 +47,7 @@ import get from 'lodash/get';
 import isNumber from 'lodash/isNumber';
 import reduce from 'lodash/reduce';
 import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
 
 export default {
   props: {
@@ -122,7 +123,7 @@ export default {
     initialize() {
       let { premises, responses } = this;
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
-      this.target = shuffle(responses.map(it => ({ ...it, answers: [] })));
+      this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
     }
   },
   created() {
