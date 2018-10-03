@@ -73,7 +73,7 @@
     "poi-preset-sass-resources": "^3.0.0",
     "rimraf": "^2.6.2",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-vue": "^4.3.2",
+    "rollup-plugin-vue": "3.0.0",
     "sass-loader": "^7.1.0",
     "to-title-case": "^1.0.0"
   },
