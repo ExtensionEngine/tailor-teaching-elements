@@ -17,11 +17,11 @@
       <component
         :is="component"
         v-bind="$attrs"
-        :answer="answer"
         :correct="correct"
         :disabled="isSaved"
         :options="options"
         :retake="retake"
+        :submission="submission"
         @update="update">
       </component>
       <hint v-if="hint && showHint" :content="hint"></hint>
@@ -87,7 +87,6 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
-    answer: { type: [Array, Object, Number], default: null },
     correct: { type: [Number, Array, Object, String, Boolean], required: true },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
@@ -95,6 +94,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
+    submission: { type: [Array, Object, Number], default: null },
     type: { type: String, required: true }
   },
   data() {

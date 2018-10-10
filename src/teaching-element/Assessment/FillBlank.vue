@@ -25,13 +25,13 @@
 <script>
 export default {
   props: {
-    answer: { type: Array, default: () => ([]) },
     correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) },
     retake: { type: Boolean, default: false }
   },
   data() {
-    return { userAnswer: [] };
+    return { userAnswer: this.submission };
   },
   methods: {
     update() {
@@ -41,11 +41,11 @@ export default {
     }
   },
   watch: {
-    answer(val) {
-      if (val) this.userAnswer = val;
-    },
     retake(val) {
       if (val) this.userAnswer = [];
+    },
+    submission(val) {
+      if (val) this.userAnswer = val;
     },
     userAnswer() {
       this.update();

@@ -68,13 +68,13 @@ const DEFAULT_GROUPS_PER_ROW = 3;
 
 export default {
   props: {
-    answer: { type: Object, default: () => ({}) },
     answers: { type: Object, required: true },
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
     groups: { type: Object, required: true },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Object, default: () => ({}) }
   },
   data() {
     const { dragDrop } = this.options;
@@ -130,7 +130,7 @@ export default {
     update(userAnswer) {
       this.$emit('update', { userAnswer });
     },
-    initializeAnswers(val) {
+    initializeSubmission(val) {
       if (!val) return;
       Object.keys(val).forEach(groupId => {
         val[groupId].forEach(answerId => {
@@ -143,16 +143,16 @@ export default {
     }
   },
   created() {
-    this.initializeAnswers(this.answer);
+    this.initializeSubmission(this.submission);
   },
   watch: {
-    answer(val) {
-      this.initializeAnswers(val);
-    },
     retake(val) {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
+    },
+    submission(val) {
+      this.initializeSubmission(val);
     },
     userAnswer: {
       handler() {

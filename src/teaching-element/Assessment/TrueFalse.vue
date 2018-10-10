@@ -26,15 +26,15 @@ const defaults = { type: 'upper-latin' };
 
 export default {
   props: {
-    answer: { type: Boolean, default: null },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Boolean, default: null }
   },
   data() {
     return {
       values: [true, false],
-      userAnswer: this.answer
+      userAnswer: this.submission
     };
   },
   computed: {
@@ -55,14 +55,14 @@ export default {
     }
   },
   watch: {
-    answer(val) {
-      if (val !== null) this.userAnswer = val;
-    },
     retake(val) {
       if (val) {
         this.userAnswer = null;
         this.update();
       }
+    },
+    submission(val) {
+      if (val !== null) this.userAnswer = val;
     }
   }
 };

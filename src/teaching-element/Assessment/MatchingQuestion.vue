@@ -51,13 +51,13 @@ import sortBy from 'lodash/sortBy';
 
 export default {
   props: {
-    answer: { type: Object, default: () => ({}) },
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
     headings: { type: Object, required: true },
     premises: { type: Array, required: true },
     responses: { type: Array, required: true },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Object, default: () => ({}) }
   },
   data() {
     return {
@@ -126,7 +126,7 @@ export default {
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
       this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
     },
-    initializeStudentAnswer(val) {
+    initializeSubmission(val) {
       if (!val) return;
       Object.keys(val).forEach(key => {
         const source = this.source.find(it => it.key === key);
@@ -138,16 +138,16 @@ export default {
   },
   created() {
     this.initialize();
-    this.$nextTick(() => this.initializeStudentAnswer(this.answer));
+    this.$nextTick(() => this.initializeSubmission(this.submission));
   },
   watch: {
-    answer(val) {
-      this.initializeStudentAnswer(val);
-    },
     retake(val) {
       if (!val) return;
       this.initialize();
       this.update();
+    },
+    submission(val) {
+      this.initializeSubmission(val);
     }
   },
   components: { Draggable }

@@ -31,16 +31,22 @@ import zipWith from 'lodash/zipWith';
 
 export default {
   props: {
-    answer: { type: Array, default: () => ([]) },
     disabled: { type: Boolean, default: false },
     prefixes: { type: Array, required: true },
     retake: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) },
     suffixes: { type: Array, required: true }
   },
   data() {
     return { items: [] };
   },
   methods: {
+    initializeSubmission(val) {
+      this.items = this.items.map((item, index) => {
+        item.answer = val[index];
+        return item;
+      });
+    },
     update() {
       const userAnswer = map(this.items, it => it.answer && toNumber(it.answer));
       this.$emit('update', { userAnswer });
@@ -49,16 +55,14 @@ export default {
   created() {
     this.items = zipWith(this.prefixes, this.suffixes,
       (prefix, suffix) => ({ prefix, suffix }));
+    this.$nextTick(() => this.initializeSubmission(this.submission));
   },
   watch: {
-    answer(val) {
-      this.items = this.items.map((item, index) => {
-        item.answer = val[index];
-        return item;
-      });
-    },
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
+    },
+    submission(val) {
+      this.initializeSubmission(val);
     }
   }
 };
