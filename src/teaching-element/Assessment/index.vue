@@ -32,7 +32,7 @@
         </div>
         <controls
           :retake="canRetake"
-          :disabled="!isEditing || !validAnswerFormat"
+          :disabled="!isEditing || !isValidAnswer"
           @reset="reset"
           @submit="submit">
         </controls>
@@ -104,7 +104,7 @@ export default {
       isCorrect: false,
       // TODO: Rename assessmentType prop to context
       context: this.options.assessmentType,
-      validAnswerFormat: true
+      isValidAnswer: true
     };
   },
   computed: {
@@ -160,8 +160,8 @@ export default {
       this.retake = false;
       this.userAnswer = data.userAnswer;
     },
-    validateAnswer({ isAnswerValid }) {
-      this.validAnswerFormat = isAnswerValid;
+    validateAnswer({ isValid }) {
+      this.isValidAnswer = isValid;
     },
     submit() {
       this.checkAnswer();

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import every from 'lodash/every';
 import map from 'lodash/map';
 import toNumber from 'lodash/toNumber';
 import zipWith from 'lodash/zipWith';
@@ -41,13 +42,9 @@ export default {
   },
   methods: {
     update() {
-      let isAnswerValid = true;
-      const userAnswer = map(this.items, it => {
-        const answer = toNumber(it.answer);
-        if (!answer || isNaN(answer)) isAnswerValid = false;
-        return answer;
-      });
-      this.$emit('validateAnswer', { isAnswerValid });
+      const userAnswer = map(this.items, it => toNumber(it.answer));
+      const isValid = every(userAnswer, it => it && !isNaN(it));
+      this.$emit('validateAnswer', { isValid });
       this.$emit('update', { userAnswer });
     }
   },
