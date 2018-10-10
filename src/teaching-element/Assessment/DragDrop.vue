@@ -135,9 +135,10 @@ export default {
       Object.keys(val).forEach(groupId => {
         val[groupId].forEach(answerId => {
           const findAnswer = it => it.id === answerId;
-          const ans = this.answersCollection.find(findAnswer);
-          this.userAnswer[groupId].push(ans);
-          this.answersCollection.splice(this.answersCollection.findIndex(findAnswer), 1);
+          const answer = this.answersCollection.find(findAnswer);
+          this.userAnswer[groupId].push(answer);
+          const answerIndex = this.answersCollection.findIndex(findAnswer);
+          this.answersCollection.splice(answerIndex, 1);
         });
       });
     }

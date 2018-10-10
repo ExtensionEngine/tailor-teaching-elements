@@ -36,7 +36,7 @@ export default {
     submission: { type: Array, default: () => ([]) }
   },
   data() {
-    return { userAnswer: this.submission };
+    return { userAnswer: this.submission || [] };
   },
   computed: {
     type() {
@@ -64,7 +64,7 @@ export default {
       this.update();
     },
     submission(val) {
-      this.userAnswer = val;
+      if (val) this.userAnswer = val;
     }
   }
 };

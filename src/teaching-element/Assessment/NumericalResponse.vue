@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     initializeSubmission(val) {
+      if (!val) return;
       this.items = this.items.map((item, index) => {
         item.answer = val[index];
         return item;

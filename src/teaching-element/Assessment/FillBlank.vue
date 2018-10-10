@@ -31,7 +31,7 @@ export default {
     retake: { type: Boolean, default: false }
   },
   data() {
-    return { userAnswer: this.submission };
+    return { userAnswer: this.submission || [] };
   },
   methods: {
     update() {
