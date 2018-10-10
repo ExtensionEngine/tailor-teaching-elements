@@ -131,6 +131,7 @@ export default {
       this.$emit('update', { userAnswer });
     },
     initializeAnswers(val) {
+      if (!val) return;
       Object.keys(val).forEach(groupId => {
         val[groupId].forEach(answerId => {
           const findAnswer = it => it.id === answerId;
