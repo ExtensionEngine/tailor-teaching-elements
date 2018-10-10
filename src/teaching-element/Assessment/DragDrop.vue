@@ -68,6 +68,7 @@ const DEFAULT_GROUPS_PER_ROW = 3;
 
 export default {
   props: {
+    answer: { type: Object, default: () => ({}) },
     answers: { type: Object, required: true },
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
@@ -128,9 +129,25 @@ export default {
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
+    },
+    initializeAnswers(val) {
+      Object.keys(val).forEach(groupId => {
+        val[groupId].forEach(answerId => {
+          const findAnswer = it => it.id === answerId;
+          const ans = this.answersCollection.find(findAnswer);
+          this.userAnswer[groupId].push(ans);
+          this.answersCollection.splice(this.answersCollection.findIndex(findAnswer), 1);
+        });
+      });
     }
   },
+  created() {
+    this.initializeAnswers(this.answer);
+  },
   watch: {
+    answer(val) {
+      this.initializeAnswers(val);
+    },
     retake(val) {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);

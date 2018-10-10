@@ -25,6 +25,7 @@
 <script>
 export default {
   props: {
+    answer: { type: Array, default: () => ([]) },
     correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     retake: { type: Boolean, default: false }
@@ -40,6 +41,9 @@ export default {
     }
   },
   watch: {
+    answer(val) {
+      if (val) this.userAnswer = val;
+    },
     retake(val) {
       if (val) this.userAnswer = [];
     },

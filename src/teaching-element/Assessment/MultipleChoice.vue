@@ -29,6 +29,7 @@ const defaults = { type: 'upper-latin' };
 
 export default {
   props: {
+    answer: { type: Array, default: () => ([]) },
     answers: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
@@ -57,6 +58,9 @@ export default {
     }
   },
   watch: {
+    answer(val) {
+      this.userAnswer = val;
+    },
     retake(val) {
       if (!val) return;
       this.userAnswer = [];

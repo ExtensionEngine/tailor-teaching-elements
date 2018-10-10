@@ -26,6 +26,7 @@ const defaults = { type: 'upper-latin' };
 
 export default {
   props: {
+    answer: { type: Boolean, default: null },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false }
@@ -33,7 +34,7 @@ export default {
   data() {
     return {
       values: [true, false],
-      userAnswer: null
+      userAnswer: this.answer
     };
   },
   computed: {
@@ -54,6 +55,9 @@ export default {
     }
   },
   watch: {
+    answer(val) {
+      if (val !== null) this.userAnswer = val;
+    },
     retake(val) {
       if (val) {
         this.userAnswer = null;

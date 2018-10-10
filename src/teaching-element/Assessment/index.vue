@@ -17,6 +17,7 @@
       <component
         :is="component"
         v-bind="$attrs"
+        :answer="answer"
         :correct="correct"
         :disabled="isSaved"
         :options="options"
@@ -86,6 +87,7 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
+    answer: { type: [Array, Object, Number], default: null },
     correct: { type: [Number, Array, Object, String, Boolean], required: true },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },

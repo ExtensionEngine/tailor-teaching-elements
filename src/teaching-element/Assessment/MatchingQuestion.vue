@@ -50,6 +50,7 @@ import shuffle from 'lodash/shuffle';
 
 export default {
   props: {
+    answer: { type: Object, default: () => ({}) },
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
     headings: { type: Object, required: true },
@@ -123,12 +124,25 @@ export default {
       let { premises, responses } = this;
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
       this.target = shuffle(responses.map(it => ({ ...it, answers: [] })));
+    },
+    initializeStudentAnswer(val) {
+      if (!val) return;
+      Object.keys(val).forEach(key => {
+        const source = this.source.find(it => it.key === key);
+        const target = this.target.find(it => it.key === val[key]);
+        target.answers.push(source);
+        source.dragged = true;
+      });
     }
   },
   created() {
     this.initialize();
+    this.$nextTick(() => this.initializeStudentAnswer(this.answer));
   },
   watch: {
+    answer(val) {
+      this.initializeStudentAnswer(val);
+    },
     retake(val) {
       if (!val) return;
       this.initialize();

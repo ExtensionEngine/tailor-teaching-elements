@@ -31,6 +31,7 @@ import zipWith from 'lodash/zipWith';
 
 export default {
   props: {
+    answer: { type: Array, default: () => ([]) },
     disabled: { type: Boolean, default: false },
     prefixes: { type: Array, required: true },
     retake: { type: Boolean, default: false },
@@ -50,6 +51,12 @@ export default {
       (prefix, suffix) => ({ prefix, suffix }));
   },
   watch: {
+    answer(val) {
+      this.items = this.items.map((item, index) => {
+        item.answer = val[index];
+        return item;
+      });
+    },
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
     }

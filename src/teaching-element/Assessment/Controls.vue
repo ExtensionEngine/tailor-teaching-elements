@@ -2,6 +2,7 @@
   <div class="controls">
     <button
       :class="{ disabled: disabled && !retake, retake }"
+      :disabled="disabled && !retake ? true : false"
       @click="onClick"
       class="btn btn-submit">
       {{ btnLabel }}
