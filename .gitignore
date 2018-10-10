@@ -181,5 +181,5 @@ selenium-debug.log
 .tern-project
 .tern-port
 
-# POI
-stats.json
+# Statistics
+stats.*
