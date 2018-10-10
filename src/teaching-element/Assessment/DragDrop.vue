@@ -22,9 +22,7 @@
         :key="id"
         :class="`col-xs-${colWidth}`"
         class="group-container">
-        <h3 class="group-title">
-          {{ group }}
-        </h3>
+        <h3 class="group-title">{{ group }}</h3>
         <div class="group">
           <draggable
             v-model="userAnswer[id]"
