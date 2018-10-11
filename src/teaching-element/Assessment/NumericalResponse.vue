@@ -19,12 +19,13 @@
     </ul>
     <span class="help-block">
       Only numerical input allowed, if decimal number is needed please
-      use '.' to separate numbers (e.g. '3.14').
+      use '.' to separate numbers (e.g. '3.14', '1000' not '1,000').
     </span>
   </div>
 </template>
 
 <script>
+import every from 'lodash/every';
 import map from 'lodash/map';
 import toNumber from 'lodash/toNumber';
 import zipWith from 'lodash/zipWith';
@@ -41,7 +42,9 @@ export default {
   },
   methods: {
     update() {
-      const userAnswer = map(this.items, it => it.answer && toNumber(it.answer));
+      const userAnswer = map(this.items, it => toNumber(it.answer));
+      const isValid = every(userAnswer, it => it && !isNaN(it));
+      this.$emit('validateAnswer', { isValid });
       this.$emit('update', { userAnswer });
     }
   },
