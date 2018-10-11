@@ -6,7 +6,7 @@
       :key="index"
       class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span v-html="content" class="content-row">{{ content }}</span>
+      <span v-html="content" class="content-row"></span>
     </div>
   </div>
 </template>
