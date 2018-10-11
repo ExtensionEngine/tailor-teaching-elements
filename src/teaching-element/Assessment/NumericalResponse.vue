@@ -59,14 +59,14 @@ export default {
   created() {
     this.items = zipWith(this.prefixes, this.suffixes,
       (prefix, suffix) => ({ prefix, suffix }));
+    this.initializeSubmission(this.submission);
   },
   watch: {
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
     },
     submission: {
-      handler: 'initializeSubmission',
-      immediate: true
+      handler: 'initializeSubmission'
     }
   }
 };
