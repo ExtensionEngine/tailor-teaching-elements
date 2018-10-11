@@ -126,11 +126,11 @@ export default {
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
       this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
     },
-    initializeSubmission(val) {
-      if (!val) return;
-      Object.keys(val).forEach(key => {
+    initializeSubmission(submission) {
+      if (!submission) return;
+      Object.keys(submission).forEach(key => {
         const source = this.source.find(it => it.key === key);
-        const target = this.target.find(it => it.key === val[key]);
+        const target = this.target.find(it => it.key === submission[key]);
         target.answers.push(source);
         source.dragged = true;
       });

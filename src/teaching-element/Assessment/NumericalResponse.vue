@@ -42,10 +42,10 @@ export default {
     return { items: [] };
   },
   methods: {
-    initializeSubmission(val) {
-      if (!val) return;
+    initializeSubmission(submission) {
+      if (!submission) return;
       this.items = this.items.map((item, index) => {
-        item.answer = val[index];
+        item.answer = submission[index];
         return item;
       });
     },

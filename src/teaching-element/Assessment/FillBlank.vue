@@ -45,7 +45,7 @@ export default {
       if (val) this.userAnswer = [];
     },
     submission(val) {
-      if (val) this.userAnswer = val;
+      this.userAnswer = val || [];
     },
     userAnswer() {
       this.update();

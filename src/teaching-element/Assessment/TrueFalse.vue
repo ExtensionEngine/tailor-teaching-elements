@@ -62,7 +62,7 @@ export default {
       }
     },
     submission(val) {
-      if (val !== null) this.userAnswer = val;
+      this.userAnswer = val;
     }
   }
 };

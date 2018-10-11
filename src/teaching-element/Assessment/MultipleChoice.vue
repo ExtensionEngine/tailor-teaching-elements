@@ -64,7 +64,7 @@ export default {
       this.update();
     },
     submission(val) {
-      if (val) this.userAnswer = val;
+      this.userAnswer = val || [];
     }
   }
 };

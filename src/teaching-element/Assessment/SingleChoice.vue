@@ -59,7 +59,7 @@ export default {
       this.update();
     },
     submission(val) {
-      if (Number.isInteger(val)) this.userAnswer = val;
+      this.userAnswer = val;
     }
   }
 };
