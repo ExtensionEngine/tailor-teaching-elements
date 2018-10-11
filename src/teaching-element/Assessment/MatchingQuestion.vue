@@ -138,7 +138,6 @@ export default {
   },
   created() {
     this.initialize();
-    this.$nextTick(() => this.initializeSubmission(this.submission));
   },
   watch: {
     retake(val) {
@@ -146,8 +145,9 @@ export default {
       this.initialize();
       this.update();
     },
-    submission(val) {
-      this.initializeSubmission(val);
+    submission: {
+      handler: 'initializeSubmission',
+      immediate: true
     }
   },
   components: { Draggable }
