@@ -1,16 +1,30 @@
 <template>
-  <div class="te-embed">
+  <div :class="{ expanded }" class="te-embed">
     <iframe
       :src="url"
-      :style="{ height: `${height}px` }"
+      :style="{ height: embedHeight }"
       class="content"
       frameborder="0">
     </iframe>
-    <div v-show="showOverlay" @click="showOverlay = false" class="interactive"></div>
+    <div
+      v-show="showOverlay"
+      @click="showOverlay = false"
+      class="interactive">
+    </div>
+    <div class="te-embed-toolbar">
+      <span
+        :class="expanded ? 'mdi-close' : 'mdi-arrow-expand-all'"
+        @click="expanded = !expanded"
+        class="mdi tes-icon">
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+
+const EXPANDED_HEIGHT = '98vh';
+
 export default {
   name: 'te-embed',
   props: {
@@ -18,7 +32,15 @@ export default {
     url: { type: String, required: true }
   },
   data() {
-    return { showOverlay: true };
+    return {
+      expanded: false,
+      showOverlay: true
+    };
+  },
+  computed: {
+    embedHeight() {
+      return this.expanded ? EXPANDED_HEIGHT : `${this.height}px`;
+    }
   }
 };
 </script>
@@ -30,6 +52,49 @@ export default {
 
   .content {
     width: 100%;
+  }
+
+  .te-embed-toolbar {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 7px 0 0 7px;
+    font-size: 16px;
+    transition: opacity 0.7s;
+
+    .tes-icon {
+      padding: 3px 6px;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.87);
+      transition: background-color 0.5s;
+
+      &:hover {
+        background-color: #d0d0d0;
+      }
+    }
+
+    .mdi-close {
+      font-size: 18px;
+    }
+  }
+
+  &:hover {
+    .te-embed-toolbar {
+      opacity: 1;
+    }
+  }
+
+  &.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    width: 98%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.87);
   }
 }
 
