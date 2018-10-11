@@ -146,9 +146,7 @@ export default {
       this.initialize();
       this.update();
     },
-    submission: {
-      handler: 'initializeSubmission'
-    }
+    submission: 'initializeSubmission',
   },
   components: { Draggable }
 };

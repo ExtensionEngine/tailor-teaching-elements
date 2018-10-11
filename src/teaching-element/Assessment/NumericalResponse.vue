@@ -65,9 +65,7 @@ export default {
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
     },
-    submission: {
-      handler: 'initializeSubmission'
-    }
+    submission: 'initializeSubmission'
   }
 };
 </script>
