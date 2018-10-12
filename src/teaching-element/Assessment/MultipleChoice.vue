@@ -5,11 +5,11 @@
       <li
         v-for="(answer, index) in answers"
         :key="index"
-        :class="{ selected: isSelected(index) }">
+        :class="[{ selected: isSelected(index) }, getAnswerClass(index)]">
         <input
           v-model="userAnswer"
-          :value="index"
           :disabled="disabled"
+          :value="index"
           @change="update"
           class="answers-checkbox"
           type="checkbox">
@@ -30,6 +30,7 @@ const defaults = { type: 'upper-latin' };
 export default {
   props: {
     answers: { type: Array, required: true },
+    correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
@@ -45,16 +46,21 @@ export default {
     }
   },
   methods: {
-    update() {
-      let { userAnswer } = this;
-      userAnswer = isEmpty(userAnswer) ? null : userAnswer.sort();
-      this.$emit('update', { userAnswer });
+    getAnswerClass(answerIndex) {
+      if (!this.disabled) return null;
+      const userAnswer = this.userAnswer[answerIndex];
+      return this.correct.includes(userAnswer) ? 'te-correct' : 'te-incorrect';
     },
     isSelected(index) {
       return includes(this.userAnswer, index);
     },
     transform(index) {
       return rules[this.type](index);
+    },
+    update() {
+      let { userAnswer } = this;
+      userAnswer = isEmpty(userAnswer) ? null : userAnswer.sort();
+      this.$emit('update', { userAnswer });
     }
   },
   watch: {

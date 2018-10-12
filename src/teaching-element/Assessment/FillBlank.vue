@@ -11,6 +11,7 @@
             <div class="input-group-addon">{{ index + 1 }}</div>
             <input
               v-model="userAnswer[index]"
+              :class="getAnswerClass(index)"
               :disabled="disabled"
               type="text"
               class="form-control"
@@ -34,6 +35,12 @@ export default {
     return { userAnswer: this.submission || [] };
   },
   methods: {
+    getAnswerClass(answerIndex) {
+      if (!this.disabled) return null;
+      const userAnswer = this.userAnswer[answerIndex];
+      const correctAnswers = this.correct[answerIndex];
+      return correctAnswers.includes(userAnswer) ? 'te-correct' : 'te-incorrect';
+    },
     update() {
       let userAnswer = this.userAnswer.map(it => it.trim()).filter(it => !!it);
       if (userAnswer.length !== this.correct.length) userAnswer = null;
