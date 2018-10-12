@@ -1,6 +1,6 @@
 {
   "name": "tailor-teaching-elements",
-  "version": "1.2.0-beta.4",
+  "version": "1.2.0-beta.5",
   "description": "Tailor teaching elements",
   "main": "dist/tailor-teaching-elements.min.js",
   "module": "dist/tailor-teaching-elements.es.js",
