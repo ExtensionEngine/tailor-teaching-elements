@@ -21,6 +21,7 @@
         :disabled="isSaved"
         :options="options"
         :retake="retake"
+        :submission="submission"
         @validateAnswer="validateAnswer"
         @update="update">
       </component>
@@ -94,6 +95,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
+    submission: { type: [Array, Boolean, Number, Object], default: null },
     type: { type: String, required: true }
   },
   data() {

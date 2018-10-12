@@ -35,12 +35,20 @@ export default {
     disabled: { type: Boolean, default: false },
     prefixes: { type: Array, required: true },
     retake: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) },
     suffixes: { type: Array, required: true }
   },
   data() {
     return { items: [] };
   },
   methods: {
+    initializeSubmission(submission) {
+      if (!submission) return;
+      this.items = this.items.map((item, index) => {
+        item.answer = submission[index];
+        return item;
+      });
+    },
     update() {
       const userAnswer = map(this.items, it => toNumber(it.answer));
       const isValid = every(userAnswer, it => it && !isNaN(it));
@@ -51,11 +59,13 @@ export default {
   created() {
     this.items = zipWith(this.prefixes, this.suffixes,
       (prefix, suffix) => ({ prefix, suffix }));
+    this.initializeSubmission(this.submission);
   },
   watch: {
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
-    }
+    },
+    submission: 'initializeSubmission'
   }
 };
 </script>

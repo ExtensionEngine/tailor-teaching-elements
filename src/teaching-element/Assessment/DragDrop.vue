@@ -72,7 +72,8 @@ export default {
     disabled: { type: Boolean, default: false },
     groups: { type: Object, required: true },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Object, default: () => ({}) }
   },
   data() {
     const { dragDrop } = this.options;
@@ -127,6 +128,18 @@ export default {
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
+    },
+    initializeSubmission(submission) {
+      if (!submission) return;
+      Object.keys(submission).forEach(groupId => {
+        submission[groupId].forEach(answerId => {
+          const findAnswer = it => it.id === answerId;
+          const answer = this.answersCollection.find(findAnswer);
+          const answerIndex = this.answersCollection.findIndex(findAnswer);
+          this.userAnswer[groupId].push(answer);
+          this.answersCollection.splice(answerIndex, 1);
+        });
+      });
     }
   },
   watch: {
@@ -134,6 +147,10 @@ export default {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
+    },
+    submission: {
+      handler: 'initializeSubmission',
+      immediate: true
     },
     userAnswer: {
       handler() {
