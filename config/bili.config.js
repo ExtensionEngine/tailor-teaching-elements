@@ -2,8 +2,8 @@ const path = require('path');
 const visualizer = require('rollup-plugin-visualizer');
 
 module.exports = {
-  name: 'tailor-tes',
-  moduleName: 'TailorTes',
+  name: 'tailor-teaching-elements',
+  moduleName: 'TailorTeachingelements',
   format: ['umd', 'umd-min', 'es'],
   plugins: ['vue', 'node-builtins', visualizer({
     // TODO: try `sourcemap` & `open` options once we migrate to latest version
