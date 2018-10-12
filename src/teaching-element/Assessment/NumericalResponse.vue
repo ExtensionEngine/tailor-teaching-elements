@@ -5,7 +5,6 @@
       <li
         v-for="(it, index) in items"
         :key="index"
-        :class="getAnswerClass(it)"
         class="input-group">
         <div v-if="it.prefix" class="input-group-addon">{{ it.prefix }}</div>
         <input
@@ -33,7 +32,6 @@ import zipWith from 'lodash/zipWith';
 
 export default {
   props: {
-    correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     prefixes: { type: Array, required: true },
     retake: { type: Boolean, default: false },
@@ -44,11 +42,6 @@ export default {
     return { items: [] };
   },
   methods: {
-    getAnswerClass(userAnswer) {
-      if (!this.disabled) return null;
-      const isCorrect = this.correct.includes(userAnswer.answer);
-      return isCorrect ? 'te-correct' : 'te-incorrect';
-    },
     initializeSubmission(submission) {
       if (!submission) return;
       this.items = this.items.map((item, index) => {
