@@ -1,3 +1,4 @@
+const bubleConfig = require('./buble.config');
 const path = require('path');
 const visualizer = require('rollup-plugin-visualizer');
 
@@ -18,6 +19,7 @@ module.exports = {
   babel: {
     babelrc: false
   },
+  vue: bubleConfig,
   alias: {
     '@': path.resolve(__dirname, '../src')
   }
