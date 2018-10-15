@@ -34,7 +34,6 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    showCorrectChoices: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
   data() {
@@ -48,7 +47,7 @@ export default {
   },
   methods: {
     getAnswerClass(answerIndex) {
-      if (!this.disabled || !this.showCorrectChoices) return null;
+      if (!this.disabled || !this.options.showCorrectChoices) return null;
       const userAnswer = this.userAnswer[answerIndex];
       return this.correct.includes(userAnswer) ? 'te-correct' : 'te-incorrect';
     },
