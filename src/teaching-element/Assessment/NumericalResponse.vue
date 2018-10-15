@@ -51,8 +51,7 @@ export default {
     },
     update() {
       const userAnswer = map(this.items, ({ answer }) => {
-        if (answer === '') return NaN;
-        return toNumber(answer);
+        return answer === '' ? NaN : toNumber(answer);
       });
       const isValid = every(userAnswer, it => !isNaN(it));
       this.$emit('validateAnswer', { isValid });
