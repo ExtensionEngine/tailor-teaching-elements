@@ -8,7 +8,7 @@
         class="input-group">
         <div v-if="it.prefix" class="input-group-addon">{{ it.prefix }}</div>
         <input
-          v-model="it.answer"
+          v-model.trim="it.answer"
           :disabled="disabled"
           @input="update"
           type="text"
@@ -50,8 +50,10 @@ export default {
       });
     },
     update() {
-      const userAnswer = map(this.items, it => toNumber(it.answer));
-      const isValid = every(userAnswer, it => it && !isNaN(it));
+      const userAnswer = map(this.items, ({ answer }) => {
+        return answer === '' ? NaN : toNumber(answer);
+      });
+      const isValid = every(userAnswer, it => !isNaN(it));
       this.$emit('validateAnswer', { isValid });
       this.$emit('update', { userAnswer });
     }
