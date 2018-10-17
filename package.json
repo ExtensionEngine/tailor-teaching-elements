@@ -7,10 +7,11 @@
   "scripts": {
     "dev": "poi --config config/poi.config.js",
     "clean": "rimraf dist",
-    "build:dist": "bili --config config/bili.config.js",
-    "build": "npm run clean && npm run build:dist",
     "lint": "eslint --ext .js,.vue src",
-    "release": "npm run build && np"
+    "prebuild": "npm run clean",
+    "build": "bili --config config/bili.config.js",
+    "prepublishOnly": "npm run build",
+    "release": "np"
   },
   "repository": {
     "type": "git",
