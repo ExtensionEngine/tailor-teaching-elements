@@ -11,7 +11,7 @@
     "prebuild": "npm run clean",
     "build": "bili --config config/bili.config.js",
     "prepublishOnly": "npm run build",
-    "release": "np --any-branch"
+    "release": "np --any-branch --no-cleanup"
   },
   "repository": {
     "type": "git",
