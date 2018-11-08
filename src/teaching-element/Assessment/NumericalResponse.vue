@@ -8,7 +8,7 @@
         class="input-group">
         <div v-if="it.prefix" class="input-group-addon">{{ it.prefix }}</div>
         <input
-          v-model="it.answer"
+          v-model.trim="it.answer"
           :disabled="disabled"
           @input="update"
           type="text"
@@ -19,14 +19,12 @@
     </ul>
     <span class="help-block">
       Only numerical input allowed, if decimal number is needed please
-      use '.' to separate numbers (e.g. '3.14').
+      use '.' to separate numbers (e.g. '3.14', '1000' not '1,000').
     </span>
   </div>
 </template>
 
 <script>
-import map from 'lodash/map';
-import toNumber from 'lodash/toNumber';
 import zipWith from 'lodash/zipWith';
 
 export default {
@@ -34,25 +32,39 @@ export default {
     disabled: { type: Boolean, default: false },
     prefixes: { type: Array, required: true },
     retake: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) },
     suffixes: { type: Array, required: true }
   },
   data() {
     return { items: [] };
   },
   methods: {
+    initializeSubmission(submission) {
+      if (!submission) return;
+      this.items = this.items.map((item, index) => {
+        item.answer = submission[index];
+        return item;
+      });
+    },
     update() {
-      const userAnswer = map(this.items, it => it.answer && toNumber(it.answer));
+      const userAnswer = this.items.map(({ answer }) => {
+        return answer ? Number(answer) : NaN;
+      });
+      const isValid = userAnswer.every(it => !isNaN(it));
+      this.$emit('validateAnswer', { isValid });
       this.$emit('update', { userAnswer });
     }
   },
   created() {
     this.items = zipWith(this.prefixes, this.suffixes,
       (prefix, suffix) => ({ prefix, suffix }));
+    this.initializeSubmission(this.submission);
   },
   watch: {
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
-    }
+    },
+    submission: 'initializeSubmission'
   }
 };
 </script>

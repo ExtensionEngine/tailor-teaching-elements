@@ -29,10 +29,11 @@ export default {
     answers: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Number, default: null }
   },
   data() {
-    return { userAnswer: null };
+    return { userAnswer: this.submission };
   },
   computed: {
     type() {
@@ -56,6 +57,9 @@ export default {
       if (!val) return;
       this.userAnswer = null;
       this.update();
+    },
+    submission(val) {
+      this.userAnswer = val;
     }
   }
 };

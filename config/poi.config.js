@@ -12,7 +12,7 @@ const rules = [{
 module.exports = (options, req) => ({
   entry: 'examples/main.js',
   html: {
-    title: 'Tailor TES Example Showcase'
+    title: 'Tailor Teaching Elements Example Showcase'
   },
   webpack(config) {
     config.module.rules.push(...rules);

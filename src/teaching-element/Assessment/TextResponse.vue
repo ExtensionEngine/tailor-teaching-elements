@@ -17,11 +17,12 @@
 export default {
   props: {
     disabled: { type: Boolean, default: false },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: String, default: null }
   },
   data() {
     return {
-      userAnswer: null
+      userAnswer: this.submission
     };
   },
   methods: {
@@ -32,6 +33,9 @@ export default {
   watch: {
     retake(val) {
       if (val) this.userAnswer = null;
+    },
+    submission(val) {
+      this.userAnswer = val;
     },
     userAnswer() {
       this.update();

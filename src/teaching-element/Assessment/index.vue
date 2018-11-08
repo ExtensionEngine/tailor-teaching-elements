@@ -21,6 +21,8 @@
         :disabled="isSaved"
         :options="options"
         :retake="retake"
+        :submission="submission"
+        @validateAnswer="validateAnswer"
         @update="update">
       </component>
       <hint v-if="hint && showHint" :content="hint"></hint>
@@ -31,7 +33,7 @@
         </div>
         <controls
           :retake="canRetake"
-          :disabled="!isEditing"
+          :disabled="!isEditing || !isValidAnswer"
           @reset="reset"
           @submit="submit">
         </controls>
@@ -93,6 +95,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
+    submission: { type: [Array, Boolean, Number, Object, String], default: null },
     type: { type: String, required: true }
   },
   data() {
@@ -102,7 +105,8 @@ export default {
       isSaved: false,
       isCorrect: false,
       // TODO: Rename assessmentType prop to context
-      context: this.options.assessmentType
+      context: this.options.assessmentType,
+      isValidAnswer: true
     };
   },
   computed: {
@@ -157,6 +161,9 @@ export default {
     update(data) {
       this.retake = false;
       this.userAnswer = data.userAnswer;
+    },
+    validateAnswer({ isValid }) {
+      this.isValidAnswer = isValid;
     },
     submit() {
       this.checkAnswer();

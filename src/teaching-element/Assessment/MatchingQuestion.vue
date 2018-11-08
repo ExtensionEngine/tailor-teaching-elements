@@ -47,6 +47,7 @@ import get from 'lodash/get';
 import isNumber from 'lodash/isNumber';
 import reduce from 'lodash/reduce';
 import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
 
 export default {
   props: {
@@ -55,7 +56,8 @@ export default {
     headings: { type: Object, required: true },
     premises: { type: Array, required: true },
     responses: { type: Array, required: true },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Object, default: () => ({}) }
   },
   data() {
     return {
@@ -122,18 +124,29 @@ export default {
     initialize() {
       let { premises, responses } = this;
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
-      this.target = shuffle(responses.map(it => ({ ...it, answers: [] })));
+      this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
+    },
+    initializeSubmission(submission) {
+      if (!submission) return;
+      Object.keys(submission).forEach(key => {
+        const source = this.source.find(it => it.key === key);
+        const target = this.target.find(it => it.key === submission[key]);
+        target.answers.push(source);
+        source.dragged = true;
+      });
     }
   },
   created() {
     this.initialize();
+    this.initializeSubmission(this.submission);
   },
   watch: {
     retake(val) {
       if (!val) return;
       this.initialize();
       this.update();
-    }
+    },
+    submission: 'initializeSubmission',
   },
   components: { Draggable }
 };

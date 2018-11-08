@@ -27,10 +27,11 @@ export default {
   props: {
     correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) },
     retake: { type: Boolean, default: false }
   },
   data() {
-    return { userAnswer: [] };
+    return { userAnswer: this.submission || [] };
   },
   methods: {
     update() {
@@ -42,6 +43,9 @@ export default {
   watch: {
     retake(val) {
       if (val) this.userAnswer = [];
+    },
+    submission(val) {
+      this.userAnswer = val || [];
     },
     userAnswer() {
       this.update();

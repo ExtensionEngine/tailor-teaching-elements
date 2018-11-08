@@ -28,12 +28,13 @@ export default {
   props: {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Boolean, default: null }
   },
   data() {
     return {
       values: [true, false],
-      userAnswer: null
+      userAnswer: this.submission
     };
   },
   computed: {
@@ -59,6 +60,9 @@ export default {
         this.userAnswer = null;
         this.update();
       }
+    },
+    submission(val) {
+      this.userAnswer = val;
     }
   }
 };
