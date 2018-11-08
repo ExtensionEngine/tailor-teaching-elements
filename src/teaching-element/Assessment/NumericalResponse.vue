@@ -8,7 +8,7 @@
         class="input-group">
         <div v-if="it.prefix" class="input-group-addon">{{ it.prefix }}</div>
         <input
-          v-model="it.answer"
+          v-model.trim="it.answer"
           :disabled="disabled"
           @input="update"
           type="text"
@@ -25,9 +25,6 @@
 </template>
 
 <script>
-import every from 'lodash/every';
-import map from 'lodash/map';
-import toNumber from 'lodash/toNumber';
 import zipWith from 'lodash/zipWith';
 
 export default {
@@ -50,8 +47,10 @@ export default {
       });
     },
     update() {
-      const userAnswer = map(this.items, it => toNumber(it.answer));
-      const isValid = every(userAnswer, it => it && !isNaN(it));
+      const userAnswer = this.items.map(({ answer }) => {
+        return answer ? Number(answer) : NaN;
+      });
+      const isValid = userAnswer.every(it => !isNaN(it));
       this.$emit('validateAnswer', { isValid });
       this.$emit('update', { userAnswer });
     }

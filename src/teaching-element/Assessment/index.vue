@@ -95,7 +95,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
-    submission: { type: [Array, Boolean, Number, Object], default: null },
+    submission: { type: [Array, Boolean, Number, Object, String], default: null },
     type: { type: String, required: true }
   },
   data() {
