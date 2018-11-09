@@ -5,7 +5,7 @@
       <li
         v-for="(answer, index) in answers"
         :key="index"
-        :class="[{ selected: isSelected(index) }, getAnswerClass(index)]">
+        :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
           :disabled="disabled"
@@ -34,6 +34,7 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
+    setCorrectnessClass: { type: Boolean, default: true },
     submission: { type: Array, default: () => ([]) }
   },
   data() {
@@ -46,10 +47,15 @@ export default {
     }
   },
   methods: {
-    getAnswerClass(answerIndex) {
-      if (!this.disabled || !this.options.showCorrectChoices) return null;
-      const userAnswer = this.userAnswer[answerIndex];
-      return this.correct.includes(userAnswer) ? 'te-correct' : 'te-incorrect';
+    getAnswerClass(index) {
+      const selected = this.isSelected(index) ? 'selected' : '';
+      if (!this.disabled || !this.setCorrectnessClass) return [selected];
+      return [selected, this.isCorrect(index) ? 'te-correct' : 'te-incorrect'];
+    },
+    isCorrect(index) {
+      const isInCorrect = includes(this.correct, index);
+      const isInAnswered = includes(this.userAnswer, index);
+      return !(isInCorrect^isInAnswered);
     },
     isSelected(index) {
       return includes(this.userAnswer, index);
