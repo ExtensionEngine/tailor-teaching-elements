@@ -5,7 +5,7 @@
       <li
         v-for="(answer, index) in answers"
         :key="index"
-        :class="{ selected: isSelected(index) }">
+        :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
           :value="index"
@@ -27,9 +27,11 @@ const defaults = { type: 'upper-latin' };
 export default {
   props: {
     answers: { type: Array, required: true },
+    correct: { type: Number, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
+    setCorrectnessClass: { type: Boolean, default: true },
     submission: { type: Number, default: null }
   },
   data() {
@@ -42,14 +44,24 @@ export default {
     }
   },
   methods: {
-    update() {
-      this.$emit('update', { userAnswer: this.userAnswer });
+    getAnswerClass(index) {
+      const selected = this.isSelected(index) ? 'selected' : '';
+      if (!this.disabled || !this.setCorrectnessClass) return [selected];
+      return [selected, this.isCorrect(index) ? 'te-correct' : 'te-incorrect'];
+    },
+    isCorrect(index) {
+      const isCorrect = index === this.correct;
+      const isAnswered = index === this.userAnswer;
+      return !(isCorrect^isAnswered);
     },
     isSelected(index) {
       return index === this.userAnswer;
     },
     transform(index) {
       return rules[this.type](index);
+    },
+    update() {
+      this.$emit('update', { userAnswer: this.userAnswer });
     }
   },
   watch: {
