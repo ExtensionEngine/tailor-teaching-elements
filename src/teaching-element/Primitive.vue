@@ -5,6 +5,7 @@
         :is="resolveElement(type)"
         :assessmentType="assessmentType"
         :content="content"
+        :height="height"
         :url="url">
       </component>
     </div>
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
 import { TE_TYPE } from '../types';
@@ -22,6 +24,7 @@ export default {
     type: { type: String, required: true },
     content: { type: String, default: '' },
     url: { type: String, default: '' },
+    height: { type: Number, default: 600 },
     assessmentType: { type: String, default: '' },
     width: { type: Number, default: 12 }
   },
@@ -31,6 +34,7 @@ export default {
     }
   },
   components: {
+    TeEmbed,
     TeHtml,
     TeImage
   }
