@@ -2,7 +2,7 @@
   "position": 1,
   "type": "IMAGE",
   "data": {
-    "url": "http://lorempixel.com/800/600/",
+    "url": "https://picsum.photos/800/600/?random",
     "width": 12
   }
 }
