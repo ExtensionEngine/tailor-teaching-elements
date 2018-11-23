@@ -6,7 +6,10 @@
       :key="index"
       class="feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span class="content-row">{{ content }}</span>
+      <div v-if="content.url" class="image-container">
+        <img :src="content.url"/>
+      </div>
+      <span class="content-row">{{ content.text }}</span>
     </div>
   </div>
 </template>
@@ -24,6 +27,7 @@ const toArray = arg => isArray(arg) ? arg : [arg];
 const noFeedback = ['TR', 'NR'];
 const defaults = {
   multipleChoice: { type: 'upper-latin' },
+  imageMultipleChoice: { type: 'none' },
   numericalResponse: { type: 'none' },
   singleChoice: { type: 'upper-latin' },
   textResponse: { type: 'none' },
@@ -65,51 +69,75 @@ export default {
       return rules[orderType](index);
     },
     getData(answer) {
-      answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = this.order(answer);
-      return { prefix, content: this.feedback[answer] };
+      let answerIndex = isBoolean(answer) ? Number(!answer) : answer;
+      if (answer.id) answerIndex = answer.id;
+      const content = {
+        text: this.feedback[answerIndex],
+        url: answer.data && answer.data.url
+      };
+      return { prefix: this.order(answerIndex), content };
     }
   }
 };
 </script>
 
 <style lang="scss">
+$img-container-dimension: 10rem;
+
 .assessment .feedback {
-  position:relative;
+  position: relative;
   border: 1px dotted #ccc;
 
   .form-label {
-    color: #000;
     margin-top: 10px;
+    color: #000;
   }
 
   .form-label, .feedback-content {
-    padding-left: 15px;
     margin-bottom: 10px;
+    padding-left: 15px;
   }
 
   .content-row {
     white-space: pre-wrap;
   }
 
-  &:before {
+  &::before {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color: #ccc transparent transparent transparent;
     top: 0;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: #ccc transparent transparent transparent;
   }
 
-  &:after {
+  &::after {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color:  white transparent transparent transparent;
     top: -1px;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: white transparent transparent transparent;
+  }
+
+  .image-container {
+    display: inline-block;
+    position: relative;
+    width: $img-container-dimension;
+    height: $img-container-dimension;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      max-width: 100%;
+      max-height: 100%;
+    }
   }
 }
 </style>

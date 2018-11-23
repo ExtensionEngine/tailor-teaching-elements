@@ -54,6 +54,7 @@ import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
+import ImageMultipleChoice from './ImageMultipleChoice.vue';
 import isUndefined from 'lodash/isUndefined';
 import MultipleChoice from './MultipleChoice.vue';
 import MatchingQuestion from './MatchingQuestion.vue';
@@ -172,6 +173,7 @@ export default {
     Feedback,
     FillBlank,
     Hint,
+    ImageMultipleChoice,
     MultipleChoice,
     MatchingQuestion,
     NumericalResponse,

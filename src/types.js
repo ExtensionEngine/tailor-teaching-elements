@@ -1,5 +1,6 @@
 export const ASSESSMENT_TYPE = {
   MC: 'multiple-choice',
+  IMC: 'image-multiple-choice',
   MQ: 'matching-question',
   SC: 'single-choice',
   TF: 'true-false',
@@ -30,6 +31,13 @@ export const subTypeInfo = {
     title: 'Multiple choice',
     class: 'multiple-choice',
     helperText: 'Select the choice(s) that best answers the question below.',
+    feedback: true
+  },
+  IMC: {
+    type: 'IMC',
+    title: 'Image multiple choice',
+    class: 'image-multiple-choice',
+    helperText: 'Select one or more images to answer the question below.',
     feedback: true
   },
   SC: {

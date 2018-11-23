@@ -8,6 +8,7 @@ import xor from 'lodash/xor';
 export default {
   default: (answer, correct) => isEqual(answer, correct),
   MC: (answers, correct) => !xor(answers, correct).length,
+  IMC: (answers, correct) => !xor(map(answers, 'id').sort(), correct).length,
   FB: (answers, correct) => {
     answers = map(answers, toLower);
     correct = map(correct, group => map(group, toLower));
