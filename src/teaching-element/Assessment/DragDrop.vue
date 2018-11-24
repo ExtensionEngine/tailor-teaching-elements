@@ -20,10 +20,9 @@
       <div
         v-for="{ id, group } in groupsCollection"
         :key="id"
-        :class="`col-xs-${colWidth}`">
-        <div>
-          <h3>{{ group }}</h3>
-        </div>
+        :class="`col-xs-${colWidth}`"
+        class="group-container">
+        <h3 class="group-title">{{ group }}</h3>
         <div class="group">
           <draggable
             v-model="userAnswer[id]"
@@ -73,7 +72,8 @@ export default {
     disabled: { type: Boolean, default: false },
     groups: { type: Object, required: true },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Object, default: () => ({}) }
   },
   data() {
     const { dragDrop } = this.options;
@@ -128,6 +128,18 @@ export default {
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
+    },
+    initializeSubmission(submission) {
+      if (!submission) return;
+      Object.keys(submission).forEach(groupId => {
+        submission[groupId].forEach(answerId => {
+          const findAnswer = it => it.id === answerId;
+          const answer = this.answersCollection.find(findAnswer);
+          const answerIndex = this.answersCollection.findIndex(findAnswer);
+          this.userAnswer[groupId].push(answer);
+          this.answersCollection.splice(answerIndex, 1);
+        });
+      });
     }
   },
   watch: {
@@ -135,6 +147,10 @@ export default {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
+    },
+    submission: {
+      handler: 'initializeSubmission',
+      immediate: true
     },
     userAnswer: {
       handler() {
@@ -167,8 +183,6 @@ export default {
 }
 
 .group > .box {
-  min-height: 200px;
-
   .ghost, .response {
     cursor: default;
     display: inline-block;
@@ -199,5 +213,32 @@ export default {
 
 .ghost {
   opacity: .5;
+}
+
+.row.groups {
+ display: flex;
+ flex-wrap: wrap;
+
+  .group-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .group-title {
+      display: flex;
+      flex-grow: 2;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .group {
+      height: 250px;
+
+      .box {
+        height: 100%;
+        overflow: scroll;
+      }
+    }
+  }
 }
 </style>

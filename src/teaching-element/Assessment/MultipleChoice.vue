@@ -32,10 +32,11 @@ export default {
     answers: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) }
   },
   data() {
-    return { userAnswer: [] };
+    return { userAnswer: this.submission || [] };
   },
   computed: {
     type() {
@@ -61,6 +62,9 @@ export default {
       if (!val) return;
       this.userAnswer = [];
       this.update();
+    },
+    submission(val) {
+      this.userAnswer = val || [];
     }
   }
 };

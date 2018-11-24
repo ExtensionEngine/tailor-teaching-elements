@@ -5,8 +5,8 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootswatch/paper/bootswatch';
 
 // MDI files
-$mdi-font-path: '~mdi/fonts';
-@import '~mdi/scss/materialdesignicons';
+$mdi-font-path: '~@mdi/font/fonts';
+@import '~@mdi/font/scss/materialdesignicons';
 
 // Roboto font
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500|PT+Serif|PT+Mono');

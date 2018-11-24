@@ -39,6 +39,7 @@ export default {
       this.$emit('update', { userAnswer: selectedAnswers });
     },
     toggleAnswerSelection(id) {
+      if (this.disabled) return;
       if (!this.selectedAnswerIds.includes(id)) return this.selectedAnswerIds.push(id);
       const index = this.selectedAnswerIds.indexOf(id);
       if (index !== -1) this.selectedAnswerIds.splice(index, 1);
@@ -69,11 +70,12 @@ export default {
 
       &.selected {
         padding: 0;
-        border: 5px solid;
+        border: 5px solid #000;
       }
 
       img {
-        max-height: 20rem;
+        width: auto;
+        height: 20rem;
       }
     }
   }

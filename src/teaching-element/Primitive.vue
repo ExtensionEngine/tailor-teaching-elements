@@ -1,36 +1,29 @@
 <template>
   <div :class="`col-xs-${width}`" class="te-container">
     <div class="teaching-element">
-      <component
-        :is="resolveElement(type)"
-        :assessmentType="assessmentType"
-        :content="content"
-        :url="url">
-      </component>
+      <component :is="resolveElement(type)" v-bind="$attrs"></component>
     </div>
   </div>
 </template>
 
 <script>
+import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
 import { TE_TYPE } from '../types';
 
+const resolveElement = type => TE_TYPE[type];
+
 export default {
   name: 'te-primitive',
+  inheritAttrs: false,
   props: {
     type: { type: String, required: true },
-    content: { type: String, default: '' },
-    url: { type: String, default: '' },
-    assessmentType: { type: String, default: '' },
     width: { type: Number, default: 12 }
   },
-  methods: {
-    resolveElement(type) {
-      return TE_TYPE[type];
-    }
-  },
+  methods: { resolveElement },
   components: {
+    TeEmbed,
     TeHtml,
     TeImage
   }

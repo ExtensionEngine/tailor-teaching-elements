@@ -1,15 +1,12 @@
 <template>
-  <div v-if="show" class="feedback">
+  <div v-if="show" class="ql-container feedback">
     <div class="form-label">{{ title }}</div>
     <div
       v-for="({ prefix, content }, index) in feedbacks"
       :key="index"
-      class="feedback-content">
+      class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <div v-if="content.url" class="image-container">
-        <img :src="content.url"/>
-      </div>
-      <span class="content-row">{{ content.text }}</span>
+      <span v-html="content" class="content-row"></span>
     </div>
   </div>
 </template>
@@ -71,10 +68,10 @@ export default {
     getData(answer) {
       let answerIndex = isBoolean(answer) ? Number(!answer) : answer;
       if (answer.id) answerIndex = answer.id;
-      const content = {
-        text: this.feedback[answerIndex],
-        url: answer.data && answer.data.url
-      };
+      const feedbackImage = answer.data && answer.data.url
+        ? `<div class="image-container"><img src="${answer.data.url}"/></div>`
+        : '';
+      const content = `${feedbackImage}${this.feedback[answerIndex]}`;
       return { prefix: this.order(answerIndex), content };
     }
   }
@@ -83,10 +80,11 @@ export default {
 
 <style lang="scss">
 $img-container-dimension: 10rem;
+$light-gray: #ccc;
 
 .assessment .feedback {
   position: relative;
-  border: 1px dotted #ccc;
+  border: 1px dotted $light-gray;
 
   .form-label {
     margin-top: 10px;
@@ -108,8 +106,8 @@ $img-container-dimension: 10rem;
     position: absolute;
     top: 0;
     left: 50%;
-    border: 9px dotted #ccc;
-    border-color: #ccc transparent transparent transparent;
+    border: 9px dotted $light-gray;
+    border-color: $light-gray transparent transparent transparent;
   }
 
   &::after {
@@ -118,7 +116,7 @@ $img-container-dimension: 10rem;
     position: absolute;
     top: -1px;
     left: 50%;
-    border: 9px dotted #ccc;
+    border: 9px dotted $light-gray;
     border-color: white transparent transparent transparent;
   }
 
@@ -128,7 +126,8 @@ $img-container-dimension: 10rem;
     width: $img-container-dimension;
     height: $img-container-dimension;
     vertical-align: middle;
-    border: 1px solid #ccc;
+    margin-right: 1rem;
+    border: 1px solid $light-gray;
 
     img {
       position: absolute;
