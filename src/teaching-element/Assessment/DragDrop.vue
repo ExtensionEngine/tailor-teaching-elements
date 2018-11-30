@@ -131,6 +131,9 @@ export default {
     },
     initializeSubmission(submission) {
       if (!submission) return;
+
+      this.answersCollection = formatAnswers(this.answers);
+      this.userAnswer = mapValues(this.groups, () => []);
       Object.keys(submission).forEach(groupId => {
         submission[groupId].forEach(answerId => {
           const findAnswer = it => it.id === answerId;
@@ -142,14 +145,15 @@ export default {
       });
     }
   },
-  created() {
-    this.initializeSubmission(this.submission);
-  },
   watch: {
     retake(val) {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
+    },
+    submission: {
+      handler: 'initializeSubmission',
+      immediate: true
     },
     userAnswer: {
       handler() {
