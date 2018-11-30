@@ -142,15 +142,14 @@ export default {
       });
     }
   },
+  created() {
+    this.initializeSubmission(this.submission);
+  },
   watch: {
     retake(val) {
       if (!val) return;
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
-    },
-    submission: {
-      handler: 'initializeSubmission',
-      immediate: true
     },
     userAnswer: {
       handler() {
