@@ -172,7 +172,7 @@ export default {
       background-color: transparent;
       border: none;
 
-      .mdi {
+      .mdi-close {
         position: absolute;
         top: 11px;
         right: 17px;
