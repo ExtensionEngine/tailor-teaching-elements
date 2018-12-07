@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import random from 'lodash/random';
+import uniqueId from 'lodash/uniqueId';
 
 export default {
   props: {
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     uniqueId() {
-      return `text-response-${random(0, 10000)}`;
+      return uniqueId('text-response');
     }
   },
   methods: {
