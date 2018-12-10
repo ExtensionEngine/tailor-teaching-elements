@@ -1,10 +1,11 @@
 <template>
   <div class="form-group">
-    <span class="form-label">Solution</span>
+    <label :for="uniqueId" class="form-label">Solution</label>
     <span class="answer">
       <textarea
         v-model="userAnswer"
         :disabled="disabled"
+        :id="uniqueId"
         class="form-control"
         rows="6"
         type="text">
@@ -14,6 +15,8 @@
 </template>
 
 <script>
+import uniqueId from 'lodash/uniqueId';
+
 export default {
   props: {
     disabled: { type: Boolean, default: false },
@@ -24,6 +27,11 @@ export default {
     return {
       userAnswer: this.submission
     };
+  },
+  computed: {
+    uniqueId() {
+      return uniqueId('text-response');
+    }
   },
   methods: {
     update() {
