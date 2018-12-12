@@ -52,7 +52,7 @@
 
 <script>
 import Controls from './Controls.vue';
-import DragDrop from './DragDrop.vue';
+import DragDrop from './DragDrop/index.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';

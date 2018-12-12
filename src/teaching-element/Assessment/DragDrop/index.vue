@@ -17,49 +17,38 @@
       </draggable>
     </div>
     <div class="row groups">
-      <div
-        v-for="{ id, group } in groupsCollection"
-        :key="id"
+      <group
+        v-for="group in groupsCollection"
+        v-model="userAnswer[group.id]"
+        :key="group.id"
+        :group="group"
+        :dragging="dragging"
+        :disabled="disabled"
+        :dragDrop="options.dragDrop"
+        :draggableOptions="draggableOptions"
         :class="`col-xs-${colWidth}`"
+        @removeFromBox="removeFromBox"
         class="group-container">
-        <h3 class="group-title">{{ group }}</h3>
-        <div class="group">
-          <draggable
-            v-model="userAnswer[id]"
-            :class="{ drop: dragging }"
-            :options="draggableOptions"
-            element="div"
-            class="box">
-            <div
-              v-for="response in userAnswer[id]"
-              :key="response.id"
-              :class="answerClasses(id, response.id)"
-              class="response">
-              {{ response.answer }}
-              <button
-                v-if="!disabled"
-                @click="removeFromBox(id, response)"
-                class="btn btn-close">
-                <span :class="removeClass"></span>
-              </button>
-            </div>
-          </draggable>
-        </div>
-      </div>
+      </group>
     </div>
   </div>
 </template>
 
 <script>
 import Draggable from 'vuedraggable';
+import findKey from 'lodash/findKey';
 import get from 'lodash/get';
+import Group from './Group.vue';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 import shuffle from 'lodash/shuffle';
 
-const formatAnswers = answers => {
-  const grouped = map(answers, (answer, id) => ({ id, answer }));
+const formatAnswers = (answers, correct) => {
+  const grouped = map(answers, (answer, id) => {
+    let groupId = findKey(correct, it => includes(it, id));
+    return { id, answer, groupId };
+  });
   return shuffle(grouped);
 };
 
@@ -82,7 +71,7 @@ export default {
       dragging: false,
       groupsPerRow: get(dragDrop, 'groupsPerRow', DEFAULT_GROUPS_PER_ROW),
       userAnswer: mapValues(this.groups, () => []),
-      answersCollection: formatAnswers(this.answers)
+      answersCollection: formatAnswers(this.answers, this.correct)
     };
   },
   computed: {
@@ -104,27 +93,14 @@ export default {
     },
     isBoxFull() {
       return this.answersCollection.length === 0;
-    },
-    removeClass() {
-      return get(this.options.dragDrop, 'removeClass', 'mdi mdi-close');
     }
   },
   methods: {
-    getResponses(id) {
-      return this.userAnswer[id];
-    },
-    answerClasses(groupId, answerId) {
-      const { correct, disabled } = this;
-      if (!disabled) return;
-      return includes(correct[groupId], answerId)
-        ? 'te-correct'
-        : 'te-incorrect';
-    },
-    removeFromBox(id, answer) {
+    removeFromBox({ response }) {
       if (this.disabled) return;
-      // Remove from box and add to answers array
-      this.userAnswer[id] = this.userAnswer[id].filter(a => a.id !== answer.id);
-      this.answersCollection.push(answer);
+      const { groupId: id } = response;
+      this.userAnswer[id] = this.userAnswer[id].filter(a => a.id !== response.id);
+      this.answersCollection.push(response);
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
@@ -145,7 +121,7 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      this.answersCollection = formatAnswers(this.answers);
+      this.answersCollection = formatAnswers(this.answers, this.correct);
       this.userAnswer = mapValues(this.groups, () => []);
     },
     submission: {
@@ -165,7 +141,8 @@ export default {
     }
   },
   components: {
-    Draggable
+    Draggable,
+    Group
   }
 };
 </script>
@@ -182,63 +159,13 @@ export default {
   }
 }
 
-.group > .box {
-  .ghost, .response {
-    cursor: default;
-    display: inline-block;
-    padding: 5px 20px;
-    margin: 5px;
-  }
-
-  .response {
-    position: relative;
-
-    .btn-close {
-      position: absolute;
-      right: 0;
-      top: 0;
-      margin: 0;
-      padding: 0;
-      font-size: 12px;
-      background-color: transparent;
-      outline: none;
-      box-shadow: none;
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-  }
+.group-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .ghost {
   opacity: .5;
-}
-
-.row.groups {
- display: flex;
- flex-wrap: wrap;
-
-  .group-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    .group-title {
-      display: flex;
-      flex-grow: 2;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .group {
-      height: 250px;
-
-      .box {
-        height: 100%;
-        overflow: scroll;
-      }
-    }
-  }
 }
 </style>
