@@ -15,7 +15,7 @@
 import { extname } from 'path';
 import { Plyr } from 'vue-plyr';
 
-const NOT_NATIVE = /youtu\.?be|vimeo/;
+const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
 
 const CUSTOM_TYPE_MAPPING = {
   ogv: 'ogg'
