@@ -3,12 +3,24 @@
     <span class="form-label">Solution</span>
     <div class="answers">
       <div
-        v-for="({ id, data }) in answers"
-        :key="id"
-        :class="{ selected: isSelected(id) }"
-        @click="toggleAnswerSelection(id)"
-        class="img-container">
-        <img :src="data.url"/>
+        v-for="answer in answers"
+        :key="answer.id"
+        class="answer-container">
+        <div
+          :class="{ selected: isSelected(answer) }"
+          @click="toggleAnswerSelection(answer)"
+          class="img-container">
+          <img :src="answer.data.url"/>
+        </div>
+        <div>
+          <input
+            :checked="isSelected(answer)"
+            :disabled="disabled"
+            @change="toggleAnswerSelection(answer)"
+            class="answers-checkbox"
+            type="checkbox">
+          <span>{{ answer.data.caption }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -16,31 +28,29 @@
 
 <script>
 import filter from 'lodash/filter';
-import includes from 'lodash/includes';
 
 export default {
   props: {
     answers: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    submission: { type: Array, default: () => ([]) }
   },
   data() {
-    return { selectedAnswerIds: [] };
+    return { selectedAnswerIds: this.submission || [] };
   },
   methods: {
-    isSelected(id) {
-      return includes(this.selectedAnswerIds, id);
+    isSelected({ id }) {
+      return this.selectedAnswerIds.includes(id);
     },
     update() {
-      const selectedAnswers = filter(this.answers, ({ id }) => {
-        return this.selectedAnswerIds.includes(id);
-      });
-      this.$emit('update', { userAnswer: selectedAnswers });
+      this.$emit('update', { userAnswer: filter(this.answers, this.isSelected) });
     },
-    toggleAnswerSelection(id) {
+    toggleAnswerSelection(answer) {
       if (this.disabled) return;
-      if (!this.selectedAnswerIds.includes(id)) return this.selectedAnswerIds.push(id);
+      const { id } = answer;
+      if (!this.isSelected(answer)) return this.selectedAnswerIds.push(id);
       const index = this.selectedAnswerIds.indexOf(id);
       if (index !== -1) this.selectedAnswerIds.splice(index, 1);
     }
@@ -53,6 +63,9 @@ export default {
     },
     selectedAnswerIds() {
       this.update();
+    },
+    submission(val) {
+      this.selectedAnswerIds = val || [];
     }
   }
 };
@@ -63,6 +76,12 @@ export default {
   .answers {
     text-align: center;
 
+    .answer-container {
+      display: inline-block;
+      vertical-align: top;
+      width: 40%;
+    }
+
     .img-container {
       display: inline-block;
       margin: 1rem;
@@ -70,7 +89,7 @@ export default {
 
       &.selected {
         padding: 0;
-        border: 5px solid #000;
+        border: 5px solid #337ab7;
       }
 
       img {
