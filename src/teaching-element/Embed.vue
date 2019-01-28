@@ -14,7 +14,7 @@
     <div class="te-embed-toolbar">
       <span
         :class="expanded ? 'mdi-close' : 'mdi-arrow-expand-all'"
-        @click="expanded = !expanded"
+        @click="toggleExpand"
         class="mdi tes-icon">
       </span>
     </div>
@@ -40,6 +40,12 @@ export default {
   computed: {
     embedHeight() {
       return this.expanded ? EXPANDED_HEIGHT : `${this.height}px`;
+    }
+  },
+  methods: {
+    toggleExpand() {
+      this.expanded = !this.expanded;
+      this.showOverlay = false;
     }
   }
 };
