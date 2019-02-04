@@ -43,7 +43,6 @@
 
 <script>
 import Draggable from 'vuedraggable';
-import every from 'lodash/every';
 import get from 'lodash/get';
 import isNumber from 'lodash/isNumber';
 import reduce from 'lodash/reduce';
@@ -82,7 +81,7 @@ export default {
       return isNumber(this.draggingItem);
     },
     isValid() {
-      return every(this.source, { dragged: true });
+      return this.source.every(({ dragged }) => dragged);
     }
   },
   methods: {
