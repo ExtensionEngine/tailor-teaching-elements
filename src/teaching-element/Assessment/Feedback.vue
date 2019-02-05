@@ -48,8 +48,8 @@ export default {
 
       if (!this.feedback) return [];
       return toArray(this.userAnswer)
-        .reduce((acc, it) => {
-          const feedback = this.getData(it);
+        .reduce((acc, it, index) => {
+          const feedback = this.getData(it, index);
           if (feedback.content) acc.push(feedback);
           return acc;
         }, []);
@@ -65,14 +65,13 @@ export default {
       const orderType = order ? order.type : defaults[assessmentType].type;
       return rules[orderType](index);
     },
-    getData(answer) {
+    getData(answer, index) {
       let answerIndex = isBoolean(answer) ? Number(!answer) : answer;
       if (answer.id) answerIndex = answer.id;
-      const feedbackImage = answer.data && answer.data.url
-        ? `<div class="image-container"><img src="${answer.data.url}"/></div>`
-        : '';
-      const content = `${feedbackImage}${this.getFeedbackValue(answerIndex)}`;
-      return { prefix: this.order(answerIndex), content };
+      const prefix = !(answer.data && answer.data.url)
+        ? this.order(answerIndex)
+        : `Image Selection ${index + 1}`;
+      return { prefix, content: this.getFeedbackValue(answerIndex) };
     },
     getFeedbackValue(answerIndex) {
       return this.feedback[answerIndex] ||
