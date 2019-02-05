@@ -71,8 +71,12 @@ export default {
       const feedbackImage = answer.data && answer.data.url
         ? `<div class="image-container"><img src="${answer.data.url}"/></div>`
         : '';
-      const content = `${feedbackImage}${this.feedback[answerIndex]}`;
+      const content = `${feedbackImage}${this.getFeedbackValue(answerIndex)}`;
       return { prefix: this.order(answerIndex), content };
+    },
+    getFeedbackValue(answerIndex) {
+      return this.feedback[answerIndex] ||
+        (includes(this.correct, answerIndex) ? 'Correct' : 'Incorrect');
     }
   }
 };
