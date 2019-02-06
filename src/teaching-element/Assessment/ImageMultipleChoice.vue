@@ -38,7 +38,8 @@ export default {
     submission: { type: Array, default: () => ([]) }
   },
   data() {
-    return { selectedAnswerIds: (this.submission || []).map(it => it.id) };
+    const submission = this.submission;
+    return { selectedAnswerIds: submission ? submission.map(it => it.id) : [] };
   },
   methods: {
     isSelected({ id }) {
@@ -65,7 +66,7 @@ export default {
       this.update();
     },
     submission(answers) {
-      this.selectedAnswerIds = (answers || []).map(it => it.id);
+      this.selectedAnswerIds = answers.map(it => it.id) || [];
     }
   }
 };
