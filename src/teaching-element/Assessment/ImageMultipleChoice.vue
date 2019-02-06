@@ -64,8 +64,8 @@ export default {
     selectedAnswerIds() {
       this.update();
     },
-    submission(val) {
-      this.selectedAnswerIds = val || [];
+    submission(answers) {
+      this.selectedAnswerIds = (answers || []).map(it => it.id);
     }
   }
 };
