@@ -25,8 +25,8 @@
     "correct": ["ghi789", "abc123"],
     "hint": "It is a large statue of a woman holding a torch.",
     "feedback": {
-      "abc123": "That is correct!",
-      "def456": "This answer is incorrect. The image shows the White House."
+      "abc123": "<p>That is correct!</p>",
+      "def456": "<p>This answer is incorrect. The image shows the White House.</p>"
     },
     "question": [{
       "data": {

@@ -75,7 +75,7 @@ export default {
     },
     getFeedbackValue(answerIndex) {
       return this.feedback[answerIndex] ||
-        (includes(this.correct, answerIndex) ? 'Correct' : 'Incorrect');
+        (includes(this.correct, answerIndex) ? '<p>Correct</p>' : '<p>Incorrect</p>');
     }
   }
 };
@@ -95,8 +95,8 @@ $light-gray: #ccc;
   }
 
   .form-label, .feedback-content {
-    margin-bottom: 10px;
-    padding-left: 15px;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
   }
 
   .content-row {
