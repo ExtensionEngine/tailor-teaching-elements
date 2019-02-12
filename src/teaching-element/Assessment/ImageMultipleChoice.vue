@@ -28,6 +28,7 @@
 
 <script>
 import filter from 'lodash/filter';
+import isEmpty from 'lodash/isEmpty';
 
 export default {
   props: {
@@ -46,7 +47,9 @@ export default {
       return this.selectedAnswerIds.includes(id);
     },
     update() {
-      this.$emit('update', { userAnswer: filter(this.answers, this.isSelected) });
+      const userAnswer = filter(this.answers, this.isSelected);
+      this.$emit('validateAnswer', { isValid: !isEmpty(userAnswer) });
+      this.$emit('update', { userAnswer });
     },
     toggleAnswerSelection(answer) {
       if (this.disabled) return;
