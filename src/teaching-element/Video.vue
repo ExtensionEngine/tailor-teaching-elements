@@ -15,7 +15,12 @@
 import { extname } from 'path';
 import { Plyr } from 'vue-plyr';
 
-const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
+const NOT_NATIVE = [
+  'youtube.com',
+  'youtu.be',
+  'vimeo.com',
+  'drive.google.com'
+]
 
 const CUSTOM_TYPE_MAPPING = {
   ogv: 'ogg'
@@ -28,7 +33,14 @@ export default {
   },
   computed: {
     type() {
-      if (NOT_NATIVE.test(this.url)) return { isNative: false };
+      const url = new URL(this.url);
+
+      if (url.host === 'drive.google.com' && url.search.includes('export=download')) {
+        return { isNative: true };
+      }
+
+      if (NOT_NATIVE.includes(url.host)) return { isNative: false };
+
       const ext = extname(this.url).substring(1);
       const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
       return { isNative: true, name };
