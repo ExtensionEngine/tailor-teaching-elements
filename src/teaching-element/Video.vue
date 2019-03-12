@@ -1,19 +1,18 @@
 <template>
   <div class="te-video">
-    <plyr>
+    <vue-plyr>
       <video v-if="type.isNative">
         <source :src="url" :type="type.name"/>
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
       </div>
-    </plyr>
+    </vue-plyr>
   </div>
 </template>
 
 <script>
 import { extname } from 'path';
-import { Plyr } from 'vue-plyr';
 
 const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
 
@@ -33,9 +32,6 @@ export default {
       const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
       return { isNative: true, name };
     }
-  },
-  components: {
-    Plyr
   }
 };
 </script>
