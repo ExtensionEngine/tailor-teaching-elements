@@ -1,6 +1,6 @@
 <template>
   <div class="te-video">
-    <plyr>
+    <plyr ref="plyr">
       <video v-if="type.isNative">
         <source :src="url" :type="type.name"/>
       </video>
