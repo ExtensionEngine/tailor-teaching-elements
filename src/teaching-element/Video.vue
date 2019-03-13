@@ -1,6 +1,6 @@
 <template>
   <div class="te-video">
-    <plyr ref="plyr" :options="playerOptions">
+    <plyr ref="plyr" :options="options">
       <video v-if="type.isNative">
         <source :src="url" :type="type.name"/>
       </video>
@@ -15,12 +15,7 @@
 import { extname } from 'path';
 import { Plyr } from 'vue-plyr';
 
-const NOT_NATIVE = [
-  'youtube.com',
-  'youtu.be',
-  'vimeo.com',
-  'drive.google.com'
-]
+const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
 
 const CUSTOM_TYPE_MAPPING = {
   ogv: 'ogg'
@@ -51,11 +46,17 @@ export default {
         return { isNative: true };
       }
 
-      if (NOT_NATIVE.includes(url.host)) return { isNative: false };
+      if (NOT_NATIVE.test(url.host)) return { isNative: false };
 
       const ext = extname(this.url).substring(1);
       const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
       return { isNative: true, name };
+    },
+    options() {
+      return {
+        ...defaultPlayerOptions,
+        ...this.playerOptions
+      }
     }
   },
   components: {
