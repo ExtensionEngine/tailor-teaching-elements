@@ -1,6 +1,6 @@
 <template>
   <div class="te-video">
-    <plyr ref="plyr">
+    <plyr ref="plyr" :options="playerOptions">
       <video v-if="type.isNative">
         <source :src="url" :type="type.name"/>
       </video>
@@ -26,10 +26,22 @@ const CUSTOM_TYPE_MAPPING = {
   ogv: 'ogg'
 };
 
+const defaultPlayerOptions = {
+  controls: [
+    'play-large',
+    'play',
+    'progress',
+    'volume',
+    'settings',
+    'fullscreen'
+  ]
+}
+
 export default {
   name: 'te-video',
   props: {
-    url: { type: String, required: true }
+    url: { type: String, required: true },
+    playerOptions: { type: Object, default: () => defaultPlayerOptions }
   },
   computed: {
     type() {
