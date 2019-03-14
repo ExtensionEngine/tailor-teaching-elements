@@ -96,7 +96,7 @@ export default {
         chosenClass: 'chosen',
         dragClass: 'drag',
         ghostClass: 'ghost',
-        group: 'tesDragDrop'
+        group: `tesDragDrop-${this._uid}`
       };
     },
     groupsCollection() {
