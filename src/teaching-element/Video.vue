@@ -1,19 +1,19 @@
 <template>
   <div class="te-video">
-    <plyr ref="plyr" :options="options">
+    <plyrue ref="plyr" :options="options">
       <video v-if="type.isNative">
         <source :src="url" :type="type.name"/>
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
       </div>
-    </plyr>
+    </plyrue>
   </div>
 </template>
 
 <script>
 import { extname } from 'path';
-import { Plyr } from 'vue-plyr';
+import { Plyrue } from 'plyrue';
 
 const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
 
