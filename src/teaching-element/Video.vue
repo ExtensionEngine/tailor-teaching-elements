@@ -60,7 +60,7 @@ export default {
     }
   },
   components: {
-    Plyr
+    Plyrue
   }
 };
 </script>
