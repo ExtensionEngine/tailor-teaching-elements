@@ -96,7 +96,7 @@ export default {
         chosenClass: 'chosen',
         dragClass: 'drag',
         ghostClass: 'ghost',
-        group: 'tesDragDrop'
+        group: `tesDragDrop-${this._uid}`
       };
     },
     groupsCollection() {
@@ -131,6 +131,9 @@ export default {
     },
     initializeSubmission(submission) {
       if (!submission) return;
+
+      this.answersCollection = formatAnswers(this.answers);
+      this.userAnswer = mapValues(this.groups, () => []);
       Object.keys(submission).forEach(groupId => {
         submission[groupId].forEach(answerId => {
           const findAnswer = it => it.id === answerId;

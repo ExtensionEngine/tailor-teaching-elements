@@ -3,6 +3,7 @@
     <button
       :disabled="!hasPrevious"
       @click="previous"
+      aria-label="Previous slide"
       class="btn btn-link btn-slide previous">
       <span class="icon"></span>
     </button>
@@ -17,6 +18,7 @@
     <button
       :disabled="!hasNext"
       @click="next"
+      aria-label="Next slide"
       class="btn btn-link btn-slide next">
       <span class="icon"></span>
     </button>

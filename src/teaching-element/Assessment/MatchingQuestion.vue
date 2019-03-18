@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       dragOptions: {
-        group: { name: 'match', pull: 'clone', put: false, revertClone: true },
+        group: { name: `match-${this._uid}`, pull: 'clone', put: false, revertClone: true },
         sort: false
       },
       source: [],
@@ -84,7 +84,7 @@ export default {
   methods: {
     getOptions(item) {
       return {
-        group: { name: 'match', put: item.answers.length < 1 },
+        group: { name: `match-${this._uid}`, put: item.answers.length < 1 },
         sort: false,
         filter: '.disabled'
       };
@@ -172,7 +172,7 @@ export default {
       background-color: transparent;
       border: none;
 
-      .mdi {
+      .mdi-close {
         position: absolute;
         top: 11px;
         right: 17px;
