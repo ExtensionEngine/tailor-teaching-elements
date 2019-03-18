@@ -56,7 +56,7 @@ export default {
       return {
         ...defaultPlayerOptions,
         ...this.playerOptions
-      }
+      };
     }
   },
   components: {
@@ -64,3 +64,4 @@ export default {
   }
 };
 </script>
+
