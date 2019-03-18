@@ -45,7 +45,7 @@ export default {
   methods: {
     toggleExpand() {
       this.expanded = !this.expanded;
-      this.showOverlay = false;
+      if (this.showOverlay) this.showOverlay = false;
     }
   }
 };
