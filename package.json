@@ -45,6 +45,7 @@
     "lodash": "^4.17.11",
     "plyrue": "^1.1.2",
     "quill": "^1.3.6",
+    "sass-web-fonts": "^2.1.0",
     "url-join": "^4.0.0",
     "video.js": "^7.2.2",
     "vue-plyr": "^3.0.0",

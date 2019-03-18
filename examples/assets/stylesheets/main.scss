@@ -1,3 +1,5 @@
+@import '~sass-web-fonts/web-fonts';
+
 // Bootstrap files
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
@@ -8,7 +10,11 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 $mdi-font-path: '~@mdi/font/fonts';
 @import '~@mdi/font/scss/materialdesignicons';
 
-// Roboto font
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500|PT+Serif|PT+Mono');
+// Google Web Fonts
+@import url(web-fonts-url(
+  ('Roboto': (100, 300, 400, 500, 700)),
+  'PT Serif',
+  'PT Mono'
+));
 
 @import 'teaching-elements/all';
