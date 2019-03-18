@@ -79,6 +79,9 @@ export default {
     },
     isDragging() {
       return isNumber(this.draggingItem);
+    },
+    isValid() {
+      return this.source.every(({ dragged }) => dragged);
     }
   },
   methods: {
@@ -146,7 +149,10 @@ export default {
       this.initialize();
       this.update();
     },
-    submission: 'initializeSubmission',
+    isValid(val) {
+      this.$emit('validateAnswer', { isValid: val });
+    },
+    submission: 'initializeSubmission'
   },
   components: { Draggable }
 };
