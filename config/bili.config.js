@@ -1,4 +1,3 @@
-const bubleConfig = require('./buble.config');
 const path = require('path');
 
 // TODO: try `sourcemap` & `open` options once we migrate to latest version
@@ -11,16 +10,16 @@ const visualizer = {
 
 module.exports = {
   name: 'tailor-teaching-elements',
-  moduleName: 'TailorTeachingelements',
+  moduleName: 'TailorTeachingElements',
   format: ['umd', 'umd-min', 'es'],
   plugins: ['vue', 'node-builtins', 'visualizer'],
   postcss: {
     extract: false
   },
   babel: {
-    babelrc: false
+    babelrc: false,
+    extensions: [ 'js', '.vue' ]
   },
-  vue: bubleConfig,
   visualizer,
   alias: {
     '@': path.resolve(__dirname, '../src')
