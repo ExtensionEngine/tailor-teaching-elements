@@ -63,7 +63,7 @@ export default {
 const isRemote = url => /^https?:\/\//.test(url);
 
 function parseUrl(url) {
-  if (isRemote(this.url)) return new URL(url);
+  if (isRemote(url)) return new URL(url);
   const parsedUrl = new URL(location);
   parsedUrl.pathname = url;
   parsedUrl.hash = '';
