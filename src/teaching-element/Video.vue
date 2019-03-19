@@ -15,7 +15,7 @@
 import { extname } from 'path';
 import { Plyrue } from 'plyrue';
 
-const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
+const EMBEDED = /youtu\.?be|vimeo|drive.google/;
 
 const CUSTOM_TYPE_MAPPING = {
   ogv: 'ogg'
@@ -30,7 +30,7 @@ const defaultPlayerOptions = {
     'settings',
     'fullscreen'
   ]
-}
+};
 
 export default {
   name: 'te-video',
@@ -40,13 +40,9 @@ export default {
   },
   computed: {
     type() {
-      const url = new URL(this.url);
+      const url = parseUrl(this.url);
 
-      if (url.host === 'drive.google.com' && url.search.includes('export=download')) {
-        return { isNative: true };
-      }
-
-      if (NOT_NATIVE.test(url.host)) return { isNative: false };
+      if (EMBEDED.test(url.host)) return { isNative: false };
 
       const ext = extname(this.url).substring(1);
       const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
@@ -63,5 +59,14 @@ export default {
     Plyrue
   }
 };
-</script>
 
+const isRemote = url => /^https?:\/\//.test(url);
+
+function parseUrl(url) {
+  if (isRemote(this.url)) return new URL(url);
+  const parsedUrl = new URL(location);
+  parsedUrl.pathname = url;
+  parsedUrl.hash = '';
+  return parsedUrl;
+}
+</script>
