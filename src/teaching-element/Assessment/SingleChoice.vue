@@ -4,23 +4,24 @@
     <ul class="answers">
       <li
         v-for="(answer, index) in answers"
-        :key="index"
-        :class="getAnswerClass(index)">
+        :key="`${index}-${camelCase(answer)}`"
+        :class="setAnswerClass(index)">
         <input
           v-model="userAnswer"
           :value="index"
           :disabled="disabled"
           @change="update"
+          id="id"
           class="answers-radio"
           type="radio">
-        <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer }}</span>
+        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import camelCase from 'lodash/camelCase';
 import { rules } from '../../util/listingType';
 const defaults = { type: 'upper-latin' };
 
@@ -43,18 +44,13 @@ export default {
     }
   },
   methods: {
-    getAnswerClass(index) {
-      const selected = this.isSelected(index) ? 'selected' : '';
+    camelCase,
+    setAnswerClass(index) {
+      const { correct, userAnswer } = this;
+      const selected = index === userAnswer ? 'selected' : '';
       if (!this.disabled || !this.options.setCorrectnessClass) return [selected];
-      return [selected, this.isCorrect(index) ? 'te-correct' : 'te-incorrect'];
-    },
-    isCorrect(index) {
-      const isCorrect = index === this.correct;
-      const isAnswered = index === this.userAnswer;
-      return !(isCorrect^isAnswered);
-    },
-    isSelected(index) {
-      return index === this.userAnswer;
+      const isAnswerCorrect = !(index === correct ^ index === userAnswer);
+      return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
     },
     transform(index) {
       return rules[this.type](index);
