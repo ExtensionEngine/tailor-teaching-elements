@@ -48,7 +48,7 @@ export default {
     setAnswerClass(index) {
       const { correct, userAnswer } = this;
       const selected = index === userAnswer ? 'selected' : '';
-      if (!this.disabled || !this.options.setCorrectnessClass) return [selected];
+      if (!this.disabled || !this.options.enableHighlighting) return [selected];
       const isAnswerCorrect = !(index === correct ^ index === userAnswer);
       return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
     },

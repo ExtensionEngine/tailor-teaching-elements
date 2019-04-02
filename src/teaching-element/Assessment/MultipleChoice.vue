@@ -46,8 +46,7 @@ export default {
     camelCase,
     setAnswerClass(index) {
       const selected = this.userAnswer.includes(index) ? 'selected' : '';
-      if (!this.disabled || !this.options.setCorrectnessClass) return [selected];
-
+      if (!this.disabled || !this.options.enableHighlighting) return [selected];
       return [
         selected,
         this.isAnswerCorrect(index) ? 'te-correct' : 'te-incorrect'
