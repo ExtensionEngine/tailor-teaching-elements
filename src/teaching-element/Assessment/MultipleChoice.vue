@@ -4,25 +4,24 @@
     <ul class="answers">
       <li
         v-for="(answer, index) in answers"
-        :key="index"
-        :class="getAnswerClass(index)">
+        :key="`${index}-${camelCase(answer)}`"
+        :class="setAnswerClass(index)">
         <input
           v-model="userAnswer"
           :disabled="disabled"
           :value="index"
           @change="update"
+          id="id"
           class="answers-checkbox"
           type="checkbox">
-        <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer }}</span>
+        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import includes from 'lodash/includes';
-import isEmpty from 'lodash/isEmpty';
+import camelCase from 'lodash/camelCase';
 import { rules } from '../../util/listingType';
 
 const defaults = { type: 'upper-latin' };
@@ -36,9 +35,7 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data() {
-    return { userAnswer: this.submission || [] };
-  },
+  data: () => ({ userAnswer: this.submission }),
   computed: {
     type() {
       const options = this.options.multipleChoice || defaults;
@@ -46,25 +43,26 @@ export default {
     }
   },
   methods: {
-    getAnswerClass(index) {
-      const selected = this.isSelected(index) ? 'selected' : '';
+    camelCase,
+    setAnswerClass(index) {
+      const selected = this.userAnswer.includes(index) ? 'selected' : '';
       if (!this.disabled || !this.options.setCorrectnessClass) return [selected];
-      return [selected, this.isCorrect(index) ? 'te-correct' : 'te-incorrect'];
+
+      return [
+        selected,
+        this.isAnswerCorrect(index) ? 'te-correct' : 'te-incorrect'
+      ];
     },
-    isCorrect(index) {
-      const isInCorrect = includes(this.correct, index);
-      const isInAnswered = includes(this.userAnswer, index);
-      return !(isInCorrect^isInAnswered);
-    },
-    isSelected(index) {
-      return includes(this.userAnswer, index);
+    isAnswerCorrect(index) {
+      const { correct, userAnswer } = this;
+      return !(userAnswer.includes(index) ^ correct.includes(index));
     },
     transform(index) {
       return rules[this.type](index);
     },
     update() {
       let { userAnswer } = this;
-      userAnswer = isEmpty(userAnswer) ? null : userAnswer.sort();
+      userAnswer = userAnswer.length > 0 ? userAnswer.sort() : null;
       this.$emit('update', { userAnswer });
     }
   },
