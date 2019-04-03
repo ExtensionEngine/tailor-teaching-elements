@@ -71,7 +71,7 @@ export default {
     },
     update() {
       let { userAnswer } = this;
-      userAnswer = userAnswer.length > 0 ? userAnswer.sort() : null;
+      userAnswer = userAnswer.length ? userAnswer.sort() : null;
       this.$emit('update', { userAnswer });
     }
   },
