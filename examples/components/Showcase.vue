@@ -28,7 +28,7 @@ export default {
   props: ['elementType', 'elementSubType'],
   data() {
     return {
-      options: { assessmentType: 'formative' }
+      options: { assessmentType: 'formative', enableHighlighting: true }
     };
   },
   computed: {

@@ -4,17 +4,17 @@
     <ul class="answers">
       <li
         v-for="(answer, index) in answers"
-        :key="`${index}-${camelCase(answer)}`"
-        :class="setAnswerClass(index)">
+        :key="answer.id"
+        :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
+          :id="answer.id"
           :value="index"
           :disabled="disabled"
           @change="update"
-          id="id"
           class="answers-radio"
           type="radio">
-        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
+        <label :for="answer.id">{{ transform(index) }}. {{ answer }}</label>
       </li>
     </ul>
   </div>
@@ -22,6 +22,7 @@
 
 <script>
 import camelCase from 'lodash/camelCase';
+import cuid from 'cuid';
 import { rules } from '../../util/listingType';
 const defaults = { type: 'upper-latin' };
 
@@ -38,6 +39,12 @@ export default {
     return { userAnswer: this.submission };
   },
   computed: {
+    mappedAnswers() {
+      return this.answers.map((answer, index) => ({
+        answer,
+        id: cuid()
+      }));
+    },
     type() {
       const options = this.options.singleChoice || defaults;
       return options.type;
@@ -45,7 +52,7 @@ export default {
   },
   methods: {
     camelCase,
-    setAnswerClass(index) {
+    getAnswerClass(index) {
       const { correct, userAnswer } = this;
       const selected = index === userAnswer ? 'selected' : '';
       if (!this.disabled || !this.options.enableHighlighting) return [selected];

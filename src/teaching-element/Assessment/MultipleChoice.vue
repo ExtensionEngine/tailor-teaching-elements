@@ -3,25 +3,25 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in answers"
-        :key="`${index}-${camelCase(answer)}`"
-        :class="setAnswerClass(index)">
+        v-for="(answer, index) in mappedAnswers"
+        :key="answer.id"
+        :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
+          :id="answer.id"
           :disabled="disabled"
           :value="index"
           @change="update"
-          id="id"
           class="answers-checkbox"
           type="checkbox">
-        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
+        <label :for="answer.id">{{ transform(index) }}. {{ answer.answer }}</label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import camelCase from 'lodash/camelCase';
+import cuid from 'cuid';
 import { rules } from '../../util/listingType';
 
 const defaults = { type: 'upper-latin' };
@@ -35,16 +35,26 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data: () => ({ userAnswer: this.submission }),
+  data() {
+    return {
+      userAnswer: this.submission || []
+    };
+  },
   computed: {
+    mappedAnswers() {
+      return this.answers.map((answer, index) => ({
+        answer,
+        correct: this.correct.includes(index),
+        id: cuid()
+      }));
+    },
     type() {
       const options = this.options.multipleChoice || defaults;
       return options.type;
     }
   },
   methods: {
-    camelCase,
-    setAnswerClass(index) {
+    getAnswerClass(index) {
       const selected = this.userAnswer.includes(index) ? 'selected' : '';
       if (!this.disabled || !this.options.enableHighlighting) return [selected];
       return [
@@ -53,8 +63,8 @@ export default {
       ];
     },
     isAnswerCorrect(index) {
-      const { correct, userAnswer } = this;
-      return !(userAnswer.includes(index) ^ correct.includes(index));
+      const { userAnswer } = this;
+      return !(userAnswer.includes(index) ^ this.mappedAnswers[index].correct);
     },
     transform(index) {
       return rules[this.type](index);
