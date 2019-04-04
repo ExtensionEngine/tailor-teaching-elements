@@ -62,8 +62,8 @@ export default {
         padding: 12px 15px;
 
         * {
-          padding: 0;
           margin: 0;
+          padding: 0;
         }
       }
     }

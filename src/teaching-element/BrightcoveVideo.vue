@@ -160,7 +160,7 @@ function empty(el) {
   .error {
     position: relative;
     height: 100%;
-    background: rgba(0,0,0,.9);
+    background: rgba(0,0,0,0.9);
   }
 
   .error .message {

@@ -71,8 +71,8 @@ export default {
 
 <style lang="scss">
 .carousel {
-  padding: 0 75px;
   position: relative;
+  padding: 0 75px;
 
   .carousel-items {
     margin: 0;
@@ -81,26 +81,26 @@ export default {
   }
 
   .indicators {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
     height: 22px;
     margin: 0;
     padding-left: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
     text-align: center;
     list-style-type: none;
 
     .indicator-item {
-      height: 16px;
-      width: 16px;
-      margin: 0 12px;
       display: inline-block;
       position: relative;
+      width: 16px;
+      height: 16px;
+      margin: 0 12px;
       background-color: #ddd;
-      transition: background-color .3s;
-      border-radius: 50%;
       cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 50%;
 
       &.active {
         background-color: #444;
@@ -109,17 +109,17 @@ export default {
   }
 
   .btn-slide {
-    height: 100%;
-    width: 75px;
     position: absolute;
-    bottom: 0;
     top: 0;
+    bottom: 0;
+    width: 75px;
+    height: 100%;
     z-index: 10;
 
     &:hover, &:focus, &:active {
       background: none;
       box-shadow: none;
-      outline:0;
+      outline: 0;
     }
 
     &[disabled] {

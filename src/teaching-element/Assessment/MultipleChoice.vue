@@ -84,8 +84,8 @@ export default {
 
     .answers-checkbox {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }

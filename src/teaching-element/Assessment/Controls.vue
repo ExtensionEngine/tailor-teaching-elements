@@ -37,8 +37,8 @@ export default {
   cursor: auto;
 
   .btn-submit {
-    padding: 7px 15px;
     min-width: 85px;
+    padding: 7px 15px;
   }
 
   .btn-submit.retake {
