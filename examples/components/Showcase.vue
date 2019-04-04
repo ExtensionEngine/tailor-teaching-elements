@@ -70,16 +70,16 @@ function importAll(r) {
 
 <style lang="scss">
 .presentation {
+  min-height: 350px;
   padding: 20px 40px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .87);
-  min-height: 350px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.87);
   overflow: hidden;
 }
 
 .teaching-element {
-  border: 1px dotted #ccc;
-  padding: 10px 10px;
   margin: 7px 15px;
+  padding: 10px 10px;
+  border: 1px dotted #ccc;
 }
 </style>

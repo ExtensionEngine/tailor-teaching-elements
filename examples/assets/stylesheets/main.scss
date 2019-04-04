@@ -2,12 +2,14 @@
 
 // Bootstrap files
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import '~bootswatch/paper/variables';
 @import '~bootswatch/paper/bootswatch';
 
 // MDI files
 $mdi-font-path: '~@mdi/font/fonts';
+
 @import '~@mdi/font/scss/materialdesignicons';
 
 // Google Web Fonts
@@ -16,5 +18,4 @@ $mdi-font-path: '~@mdi/font/fonts';
   'PT Serif',
   'PT Mono'
 ));
-
 @import 'teaching-elements/all';

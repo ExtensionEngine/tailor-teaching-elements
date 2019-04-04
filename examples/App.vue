@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <navbar @select="select" :elementType="elementType"></navbar>
+    <navbar :elementType="elementType" @select="select"></navbar>
     <div class="container-fluid">
       <showcase
-        @select="select"
         :elementType="elementType"
-        :elementSubType="elementSubType">
+        :elementSubType="elementSubType"
+        @select="select">
       </showcase>
     </div>
   </div>
@@ -44,12 +44,12 @@ export default {
 @import './assets/stylesheets/main';
 
 #app {
-  color: rgba(0, 0, 0, .87);
-  font-family: 'Roboto', 'Georgia', sans-serif;
+  width: 100%;
   height: 100%;
   padding: 100px 200px;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Roboto', 'Georgia', sans-serif;
   text-align: center;
-  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

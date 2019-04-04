@@ -4,9 +4,9 @@
     height: 450px;
   }
 
-   .vjs-error .vjs-error-display:before {
-    font-size: 42px;
-    font-family: "Material Design Icons";
+  .vjs-error .vjs-error-display::before {
     content: "\F026"; // alert
+    font-size: 42px;
+    font-family: "Material Design Icons", sans-serif;
   }
 }

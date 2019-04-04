@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "poi --config config/poi.config.js",
     "clean": "rimraf dist",
-    "lint:js": "eslint --ext .js,.vue src",
-    "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
+    "lint:js": "eslint --ext .js,.vue .",
+    "lint:scss": "stylelint \"./**/*.vue\" \"./**/*.scss\"",
     "lint": "npm run lint:js; npm run lint:scss",
     "prebuild": "npm run clean",
     "build": "bili --config config/bili.config.js",
