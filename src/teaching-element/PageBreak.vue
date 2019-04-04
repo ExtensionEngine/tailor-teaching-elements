@@ -72,7 +72,7 @@ export default {
 
     &.break-hidden {
       height: 1px;
-      cursor:  default;
+      cursor: default;
 
       > span {
         display: none;
@@ -99,7 +99,7 @@ export default {
 .te-break-tooltip {
   position: absolute;
   opacity: 0;
-  transition: opacity .25s ease-in;
+  transition: opacity 0.25s ease-in;
   z-index: 1000;
   cursor: default;
 

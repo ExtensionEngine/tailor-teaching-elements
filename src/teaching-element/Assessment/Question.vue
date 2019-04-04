@@ -34,9 +34,9 @@ export default {
   text-align: left;
 
   .question {
+    padding: 10px;
     font-size: 22px;
     text-align: center;
-    padding: 10px;
   }
 }
 </style>

@@ -55,9 +55,9 @@ export default {
 <style lang="scss">
 .assessment.text-response {
   .answer {
+    margin: 10px 0;
     padding: 10px 0 0 50px;
     font-size: 16px;
-    margin: 10px 0;
   }
 }
 </style>

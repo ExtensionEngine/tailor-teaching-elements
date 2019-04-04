@@ -79,8 +79,8 @@ export default {
 
     .answers-radio {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }

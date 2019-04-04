@@ -160,6 +160,13 @@ export default {
 
 <style lang="scss">
 .assessment.matching-question {
+  .item {
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    background-color: #f5f5f5;
+    border: 1px solid grey;
+  }
+
   .drag-spot {
     margin-bottom: 10px;
     cursor: move;
@@ -171,10 +178,10 @@ export default {
     border: 1px solid grey;
 
     .item {
-      position: relative;
       display: block;
-      padding: 10px 35px 10px 20px;
+      position: relative;
       margin: 5px 0;
+      padding: 10px 35px 10px 20px;
       background-color: transparent;
       border: none;
 
@@ -182,21 +189,14 @@ export default {
         position: absolute;
         top: 11px;
         right: 17px;
-        pointer-events: all;
         cursor: pointer;
+        pointer-events: all;
       }
     }
   }
 
-  .item {
-    display: inline-block;
-    padding: 10px 20px 10px 20px;
-    border: 1px solid grey;
-    background-color: #f5f5f5;
-  }
-
   .dragged {
-     visibility: hidden;
+    visibility: hidden;
   }
 
   .sortable-drag {
@@ -207,8 +207,8 @@ export default {
     }
   }
 
-  .drag-container .sortable-ghost .item, .cloned .item {
-    border: 1px dashed #cccccc;
+  .cloned .item, .drag-container .sortable-ghost .item, {
+    border: 1px dashed #ccc;
   }
 
   .drop-area {

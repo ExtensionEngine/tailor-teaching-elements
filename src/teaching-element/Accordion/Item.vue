@@ -58,32 +58,32 @@ export default {
 
 <style lang="scss">
 .accordion-header {
+  position: relative;
   height: 60px;
   font-size: 16px;
-  text-align: justify;
   cursor: pointer;
-  position: relative;
+  text-align: justify;
 
   .accordion-active & { font-weight: 500; }
 
   .contents {
-    line-height: 34px;
     padding: 12px;
+    line-height: 34px;
 
     .title {
       display: inline-block;
       width: 90%;
       max-width: 90%;
       padding-top: 1px;
-      vertical-align: middle;
       line-height: 1em;
+      vertical-align: middle;
     }
   }
 
   .icon {
     position: absolute;
-    right: 25px;
     top: 50%;
+    right: 25px;
     transform: translateY(-50%);
     font-size: 16px;
   }

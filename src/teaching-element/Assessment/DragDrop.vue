@@ -178,19 +178,23 @@ export default {
   min-height: 100px;
 
   .answer {
-    cursor: default;
     display: inline-block;
-    padding: 10px 20px;
     margin: 0 10px 10px 0;
+    padding: 10px 20px;
+    cursor: default;
   }
+}
+
+.ghost {
+  opacity: 0.5;
 }
 
 .group > .box {
   .ghost, .response {
-    cursor: default;
     display: inline-block;
-    padding: 5px 20px;
     margin: 5px;
+    padding: 5px 20px;
+    cursor: default;
   }
 
   .response {
@@ -198,8 +202,8 @@ export default {
 
     .btn-close {
       position: absolute;
-      right: 0;
       top: 0;
+      right: 0;
       margin: 0;
       padding: 0;
       font-size: 12px;
@@ -214,13 +218,9 @@ export default {
   }
 }
 
-.ghost {
-  opacity: .5;
-}
-
 .row.groups {
- display: flex;
- flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
   .group-container {
     display: flex;
