@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import camelCase from 'lodash/camelCase';
 import cuid from 'cuid';
 import { rules } from '../../util/listingType';
 const defaults = { type: 'upper-latin' };
@@ -51,7 +50,6 @@ export default {
     }
   },
   methods: {
-    camelCase,
     getAnswerClass(index) {
       const { correct, userAnswer } = this;
       const selected = index === userAnswer ? 'selected' : '';
