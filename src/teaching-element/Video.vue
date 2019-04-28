@@ -30,7 +30,7 @@ const defaultPlayerOptions = {
     'settings',
     'fullscreen'
   ]
-}
+};
 
 export default {
   name: 'te-video',
@@ -40,15 +40,14 @@ export default {
   },
   computed: {
     type() {
-      const url = new URL(this.url);
-
-      if (url.host === 'drive.google.com' && url.search.includes('export=download')) {
+      const { host, search, pathname } = new URL(this.url);
+      if (host === 'drive.google.com' && search.includes('export=download')) {
         return { isNative: true };
       }
 
-      if (NOT_NATIVE.test(url.host)) return { isNative: false };
+      if (NOT_NATIVE.test(host)) return { isNative: false };
 
-      const ext = extname(this.url).substring(1);
+      const ext = extname(pathname).substring(1);
       const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
       return { isNative: true, name };
     },
@@ -56,7 +55,7 @@ export default {
       return {
         ...defaultPlayerOptions,
         ...this.playerOptions
-      }
+      };
     }
   },
   components: {
