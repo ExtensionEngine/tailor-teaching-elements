@@ -8,10 +8,10 @@ const visualizer = {
 module.exports = {
   babel: { babelrc: false },
   plugins: {
-    visualizer,
     vue: true,
     'node-builtins': true,
-    alias: { '@': path.resolve(__dirname, '../src') }
+    alias: { '@': path.resolve(__dirname, '../src') },
+    visualizer
   },
   output: {
     extractCSS: false,
