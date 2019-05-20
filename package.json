@@ -3,7 +3,7 @@
   "version": "1.4.0-beta.6",
   "description": "Tailor teaching elements",
   "main": "dist/tailor-teaching-elements.min.umd.js",
-  "module": "dist/tailor-teaching-elements.min.esm.js",
+  "module": "dist/tailor-teaching-elements.esm.js",
   "scripts": {
     "dev": "poi --config config/poi.config.js",
     "clean": "rimraf dist",

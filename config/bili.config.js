@@ -12,7 +12,7 @@ module.exports = {
   plugins: { vue: true, 'node-builtins': true, alias, visualizer },
   output: {
     extractCSS: false,
-    format: ['esm', 'esm-min', 'umd', 'umd-min'],
+    format: ['esm', 'umd', 'umd-min'],
     fileName: 'tailor-teaching-elements[min].[format][ext]',
     moduleName: 'TailorTeachingElements',
     sourceMap: sourcemap
