@@ -16,6 +16,7 @@ import { extname } from 'path';
 import { Plyrue } from 'plyrue';
 
 const MIMETYPE = {
+  m4v: 'video/mp4',
   ogv: 'video/ogg'
 };
 
