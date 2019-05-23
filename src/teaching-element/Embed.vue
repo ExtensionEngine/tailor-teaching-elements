@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 const EXPANDED_HEIGHT = '98vh';
 
 export default {

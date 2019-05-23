@@ -1,27 +1,41 @@
-const path = require('path');
+'use strict';
 
-// TODO: try `sourcemap` & `open` options once we migrate to latest version
-//       of rollup-plugin-visualizer which is currently locked due to older
-//       rollup version used by bili
-const visualizer = {
-  // sourcemap: true,
-  // open: true
+const path = require('path');
+const { name: filename, config: { moduleName } } = require('../package');
+
+const sourceDir = path.resolve(__dirname, '../src');
+const sourceMap = true;
+
+const babel = {
+  babelrc: false,
+  runtimeHelpers: true,
+  sourceMap
 };
 
+const alias = {
+  '@': sourceDir
+};
+
+// NOTE: ``--open'' flag blocks build process
+// https://github.com/btd/rollup-plugin-visualizer/issues/27
+const visualizer = {
+  sourcemap: sourceMap
+};
+
+/** @type {import('bili').Config} */
 module.exports = {
-  name: 'tailor-teaching-elements',
-  moduleName: 'TailorTeachingElements',
-  format: ['umd', 'umd-min', 'es'],
-  plugins: ['vue', 'node-builtins', 'visualizer'],
-  postcss: {
-    extract: false
+  input: { [filename]: sourceDir },
+  plugins: {
+    'node-builtins': true,
+    vue: true,
+    babel,
+    alias,
+    visualizer
   },
-  babel: {
-    babelrc: false,
-    extensions: [ 'js', '.vue' ]
-  },
-  visualizer,
-  alias: {
-    '@': path.resolve(__dirname, '../src')
+  output: {
+    extractCSS: false,
+    format: ['esm', 'umd', 'umd-min'],
+    moduleName,
+    sourceMap
   }
 };

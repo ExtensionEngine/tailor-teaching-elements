@@ -1,8 +1,8 @@
 <template>
   <div class="te-video">
-    <plyrue ref="plyr" :options="options">
-      <video v-if="type.isNative">
-        <source :src="url" :type="type.name"/>
+    <plyrue :options="options">
+      <video v-if="video.native">
+        <source :src="video.url" :type="video.mime">
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
@@ -15,11 +15,16 @@
 import { extname } from 'path';
 import { Plyrue } from 'plyrue';
 
-const EMBEDED = /youtu\.?be|vimeo|drive.google/;
-
-const CUSTOM_TYPE_MAPPING = {
-  ogv: 'ogg'
+const MIMETYPE = {
+  m4v: 'video/mp4',
+  ogv: 'video/ogg'
 };
+
+const VIDEO_HOSTING = [
+  /youtu(?:\.be|be\.com)$/,
+  /vimeo\.com$/,
+  /drive\.google\.com$/
+];
 
 const defaultPlayerOptions = {
   controls: [
@@ -39,34 +44,28 @@ export default {
     playerOptions: { type: Object, default: () => defaultPlayerOptions }
   },
   computed: {
-    type() {
-      const url = parseUrl(this.url);
-
-      if (EMBEDED.test(url.host)) return { isNative: false };
-
-      const ext = extname(this.url).substring(1);
-      const name = `video/${CUSTOM_TYPE_MAPPING[ext] || ext}`;
-      return { isNative: true, name };
+    video: ({ url }) => {
+      url = new URL(url);
+      if (isDownloadLink(url)) return { url: url.href, native: true, mime: 'video/*' };
+      if (isShareLink(url)) return { url: url.href, native: false };
+      return { url: url.href, native: true, mime: mimetype(url) };
     },
-    options() {
-      return {
-        ...defaultPlayerOptions,
-        ...this.playerOptions
-      };
-    }
+    options: ({ playerOptions }) => ({ ...defaultPlayerOptions, ...playerOptions })
   },
-  components: {
-    Plyrue
-  }
+  components: { Plyrue }
 };
 
-const isRemote = url => /^https?:\/\//.test(url);
+function isDownloadLink({ hostname, searchParams }) {
+  return hostname === 'drive.google.com' && searchParams.get('export') === 'download';
+}
 
-function parseUrl(url) {
-  if (isRemote(url)) return new URL(url);
-  const parsedUrl = new URL(location);
-  parsedUrl.pathname = url;
-  parsedUrl.hash = '';
-  return parsedUrl;
+function isShareLink({ hostname }) {
+  return VIDEO_HOSTING.some(re => re.test(hostname));
+}
+
+function mimetype({ pathname }) {
+  const ext = extname(pathname).replace(/^\./, '');
+  if (MIMETYPE[ext]) return MIMETYPE[ext];
+  return `video/${ext}`;
 }
 </script>
