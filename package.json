@@ -33,6 +33,9 @@
     "url": "https://github.com/ExtensionEngine"
   },
   "license": "MIT",
+  "config": {
+    "moduleName": "TailorTeachingElements"
+  },
   "browserslist": [
     "last 2 versions",
     "ie 11"

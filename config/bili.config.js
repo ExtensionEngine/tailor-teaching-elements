@@ -1,9 +1,8 @@
 'use strict';
 
 const path = require('path');
+const { name: filename, config: { moduleName } } = require('../package');
 
-const filename = 'tailor-teaching-elements';
-const moduleName = 'TailorTeachingElements';
 const sourceDir = path.resolve(__dirname, '../src');
 const sourceMap = true;
 
