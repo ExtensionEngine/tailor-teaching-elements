@@ -25,6 +25,7 @@ const visualizer = {
 /** @type {import('bili').Config} */
 module.exports = {
   input: { [filename]: sourceDir },
+  bundleNodeModules: ['style-inject', 'vue-runtime-helpers'],
   plugins: {
     'node-builtins': true,
     vue: true,
