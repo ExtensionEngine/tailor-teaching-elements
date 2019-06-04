@@ -3,18 +3,18 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in answers"
-        :key="answer.id"
+        v-for="({answer, id}, index) in mappedAnswers"
+        :key="id"
         :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
-          :id="answer.id"
+          :id="id"
           :value="index"
           :disabled="disabled"
           @change="update"
           class="answers-radio"
           type="radio">
-        <label :for="answer.id">{{ transform(index) }}. {{ answer }}</label>
+        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
       </li>
     </ul>
   </div>
@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     mappedAnswers() {
-      return this.answers.map((answer, index) => ({
+      return this.answers.map(answer => ({
         answer,
         id: cuid()
       }));
