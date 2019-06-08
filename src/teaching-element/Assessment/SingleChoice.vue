@@ -3,7 +3,7 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="({answer, id}, index) in mappedAnswers"
+        v-for="({ answer, id }, index) in mappedAnswers"
         :key="id"
         :class="getAnswerClass(index)">
         <input
@@ -51,9 +51,9 @@ export default {
   },
   methods: {
     getAnswerClass(index) {
-      const { correct, userAnswer } = this;
+      const { correct, userAnswer, disabled, options } = this;
       const selected = index === userAnswer ? 'selected' : '';
-      if (!this.disabled || !this.options.enableHighlighting) return [selected];
+      if (!disabled || !options.enableHighlighting) return [selected];
       const isAnswerCorrect = !(index === correct ^ index === userAnswer);
       return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
     },
