@@ -16,7 +16,7 @@
             v-for="({ dragged, value }, index) in source"
             :key="index"
             class="drag-spot">
-            <span :class="{ dragged }" class="item">{{ value }}</span>
+            <span v-if="!dragged" :class="{ dragged }" class="item">{{ value }}</span>
           </div>
         </draggable>
       </div>
@@ -54,6 +54,7 @@ export default {
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
     headings: { type: Object, required: true },
+    options: { type: Object, default: () => ({}) },
     premises: { type: Array, required: true },
     responses: { type: Array, required: true },
     retake: { type: Boolean, default: false },
@@ -117,6 +118,17 @@ export default {
     draggable(item) {
       return get(item.answers, '0.value', '');
     },
+    retakeIncorrect() {
+      this.target.forEach(response => {
+        const key = response.answers[0].key;
+        if (this.correct[key] !== response.key) {
+          this.source.map(it => {
+            if (it.key === this.correct[key]) it.dragged = false;
+          });
+          this.remove(response);
+        }
+      });
+    },
     update() {
       const reducer = (acc, it) => {
         if (it.answers.length) acc[it.answers[0].key] = it.key;
@@ -146,8 +158,11 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      this.initialize();
-      this.update();
+      if (this.options.partialRetake) this.retakeIncorrect();
+      else {
+        this.initialize();
+        this.update();
+      }
     },
     isValid(val) {
       this.$emit('validateAnswer', { isValid: val });

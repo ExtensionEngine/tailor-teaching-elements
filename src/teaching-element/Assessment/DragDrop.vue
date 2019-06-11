@@ -82,7 +82,9 @@ export default {
       dragging: false,
       groupsPerRow: get(dragDrop, 'groupsPerRow', DEFAULT_GROUPS_PER_ROW),
       userAnswer: mapValues(this.groups, () => []),
-      answersCollection: formatAnswers(this.answers)
+      answersCollection: formatAnswers(this.answers),
+      incorrect: [],
+      correctAnswers: {}
     };
   },
   computed: {
@@ -126,6 +128,25 @@ export default {
       this.userAnswer[id] = this.userAnswer[id].filter(a => a.id !== answer.id);
       this.answersCollection.push(answer);
     },
+    retakeIncorrect() {
+      Object.keys(this.userAnswer).forEach(groupId => {
+        let wrongAnswers = [];
+        this.userAnswer[groupId].forEach((answer) => {
+          if (!includes(this.correct[groupId], answer.id)) {
+            wrongAnswers.push(answer.id);
+            this.answersCollection.push(answer);
+          }
+        });
+        this.removeFromGroup(wrongAnswers, groupId);
+      });
+    },
+    removeFromGroup(wrongAnswers, groupId) {
+      if (!wrongAnswers.length) return;
+      wrongAnswers.forEach(answer => {
+        const index = this.userAnswer[groupId].map(e => e.id).indexOf(answer);
+        this.userAnswer[groupId].splice(index, 1);
+      });
+    },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
     },
@@ -148,8 +169,11 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      this.answersCollection = formatAnswers(this.answers);
-      this.userAnswer = mapValues(this.groups, () => []);
+      if (this.options.partialRetake) this.retakeIncorrect();
+      else {
+        this.answersCollection = formatAnswers(this.answers);
+        this.userAnswer = mapValues(this.groups, () => []);
+      }
     },
     submission: {
       handler: 'initializeSubmission',
