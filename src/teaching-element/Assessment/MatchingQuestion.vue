@@ -16,7 +16,7 @@
             v-for="({ dragged, value }, index) in source"
             :key="index"
             class="drag-spot">
-            <span v-if="!dragged" :class="{ dragged }" class="item">{{ value }}</span>
+            <span v-if="!dragged" class="item">{{ value }}</span>
           </div>
         </draggable>
       </div>
@@ -122,7 +122,7 @@ export default {
       this.target.forEach(response => {
         const key = response.answers[0].key;
         if (this.correct[key] !== response.key) {
-          this.source.map(it => {
+          this.source.forEach(it => {
             if (it.key === this.correct[key]) it.dragged = false;
           });
           this.remove(response);
@@ -158,11 +158,9 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      if (this.options.partialRetake) this.retakeIncorrect();
-      else {
-        this.initialize();
-        this.update();
-      }
+      if (this.options.partialRetake) return this.retakeIncorrect();
+      this.initialize();
+      this.update();
     },
     isValid(val) {
       this.$emit('validateAnswer', { isValid: val });
