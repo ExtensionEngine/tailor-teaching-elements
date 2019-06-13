@@ -83,6 +83,9 @@ export default {
     },
     isValid() {
       return this.source.every(({ dragged }) => dragged);
+    },
+    canPartiallyRetake() {
+      return get(this.options.matchingQuestions, 'partialRetake', false);
     }
   },
   methods: {
@@ -104,11 +107,11 @@ export default {
       this.source[this.draggingItem].dragged = true;
       this.update();
     },
-    answerClasses(item) {
-      if (!this.disabled) return;
-      return item.key === this.correct[item.answers[0].key]
-        ? 'te-correct'
-        : 'te-incorrect';
+    answerClasses({ key, answers }) {
+      const { disabled, correct } = this;
+      if (!disabled) return;
+      const isCorrect = key === correct[answers[0].key];
+      return isCorrect ? 'te-correct' : 'te-incorrect';
     },
     remove(item) {
       let premise = item.answers[0];
@@ -118,20 +121,16 @@ export default {
     draggable(item) {
       return get(item.answers, '0.value', '');
     },
-    retakeIncorrect() {
-      this.target.forEach(response => {
+    partiallyRetake() {
+      const { correct, target } = this;
+      target.forEach(response => {
         const key = response.answers[0].key;
-        if (this.correct[key] !== response.key) {
-          this.source.forEach(it => {
-            if (it.key === this.correct[key]) it.dragged = false;
-          });
-          this.remove(response);
-        }
+        if (correct[key] !== response.key) this.remove(response);
       });
     },
     update() {
-      const reducer = (acc, it) => {
-        if (it.answers.length) acc[it.answers[0].key] = it.key;
+      const reducer = (acc, { answers, key }) => {
+        if (answers.length) acc[answers[0].key] = key;
         return acc;
       };
       this.$emit('update', { userAnswer: reduce(this.target, reducer, {}) });
@@ -158,7 +157,7 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      if (this.options.partialRetake) return this.retakeIncorrect();
+      if (this.canPartiallyRetake) return this.partiallyRetake();
       this.initialize();
       this.update();
     },
