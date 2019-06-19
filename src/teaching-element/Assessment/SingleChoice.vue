@@ -3,11 +3,11 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in answers"
+        v-for="(answer, index) in shuffledAnswers"
         :key="index"
         :class="{ selected: isSelected(index) }">
         <input
-          v-model="userAnswer"
+          v-model="unorderedAnswer"
           :value="index"
           :disabled="disabled"
           @change="update"
@@ -22,6 +22,7 @@
 
 <script>
 import { rules } from '../../util/listingType';
+import shuffle from 'lodash/shuffle';
 const defaults = { type: 'upper-latin' };
 
 export default {
@@ -33,20 +34,28 @@ export default {
     submission: { type: Number, default: null }
   },
   data() {
-    return { userAnswer: this.submission };
+    return {
+      userAnswer: this.submission,
+      unorderedAnswer: this.submission
+    };
   },
   computed: {
     type() {
       const options = this.options.singleChoice || defaults;
       return options.type;
+    },
+    shuffledAnswers() {
+      return shuffle(this.answers);
     }
   },
   methods: {
     update() {
+      let { shuffledAnswers, unorderedAnswer, answers } = this;
+      this.userAnswer = answers.indexOf(shuffledAnswers[unorderedAnswer]);
       this.$emit('update', { userAnswer: this.userAnswer });
     },
     isSelected(index) {
-      return index === this.userAnswer;
+      return index === this.unorderedAnswer;
     },
     transform(index) {
       return rules[this.type](index);
@@ -55,6 +64,7 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
+      this.unorderedAnswer = null;
       this.userAnswer = null;
       this.update();
     },

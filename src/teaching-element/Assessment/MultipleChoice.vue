@@ -3,12 +3,12 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in answers"
+        v-for="(answer, index) in randomAnswers"
         :key="index"
-        :class="{ selected: isSelected(index) }">
+        :class="{ selected: isSelected(answer) }">
         <input
-          v-model="userAnswer"
-          :value="index"
+          v-model="unorderedAnswer"
+          :value="answer"
           :disabled="disabled"
           @change="update"
           class="answers-checkbox"
@@ -23,6 +23,7 @@
 <script>
 import includes from 'lodash/includes';
 import isEmpty from 'lodash/isEmpty';
+import shuffle from 'lodash/shuffle';
 import { rules } from '../../util/listingType';
 
 const defaults = { type: 'upper-latin' };
@@ -36,22 +37,32 @@ export default {
     submission: { type: Array, default: () => ([]) }
   },
   data() {
-    return { userAnswer: this.submission || [] };
+    return {
+      userAnswer: this.submission || [],
+      unorderedAnswer: this.submission || []
+    };
   },
   computed: {
     type() {
       const options = this.options.multipleChoice || defaults;
       return options.type;
+    },
+    randomAnswers() {
+      return shuffle(this.answers);
     }
   },
   methods: {
     update() {
+      this.userAnswer = [];
+      this.unorderedAnswer.forEach(a => {
+        this.userAnswer.push(this.answers.indexOf(a));
+      });
       let { userAnswer } = this;
       userAnswer = isEmpty(userAnswer) ? null : userAnswer.sort();
       this.$emit('update', { userAnswer });
     },
-    isSelected(index) {
-      return includes(this.userAnswer, index);
+    isSelected(answer) {
+      return includes(this.unorderedAnswer, answer);
     },
     transform(index) {
       return rules[this.type](index);
@@ -61,6 +72,7 @@ export default {
     retake(val) {
       if (!val) return;
       this.userAnswer = [];
+      this.unorderedAnswer = [];
       this.update();
     },
     submission(val) {
