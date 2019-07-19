@@ -3,9 +3,9 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in shuffledAnswers"
+        v-for="(answer, index) in availableAnswers"
         :key="index"
-        :class="{ selected: isSelected(index) }">
+        :class="{ selected: isSelected(answer.key) }">
         <input
           v-model="unorderedAnswer"
           :value="index"
@@ -14,7 +14,7 @@
           class="answers-radio"
           type="radio">
         <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer }}</span>
+        <span>{{ answer.value }}</span>
       </li>
     </ul>
   </div>
@@ -22,7 +22,10 @@
 
 <script>
 import { rules } from '../../util/listingType';
+
+import get from 'lodash/get';
 import shuffle from 'lodash/shuffle';
+
 const defaults = { type: 'upper-latin' };
 
 export default {
@@ -36,7 +39,8 @@ export default {
   data() {
     return {
       userAnswer: this.submission,
-      unorderedAnswer: this.submission
+      unorderedAnswer: this.submission,
+      availableAnswers: []
     };
   },
   computed: {
@@ -44,15 +48,14 @@ export default {
       const options = this.options.singleChoice || defaults;
       return options.type;
     },
-    shuffledAnswers() {
-      return shuffle(this.answers);
+    isRandom() {
+      return get(this.options.singeChoice, 'random', false);
     }
   },
   methods: {
     update() {
-      let { shuffledAnswers, unorderedAnswer, answers } = this;
-      this.userAnswer = answers.indexOf(shuffledAnswers[unorderedAnswer]);
-      this.$emit('update', { userAnswer: this.userAnswer });
+      let { availableAnswers, unorderedAnswer } = this;
+      this.$emit('update', { userAnswer: availableAnswers[unorderedAnswer].key });
     },
     isSelected(index) {
       return index === this.unorderedAnswer;
@@ -60,6 +63,12 @@ export default {
     transform(index) {
       return rules[this.type](index);
     }
+  },
+  created() {
+    this.answers.forEach((value, key) => {
+      this.availableAnswers.push({ value: value, key: key });
+    });
+    if (this.isRandom) this.availableAnswers = shuffle(this.availableAnswers);
   },
   watch: {
     retake(val) {

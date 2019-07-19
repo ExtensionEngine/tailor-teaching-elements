@@ -3,28 +3,29 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in randomAnswers"
+        v-for="(answer, index) in availableAnswers"
         :key="index"
-        :class="{ selected: isSelected(answer) }">
+        :class="{ selected: isSelected(answer.key) }">
         <input
           v-model="unorderedAnswer"
-          :value="answer"
+          :value="index"
           :disabled="disabled"
           @change="update"
           class="answers-checkbox"
           type="checkbox">
         <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer }}</span>
+        <span>{{ answer.value }}</span>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import includes from 'lodash/includes';
-import isEmpty from 'lodash/isEmpty';
-import shuffle from 'lodash/shuffle';
 import { rules } from '../../util/listingType';
+
+import get from 'lodash/get';
+import includes from 'lodash/includes';
+import shuffle from 'lodash/shuffle';
 
 const defaults = { type: 'upper-latin' };
 
@@ -34,12 +35,14 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    submission: { type: Array, default: () => ([]) }
+    submission: { type: Array, default: () => ([]) },
+    correct: { type: Array, default: () => ([]) }
   },
   data() {
     return {
       userAnswer: this.submission || [],
-      unorderedAnswer: this.submission || []
+      unorderedAnswer: this.submission || [],
+      availableAnswers: []
     };
   },
   computed: {
@@ -47,19 +50,20 @@ export default {
       const options = this.options.multipleChoice || defaults;
       return options.type;
     },
-    randomAnswers() {
-      return shuffle(this.answers);
+    isRandom() {
+      return get(this.options.multipleChoice, 'random', false);
+    },
+    sortedAnswers() {
+      let answers = [];
+      this.unorderedAnswer.forEach(val => {
+        answers.push(this.availableAnswers[val].key);
+      });
+      return !answers.length ? null : answers.sort();
     }
   },
   methods: {
     update() {
-      this.userAnswer = [];
-      this.unorderedAnswer.forEach(a => {
-        this.userAnswer.push(this.answers.indexOf(a));
-      });
-      let { userAnswer } = this;
-      userAnswer = isEmpty(userAnswer) ? null : userAnswer.sort();
-      this.$emit('update', { userAnswer });
+      this.$emit('update', { userAnswer: this.sortedAnswers });
     },
     isSelected(answer) {
       return includes(this.unorderedAnswer, answer);
@@ -67,6 +71,12 @@ export default {
     transform(index) {
       return rules[this.type](index);
     }
+  },
+  created() {
+    this.answers.forEach((value, key) => {
+      this.availableAnswers.push({ value: value, key: key });
+    });
+    if (this.isRandom) this.availableAnswers = shuffle(this.availableAnswers);
   },
   watch: {
     retake(val) {
