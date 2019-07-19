@@ -35,8 +35,7 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    submission: { type: Array, default: () => ([]) },
-    correct: { type: Array, default: () => ([]) }
+    submission: { type: Array, default: () => ([]) }
   },
   data() {
     return {
