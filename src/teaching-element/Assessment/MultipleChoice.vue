@@ -5,7 +5,7 @@
       <li
         v-for="(answer, index) in availableAnswers"
         :key="index"
-        :class="{ selected: isSelected(answer.key) }">
+        :class="{ selected: isSelected(index) }">
         <input
           v-model="unorderedAnswer"
           :value="index"
@@ -46,11 +46,11 @@ export default {
   },
   computed: {
     type() {
-      const options = this.options.multipleChoice || defaults;
-      return options.type;
+      const type = this.options.multipleChoice.type || defaults.type;
+      return type;
     },
     isRandom() {
-      return get(this.options.multipleChoice, 'random', false);
+      return get(this.options.multipleChoice, 'isRandom', false);
     },
     sortedAnswers() {
       let answers = [];
@@ -64,8 +64,8 @@ export default {
     update() {
       this.$emit('update', { userAnswer: this.sortedAnswers });
     },
-    isSelected(answer) {
-      return includes(this.unorderedAnswer, answer);
+    isSelected(index) {
+      return includes(this.unorderedAnswer, index);
     },
     transform(index) {
       return rules[this.type](index);
