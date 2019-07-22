@@ -44,7 +44,7 @@ export default {
       return defaults;
     },
     type() {
-      return this.MCOptions.type;
+      return this.SCOptions.type;
     }
   },
   methods: {
