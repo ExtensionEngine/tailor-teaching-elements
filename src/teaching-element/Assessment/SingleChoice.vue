@@ -36,9 +36,15 @@ export default {
     return { userAnswer: this.submission };
   },
   computed: {
+    SCOptions() {
+      const { options } = this;
+      if (options.singleChoice && options.singleChoice.type) {
+        return { ...options.singleChoice, ...defaults };
+      }
+      return defaults;
+    },
     type() {
-      const options = this.options.singleChoice || defaults;
-      return options.type || defaults.type;
+      return this.MCOptions.type;
     }
   },
   methods: {
