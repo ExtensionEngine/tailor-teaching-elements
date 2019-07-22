@@ -40,9 +40,10 @@ export default {
   },
   computed: {
     MCOptions() {
-      const { options } = this;
-      if (options.multipleChoice && options.multipleChoice.type) {
-        return { ...options.multipleChoice, ...defaults };
+      const { multipleChoice } = this.options;
+      if (multipleChoice) {
+        if (!multipleChoice.type) return { ...multipleChoice, ...defaults };
+        return multipleChoice;
       }
       return defaults;
     },

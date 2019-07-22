@@ -37,9 +37,10 @@ export default {
   },
   computed: {
     SCOptions() {
-      const { options } = this;
-      if (options.singleChoice && options.singleChoice.type) {
-        return { ...options.singleChoice, ...defaults };
+      const { singleChoice } = this.options;
+      if (singleChoice) {
+        if (!singleChoice.type) return { ...singleChoice, ...defaults };
+        return singleChoice;
       }
       return defaults;
     },
