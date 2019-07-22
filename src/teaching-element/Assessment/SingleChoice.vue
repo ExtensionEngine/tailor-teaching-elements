@@ -38,7 +38,7 @@ export default {
   computed: {
     type() {
       const options = this.options.singleChoice || defaults;
-      return options.type;
+      return options.type || defaults.type;
     }
   },
   methods: {
