@@ -39,8 +39,7 @@ export default {
     };
   },
   computed: {
-    config: vm => ({ ...defaults, ...vm.options.trueFalse }),
-    type: vm => vm.config.type
+    config: vm => ({ ...defaults, ...vm.options.trueFalse })
   },
   methods: {
     update() {
@@ -50,7 +49,7 @@ export default {
       return val === this.userAnswer;
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   watch: {

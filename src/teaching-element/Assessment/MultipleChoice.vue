@@ -39,8 +39,7 @@ export default {
     return { userAnswer: this.submission || [] };
   },
   computed: {
-    config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
-    type: vm => vm.config.type
+    config: vm => ({ ...defaults, ...vm.options.multipleChoice })
   },
   methods: {
     update() {
@@ -52,7 +51,7 @@ export default {
       return includes(this.userAnswer, index);
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   watch: {

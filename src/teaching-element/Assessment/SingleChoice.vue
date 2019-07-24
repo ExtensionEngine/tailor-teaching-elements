@@ -37,8 +37,7 @@ export default {
     return { userAnswer: this.submission };
   },
   computed: {
-    config: vm => ({ ...defaults, ...vm.options.singleChoice }),
-    type: vm => vm.config.type
+    config: vm => ({ ...defaults, ...vm.options.singleChoice })
   },
   methods: {
     update() {
@@ -48,7 +47,7 @@ export default {
       return index === this.userAnswer;
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   watch: {

@@ -83,7 +83,6 @@ export default {
   },
   computed: {
     config: vm => ({ ...defaults, ...vm.options.dragDrop }),
-    type: vm => vm.config.type,
     colWidth: vm => 12 / vm.config.groupsPerRow,
     draggableOptions() {
       return {
