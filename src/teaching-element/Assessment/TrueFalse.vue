@@ -22,6 +22,7 @@
 
 <script>
 import { rules } from '../../util/listingType';
+
 const defaults = { type: 'upper-latin' };
 
 export default {
@@ -38,10 +39,8 @@ export default {
     };
   },
   computed: {
-    type() {
-      const options = this.options.trueFalse || defaults;
-      return options.type;
-    }
+    config: vm => ({ ...defaults, ...vm.options.trueFalse }),
+    type: vm => vm.config.type
   },
   methods: {
     update() {

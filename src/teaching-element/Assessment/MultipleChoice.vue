@@ -39,12 +39,8 @@ export default {
     return { userAnswer: this.submission || [] };
   },
   computed: {
-    MCOptions() {
-      return { ...defaults, ...this.options.multipleChoice };
-    },
-    type() {
-      return this.MCOptions.type;
-    }
+    config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
+    type: vm => vm.config.type
   },
   methods: {
     update() {
