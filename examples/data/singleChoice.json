@@ -1,12 +1,13 @@
 {
   "id": 2,
   "data": {
-    "answers": ["answer 1 ","answer 2"],
+    "answers": ["answer 1 ","answer 2", "answer 3"],
     "correct": 1,
     "hint": "Single choice hint",
     "feedback": {
       "0": "answer 1 feedback",
-      "1": "answer 2 feedback"
+      "1": "answer 2 feedback",
+      "2": "answer 3 feedback"
     },
     "question": [{
       "data": {
