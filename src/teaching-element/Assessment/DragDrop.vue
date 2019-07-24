@@ -40,7 +40,7 @@
                 v-if="!disabled"
                 @click="removeFromBox(id, response)"
                 class="btn btn-close">
-                <span :class="removeClass"></span>
+                <span :class="config.removeClass"></span>
               </button>
             </div>
           </draggable>
@@ -52,7 +52,6 @@
 
 <script>
 import Draggable from 'vuedraggable';
-import get from 'lodash/get';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
@@ -63,7 +62,7 @@ const formatAnswers = answers => {
   return shuffle(grouped);
 };
 
-const DEFAULT_GROUPS_PER_ROW = 3;
+const defaults = { groupsPerRow: 3, removeClass: 'mdi mdi-close' };
 
 export default {
   props: {
@@ -76,19 +75,15 @@ export default {
     submission: { type: Object, default: () => ({}) }
   },
   data() {
-    const { dragDrop } = this.options;
-
     return {
       dragging: false,
-      groupsPerRow: get(dragDrop, 'groupsPerRow', DEFAULT_GROUPS_PER_ROW),
       userAnswer: mapValues(this.groups, () => []),
       answersCollection: formatAnswers(this.answers)
     };
   },
   computed: {
-    colWidth() {
-      return 12 / this.groupsPerRow;
-    },
+    config: vm => ({ ...defaults, ...vm.options.dragDrop }),
+    colWidth: vm => 12 / vm.config.groupsPerRow,
     draggableOptions() {
       return {
         animation: 150,
@@ -104,9 +99,6 @@ export default {
     },
     isBoxFull() {
       return this.answersCollection.length === 0;
-    },
-    removeClass() {
-      return get(this.options.dragDrop, 'removeClass', 'mdi mdi-close');
     }
   },
   methods: {

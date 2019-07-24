@@ -21,13 +21,11 @@
 </template>
 
 <script>
-import { rules } from '../../util/listingType';
-
-import get from 'lodash/get';
 import includes from 'lodash/includes';
+import { rules } from '../../util/listingType';
 import shuffle from 'lodash/shuffle';
 
-const defaults = { type: 'upper-latin' };
+const defaults = { type: 'upper-latin', isRandom: false };
 
 export default {
   props: {
@@ -45,15 +43,9 @@ export default {
     };
   },
   computed: {
-    type() {
-      const type = this.options.multipleChoice.type || defaults.type;
-      return type;
-    },
-    isRandom() {
-      return get(this.options.multipleChoice, 'isRandom', false);
-    },
+    config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
     sortedAnswers() {
-      let answers = [];
+      const answers = [];
       this.unorderedAnswer.forEach(val => {
         answers.push(this.availableAnswers[val].key);
       });
@@ -68,14 +60,14 @@ export default {
       return includes(this.unorderedAnswer, index);
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   created() {
     this.answers.forEach((value, key) => {
       this.availableAnswers.push({ value: value, key: key });
     });
-    if (this.isRandom) this.availableAnswers = shuffle(this.availableAnswers);
+    if (this.config.isRandom) this.availableAnswers = shuffle(this.availableAnswers);
   },
   watch: {
     retake(val) {
