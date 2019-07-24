@@ -3,18 +3,18 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in availableAnswers"
-        :key="index"
-        :class="{ selected: isSelected(index) }">
+        v-for="({ value, key }, index) in choices"
+        :key="key"
+        :class="{ selected: isSelected(key) }">
         <input
-          v-model="unorderedAnswer"
-          :value="index"
+          v-model="userAnswer"
+          :value="key"
           :disabled="disabled"
           @change="update"
           class="answers-checkbox"
           type="checkbox">
         <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer.value }}</span>
+        <span>{{ value }}</span>
       </li>
     </ul>
   </div>
@@ -37,43 +37,32 @@ export default {
   },
   data() {
     return {
-      userAnswer: this.submission || [],
-      unorderedAnswer: this.submission || [],
-      availableAnswers: []
+      userAnswer: this.submission || []
     };
   },
   computed: {
     config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
-    sortedAnswers() {
-      const answers = [];
-      this.unorderedAnswer.forEach(val => {
-        answers.push(this.availableAnswers[val].key);
-      });
-      return !answers.length ? null : answers.sort();
+    choices() {
+      const { isRandom } = this.config;
+      const answers = this.answers.map((value, key) => ({ value, key }));
+      return isRandom ? shuffle(answers) : answers;
     }
   },
   methods: {
     update() {
-      this.$emit('update', { userAnswer: this.sortedAnswers });
+      this.$emit('update', { userAnswer: this.userAnswer.sort() });
     },
     isSelected(index) {
-      return includes(this.unorderedAnswer, index);
+      return includes(this.userAnswer, index);
     },
     transform(index) {
       return rules[this.config.type](index);
     }
   },
-  created() {
-    this.answers.forEach((value, key) => {
-      this.availableAnswers.push({ value: value, key: key });
-    });
-    if (this.config.isRandom) this.availableAnswers = shuffle(this.availableAnswers);
-  },
   watch: {
     retake(val) {
       if (!val) return;
       this.userAnswer = [];
-      this.unorderedAnswer = [];
       this.update();
     },
     submission(val) {
