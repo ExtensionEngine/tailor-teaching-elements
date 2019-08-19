@@ -31,7 +31,7 @@ import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
 import TeModal from './Modal/index.vue';
-import TePassage from './Passage';
+import TePassage from './Passage.vue';
 import TePdf from './Pdf.vue';
 import TeTable from './Table.vue';
 import TeVideo from './Video.vue';
