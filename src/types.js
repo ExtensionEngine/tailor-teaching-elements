@@ -13,6 +13,7 @@ export const TE_TYPE = {
   BREAK: 'te-break',
   EMBED: 'te-embed',
   HTML: 'te-html',
+  FILE: 'te-file',
   IMAGE: 'te-image',
   ASSESSMENT: 'te-assessment',
   VIDEO: 'te-video',
