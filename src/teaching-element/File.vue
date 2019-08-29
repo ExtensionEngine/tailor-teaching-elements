@@ -5,7 +5,7 @@
       @click="download"
       class="btn btn-primary download-button">
       <span class="mdi mdi-file-download download-icon"></span>
-      <span class="file-name">{{ name }}</span>
+      <span class="file-name">{{ label || name }}</span>
     </button>
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
   name: 'te-file',
   props: {
     url: { type: String, default: null },
-    name: { type: String, default: null }
+    name: { type: String, default: null },
+    label: { type: String, default: null }
   },
   methods: {
     download() {
