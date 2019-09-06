@@ -88,7 +88,7 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
-    correct: { type: [Number, Array, Object, String, Boolean], required: true },
+    correct: { type: [Number, Array, Object, String, Boolean], default: false },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },
@@ -96,6 +96,7 @@ export default {
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
     submission: { type: [Array, Boolean, Number, Object, String], default: null },
+    isReflection: { type: Boolean, default: false },
     type: { type: String, required: true }
   },
   data() {
@@ -121,6 +122,7 @@ export default {
     },
     showCorrect() {
       return this.context !== CONTEXT_TYPE.GOAL &&
+        !this.isReflection &&
         this.type !== 'TR' &&
         this.isSaved;
     },
@@ -142,10 +144,11 @@ export default {
         this.isSaved;
     },
     canRetake() {
-      const { allowRetake } = this.typeInfo;
+      const { context, isCorrect, isReflection, isSaved, typeInfo } = this;
+      const { allowRetake } = typeInfo;
       const componentCanRetake = isUndefined(allowRetake) || allowRetake;
-      const isFormative = this.context === 'formative';
-      return isFormative && componentCanRetake && !this.isCorrect && this.isSaved;
+      const isFormative = context === 'formative';
+      return isFormative && componentCanRetake && (!isCorrect || isReflection) && isSaved;
     }
   },
   methods: {
@@ -166,6 +169,16 @@ export default {
       this.isValidAnswer = isValid;
     },
     submit() {
+      this.isReflection
+        ? this.submitReflection()
+        : this.submitAssessment();
+    },
+    submitReflection() {
+      const data = { id: this.id, answer: this.userAnswer };
+      this.$emit('reflectionSubmit', { data, reflection: true });
+      this.isSaved = true;
+    },
+    submitAssessment() {
       this.checkAnswer();
       this.retake = this.canRetake;
       const data = { id: this.id, answer: this.userAnswer };
