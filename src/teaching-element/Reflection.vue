@@ -1,8 +1,7 @@
 <template>
   <assessment
     v-bind="$attrs"
-    @assessmentSubmit="data => $emit('assessmentSubmit', data)"
-    @reflectionSubmit="data => $emit('reflectionSubmit', data)"
+    v-on="$listeners"
     isReflection/>
 </template>
 
