@@ -11,7 +11,7 @@
     "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
     "lint": "npm run lint:js; npm run lint:scss",
     "prebuild": "npm run clean",
-    "build": "bili --config config/bili.config.js",
+    "build": "bili",
     "prepublishOnly": "npm run build",
     "release": "np --any-branch --no-cleanup"
   },
@@ -80,6 +80,7 @@
     "poi": "^12.7.2",
     "poi-preset-sass-resources": "^4.0.2",
     "rimraf": "^3.0.0",
+    "rollup-plugin-alias": "^2.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-visualizer": "^2.6.0",
     "rollup-plugin-vue": "^4.7.2",
