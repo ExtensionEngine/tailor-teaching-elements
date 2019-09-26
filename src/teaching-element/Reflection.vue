@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Assessment from './Assessment';
+import Assessment from './Assessment/index.vue';
 
 export default {
   name: 'te-reflection',
