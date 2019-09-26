@@ -6,7 +6,7 @@
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
-        <div v-if="posterUrl" :style="style" class="plyr__poster"></div>
+        <div v-if="thumbnailUrl" :style="style" class="plyr__poster"></div>
       </div>
     </plyrue>
   </div>
@@ -37,7 +37,7 @@ export default {
   name: 'te-video',
   props: {
     url: { type: String, required: true },
-    posterUrl: { type: String, default: null },
+    thumbnailUrl: { type: String, default: null },
     playerOptions: { type: Object, default: () => defaultPlayerOptions }
   },
   computed: {
@@ -61,7 +61,7 @@ export default {
       };
     },
     style() {
-      return `background-image: url('${this.posterUrl}');`;
+      return `background-image: url('${this.thumbnailUrl}');`;
     }
   },
   components: {
