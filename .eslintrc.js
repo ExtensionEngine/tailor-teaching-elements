@@ -1,27 +1,61 @@
-const isDev = process.env.NODE_ENV === 'development'
+'use strict';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   root: true,
-  parserOptions: { sourceType: 'module' },
-  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+  parserOptions: {
+    parser: 'babel-eslint',
+    sourceType: 'module'
+  },
+  // https://github.com/Flet/eslint-config-semistandard
   extends: [
-    'standard',
+    'semistandard',
     'plugin:vue/recommended'
   ],
+  // required to lint *.vue files
   plugins: ['vue'],
   rules: {
-    'arrow-parens': 'off',
+    indent: ['error', 2, {
+      SwitchCase: 1,
+      // NOTE: Consistent indentation IS enforced;
+      //       ESLint calculated indentation start IS NOT!
+      // https://eslint.org/docs/rules/indent#memberexpression
+      MemberExpression: 'off'
+    }],
+    'arrow-parens': ['error', 'as-needed'],
+    // TODO: Remove this after all error reports get resolved!
+    'prefer-const': 'off',
     'comma-dangle': ['warn', 'never'],
-    'generator-star-spacing': 'off',
     'no-debugger': isDev ? 'warn' : 'error',
-    'semi': ['warn', 'always'],
+    'no-unreachable': isDev ? 'warn' : 'error',
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'never'
     }],
-    'vue/html-self-closing': 'off',
-    'vue/attribute-hyphenation': 'off',
-    'vue/max-attributes-per-line': ['error', { singleline: 5 }],
+    'sort-imports': ['error', {
+      'ignoreCase': true
+    }],
+    // Vue rules
+    'vue/html-self-closing': ['error', {
+      html: {
+        void: 'never',
+        normal: 'never',
+        component: 'always'
+      },
+      svg: 'never',
+      math: 'never'
+    }],
+    'vue/no-v-html': 'off',
+    'vue/html-closing-bracket-newline': ['error', {
+      singleline: 'never',
+      multiline: 'never'
+    }],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/max-attributes-per-line': ['error', {
+      singleline: 5,
+      multiline: 4
+    }],
     'vue/name-property-casing': ['error', 'kebab-case'],
     // TODO: Add order for custom directives once supported
     'vue/attributes-order': ['error', {
@@ -31,11 +65,12 @@ module.exports = {
         'CONDITIONALS',
         'RENDER_MODIFIERS',
         'UNIQUE',
-        'BINDING',
+        'TWO_WAY_BINDING',
+        'OTHER_DIRECTIVES',
         'EVENTS',
-        'CONTENT',
         'GLOBAL',
-        'OTHER_ATTR'
+        'OTHER_ATTR',
+        'CONTENT'
       ]
     }],
     'vue/order-in-components': ['error', {
@@ -52,11 +87,14 @@ module.exports = {
         'data',
         'computed',
         'methods',
-        'LIFECYCLE_HOOKS',
         'watch',
+        'LIFECYCLE_HOOKS',
         ['directives', 'filters'],
         'components'
       ]
     }]
+  },
+  globals: {
+    BRAND_CONFIG: true
   }
-}
+};
