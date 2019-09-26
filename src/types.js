@@ -18,6 +18,7 @@ export const TE_TYPE = {
   VIDEO: 'te-video',
   ACCORDION: 'te-accordion',
   CAROUSEL: 'te-carousel',
+  JODIT_HTML: 'te-jodit-html',
   MODAL: 'te-modal',
   TABLE: 'te-table',
   PDF: 'te-pdf',
