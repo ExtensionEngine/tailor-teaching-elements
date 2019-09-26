@@ -6,6 +6,7 @@
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
+        <div v-if="posterUrl" :style="style" class="plyr__poster"></div>
       </div>
     </plyrue>
   </div>
@@ -30,12 +31,13 @@ const defaultPlayerOptions = {
     'settings',
     'fullscreen'
   ]
-}
+};
 
 export default {
   name: 'te-video',
   props: {
     url: { type: String, required: true },
+    posterUrl: { type: String, default: null },
     playerOptions: { type: Object, default: () => defaultPlayerOptions }
   },
   computed: {
@@ -56,7 +58,10 @@ export default {
       return {
         ...defaultPlayerOptions,
         ...this.playerOptions
-      }
+      };
+    },
+    style() {
+      return `background-image: url('${this.posterUrl}');`;
     }
   },
   components: {
