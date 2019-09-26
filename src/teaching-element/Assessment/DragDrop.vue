@@ -4,9 +4,9 @@
     <div class="row answers">
       <draggable
         v-model="answersCollection"
-        :options="draggableOptions"
         @start="dragging = true"
         @end="dragging = false"
+        :options="draggableOptions"
         class="col-xs-12">
         <span
           v-for="{ id, answer } in answersCollection"

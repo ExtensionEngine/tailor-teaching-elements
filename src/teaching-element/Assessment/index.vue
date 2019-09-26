@@ -13,59 +13,56 @@
       <div class="exam-order">
         <span>Question {{ position }} of {{ count }}</span>
       </div>
-      <question :question="question" :assessmentType="type"></question>
+      <question :question="question" :assessment-type="type" />
       <component
         :is="component"
+        @validateAnswer="validateAnswer"
+        @update="update"
         v-bind="$attrs"
         :correct="correct"
         :disabled="isSaved"
         :options="options"
         :retake="retake"
-        :submission="submission"
-        @validateAnswer="validateAnswer"
-        @update="update">
-      </component>
-      <hint v-if="hint && showHint" :content="hint"></hint>
+        :submission="submission" />
+      <hint v-if="hint && showHint" :content="hint" />
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
           <span></span>
           {{ answerStatus.note }}
         </div>
         <controls
-          :retake="canRetake"
-          :disabled="!isEditing || !isValidAnswer"
           @reset="reset"
-          @submit="submit">
-        </controls>
+          @submit="submit"
+          :retake="canRetake"
+          :disabled="!isEditing || !isValidAnswer" />
       </div>
       <feedback
         v-if="hasFeedback"
         :type="type"
         :correct="correct"
         :feedback="feedback"
-        :userAnswer="userAnswer"
-        :options="options">
-      </feedback>
+        :user-answer="userAnswer"
+        :options="options" />
     </div>
   </div>
 </template>
 
 <script>
+import { ASSESSMENT_TYPE, subTypeInfo } from '@/types';
 import Controls from './Controls.vue';
 import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
 import isUndefined from 'lodash/isUndefined';
-import MultipleChoice from './MultipleChoice.vue';
 import MatchingQuestion from './MatchingQuestion.vue';
+import MultipleChoice from './MultipleChoice.vue';
 import NumericalResponse from './NumericalResponse.vue';
 import Question from './Question.vue';
 import SingleChoice from './SingleChoice.vue';
 import strategies from '@/util/strategies';
 import TextResponse from './TextResponse.vue';
 import TrueFalse from './TrueFalse.vue';
-import { subTypeInfo, ASSESSMENT_TYPE } from '@/types';
 
 const answer = {
   correct: {

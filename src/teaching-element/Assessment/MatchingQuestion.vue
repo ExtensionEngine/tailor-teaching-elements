@@ -9,9 +9,9 @@
       <div class="col-xs-6 drag-container">
         <draggable
           v-model="source"
-          :options="dragOptions"
           @start="onDragStart($event)"
-          @end="onDragEnd">
+          @end="onDragEnd"
+          :options="dragOptions">
           <div
             v-for="({ dragged, value }, index) in source"
             :key="index"
@@ -24,10 +24,10 @@
         <draggable
           v-for="(item, index) in target"
           :key="index"
+          @add="onAdd"
           :list="item.answers"
           :options="getOptions(item)"
           :class="[{ 'drop-area': isDragging }, answerClasses(item)]"
-          @add="onAdd"
           class="drop-spot">
           <div class="item disabled">{{ item.value }}</div>
           <span v-show="item.answers[0]" class="item disabled">
@@ -139,10 +139,6 @@ export default {
       });
     }
   },
-  created() {
-    this.initialize();
-    this.initializeSubmission(this.submission);
-  },
   watch: {
     retake(val) {
       if (!val) return;
@@ -153,6 +149,10 @@ export default {
       this.$emit('validateAnswer', { isValid: val });
     },
     submission: 'initializeSubmission'
+  },
+  created() {
+    this.initialize();
+    this.initializeSubmission(this.submission);
   },
   components: { Draggable }
 };

@@ -4,7 +4,7 @@ import sortBy from 'lodash/sortBy';
 function getElements(item, embeds) {
   const elements = map(item.body, (_, id) => embeds[id]);
   return sortBy(elements, 'position');
-};
+}
 
 export default {
   props: {

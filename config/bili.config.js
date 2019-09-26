@@ -18,7 +18,7 @@ module.exports = {
   },
   babel: {
     babelrc: false,
-    extensions: [ 'js', '.vue' ]
+    extensions: ['js', '.vue']
   },
   visualizer,
   alias: {

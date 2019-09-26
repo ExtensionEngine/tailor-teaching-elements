@@ -2,7 +2,7 @@
   <div class="te-video">
     <plyrue ref="plyr" :options="options">
       <video v-if="type.isNative">
-        <source :src="url" :type="type.name"/>
+        <source :src="url" :type="type.name">
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
@@ -30,7 +30,7 @@ const defaultPlayerOptions = {
     'settings',
     'fullscreen'
   ]
-}
+};
 
 export default {
   name: 'te-video',
@@ -56,7 +56,7 @@ export default {
       return {
         ...defaultPlayerOptions,
         ...this.playerOptions
-      }
+      };
     }
   },
   components: {

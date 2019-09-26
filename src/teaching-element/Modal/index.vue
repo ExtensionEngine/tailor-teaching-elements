@@ -5,9 +5,8 @@
     </button>
     <modal
       v-show="showDialog"
-      :elements="elements"
-      @close="showDialog = false">
-    </modal>
+      @close="showDialog = false"
+      :elements="elements" />
   </div>
 </template>
 

@@ -4,8 +4,8 @@
     <span class="answer">
       <textarea
         v-model="userAnswer"
-        :disabled="disabled"
         :id="uniqueId"
+        :disabled="disabled"
         class="form-control"
         rows="6"
         type="text">

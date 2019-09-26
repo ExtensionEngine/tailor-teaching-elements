@@ -13,8 +13,7 @@
               v-for="{ id, data, type } in elements"
               :key="id"
               :type="type"
-              v-bind="data">
-            </primitive>
+              v-bind="data" />
           </div>
         </div>
         <div class="modal-footer">

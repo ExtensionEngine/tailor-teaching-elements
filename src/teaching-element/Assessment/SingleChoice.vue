@@ -8,9 +8,9 @@
         :class="{ selected: isSelected(index) }">
         <input
           v-model="userAnswer"
+          @change="update"
           :value="index"
           :disabled="disabled"
-          @change="update"
           class="answers-radio"
           type="radio">
         <span class="order">{{ transform(index) }}.</span>

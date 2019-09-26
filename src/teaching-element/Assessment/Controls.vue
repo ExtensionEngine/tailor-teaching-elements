@@ -1,9 +1,9 @@
 <template>
   <div class="controls">
     <button
+      @click="onClick"
       :class="{ disabled: disabled && !retake, retake }"
       :disabled="disabled && !retake"
-      @click="onClick"
       class="btn btn-submit">
       {{ btnLabel }}
     </button>

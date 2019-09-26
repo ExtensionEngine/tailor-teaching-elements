@@ -110,12 +110,6 @@ export default {
       this.error = err;
     }
   },
-  mounted() {
-    this.initPlayer();
-  },
-  beforeDestroy() {
-    this.destroyPlayer();
-  },
   watch: {
     playerUrl() {
       if (!this.$el) return;
@@ -125,6 +119,12 @@ export default {
       if (!this.$el) return;
       this.initPlayer();
     }
+  },
+  mounted() {
+    this.initPlayer();
+  },
+  beforeDestroy() {
+    this.destroyPlayer();
   }
 };
 

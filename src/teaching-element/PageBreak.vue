@@ -1,9 +1,9 @@
 <template>
   <div
-    :class="{ 'break-hidden': hidden, disabled, last: end }"
     @click="click"
     @mouseenter="hover = true"
     @mouseleave="hover = false"
+    :class="{ 'break-hidden': hidden, disabled, last: end }"
     class="te-break noselect">
     <div :class="{ show: showTooltip }" class="te-break-tooltip">
       {{ tooltip }}

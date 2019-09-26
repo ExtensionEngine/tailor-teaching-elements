@@ -7,9 +7,8 @@
           v-for="{ id, data, type } in question"
           :key="id"
           v-bind="data"
-          :assessmentType="assessmentType"
-          :type="type">
-        </primitive>
+          :assessment-type="assessmentType"
+          :type="type" />
       </div>
     </div>
   </div>

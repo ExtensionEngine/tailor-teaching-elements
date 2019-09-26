@@ -1,5 +1,5 @@
 <template>
-  <li :class="{ 'accordion-active': expanded }" @scroll="scroll">
+  <li @scroll="scroll" :class="{ 'accordion-active': expanded }">
     <div @click="toggle" class="accordion-header">
       <div class="contents">
         <span class="title">{{ heading }}</span>
@@ -13,8 +13,7 @@
             v-for="{ id, type, data } in elements"
             :key="id"
             :type="type"
-            v-bind="data">
-          </primitive>
+            v-bind="data" />
         </div>
       </div>
     </transition>

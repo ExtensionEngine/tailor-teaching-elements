@@ -2,9 +2,8 @@
   <ul class="accordion">
     <accordion-item
       v-for="item in embeddedItems"
-      v-bind="item"
-      :key="item.id">
-    </accordion-item>
+      :key="item.id"
+      v-bind="item" />
   </ul>
 </template>
 

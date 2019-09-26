@@ -1,6 +1,6 @@
 <template>
   <div class="ql-container te-html">
-    <div v-html="html" class="ql-editor content"></div>
+    <div class="ql-editor content" v-html="html"></div>
   </div>
 </template>
 

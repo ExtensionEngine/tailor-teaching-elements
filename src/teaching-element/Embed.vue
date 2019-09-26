@@ -13,8 +13,8 @@
     </div>
     <div class="te-embed-toolbar">
       <span
-        :class="expanded ? 'mdi-close' : 'mdi-arrow-expand-all'"
         @click="toggleExpand"
+        :class="expanded ? 'mdi-close' : 'mdi-arrow-expand-all'"
         class="mdi tes-icon">
       </span>
     </div>

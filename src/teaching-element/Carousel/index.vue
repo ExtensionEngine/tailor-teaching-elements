@@ -1,8 +1,8 @@
 <template>
   <div :style="{ height: `${height}px` }" class="carousel">
     <button
-      :disabled="!hasPrevious"
       @click="previous"
+      :disabled="!hasPrevious"
       aria-label="Previous slide"
       class="btn btn-link btn-slide previous">
       <span class="icon"></span>
@@ -12,12 +12,11 @@
         v-for="({ elements, id }, index) in embeddedItems"
         :key="id"
         :elements="elements"
-        :isActive="index === activeIndex">
-      </carousel-item>
+        :is-active="index === activeIndex" />
     </ul>
     <button
-      :disabled="!hasNext"
       @click="next"
+      :disabled="!hasNext"
       aria-label="Next slide"
       class="btn btn-link btn-slide next">
       <span class="icon"></span>
@@ -26,8 +25,8 @@
       <li
         v-for="({ id }, index) in embeddedItems"
         :key="id"
-        :class="{ active: index === activeIndex }"
         @click="activeIndex = index"
+        :class="{ active: index === activeIndex }"
         class="indicator-item">
       </li>
     </ul>
