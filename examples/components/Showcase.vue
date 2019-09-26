@@ -24,8 +24,8 @@ const data = importAll(require.context('../data/', true, /\.json$/));
 
 export default {
   props: {
-    elementType: { type: String, required: true },
-    elementSubType: { type: String, required: true }
+    elementType: { type: String, default: null },
+    elementSubType: { type: String, default: null }
   },
   data() {
     return {

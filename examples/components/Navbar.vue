@@ -43,7 +43,7 @@ import toTitleCase from 'to-title-case';
 
 export default {
   props: {
-    elementType: { type: String, required: true }
+    elementType: { type: String, default: null }
   },
   computed: {
     elementTypes() {
