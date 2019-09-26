@@ -22,6 +22,7 @@
 
 <script>
 import { rules } from '../../util/listingType';
+
 const defaults = { type: 'upper-latin' };
 
 export default {
@@ -36,10 +37,7 @@ export default {
     return { userAnswer: this.submission };
   },
   computed: {
-    type() {
-      const options = this.options.singleChoice || defaults;
-      return options.type;
-    }
+    config: vm => ({ ...defaults, ...vm.options.singleChoice })
   },
   methods: {
     update() {
@@ -49,7 +47,7 @@ export default {
       return index === this.userAnswer;
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   watch: {
