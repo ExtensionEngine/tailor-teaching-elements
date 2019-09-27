@@ -1,7 +1,7 @@
 <template>
   <div class="assessment-container">
     <div :class="assessmentClasses" class="assessment">
-      <div v-if="context === 'formative'" class="formative-notification">
+      <div v-if="isFormative" class="formative-notification">
         <span>
           Knowledge check
         </span>
@@ -13,7 +13,7 @@
       <div class="exam-order">
         <span>Question {{ position }} of {{ count }}</span>
       </div>
-      <question :question="question" :assessmentType="type"></question>
+      <question :question="question" :assessmentType="type"/>
       <component
         :is="component"
         v-bind="$attrs"
@@ -23,9 +23,8 @@
         :retake="retake"
         :submission="submission"
         @validateAnswer="validateAnswer"
-        @update="update">
-      </component>
-      <hint v-if="hint && showHint" :content="hint"></hint>
+        @update="update"/>
+      <hint v-if="showHint" :content="hint"/>
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
           <span></span>
@@ -56,7 +55,6 @@ import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
-import isUndefined from 'lodash/isUndefined';
 import MultipleChoice from './MultipleChoice.vue';
 import MatchingQuestion from './MatchingQuestion.vue';
 import NumericalResponse from './NumericalResponse.vue';
@@ -120,11 +118,12 @@ export default {
     assessmentClasses() {
       return [this.typeInfo.class, this.context, this.isSaved ? 'saved' : ''];
     },
+    hasCorrect() {
+      return !(this.type === 'TR' || this.isReflection);
+    },
     showCorrect() {
-      return this.context !== CONTEXT_TYPE.GOAL &&
-        !this.isReflection &&
-        this.type !== 'TR' &&
-        this.isSaved;
+      const { context, hasCorrect, isSaved } = this;
+      return hasCorrect && context !== CONTEXT_TYPE.GOAL && isSaved;
     },
     typeInfo() {
       return subTypeInfo[this.type] || {};
@@ -133,57 +132,47 @@ export default {
       return this.hasUserAnswer && !this.isSaved;
     },
     showHint() {
-      return !this.options.hintOnSubmit || (this.isSaved && !this.isCorrect);
+      const { hint, options, isSaved, isCorrect } = this;
+      return hint && (!options.hintOnSubmit || (isSaved && !isCorrect));
     },
     hasUserAnswer() {
       return this.userAnswer !== null;
     },
     hasFeedback() {
-      return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT &&
-        this.typeInfo.feedback &&
-        this.isSaved;
+      return this.isFormative && this.typeInfo.feedback && this.isSaved;
+    },
+    isFormative() {
+      return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT;
     },
     canRetake() {
-      const { context, isCorrect, isReflection, isSaved, typeInfo } = this;
-      const { allowRetake } = typeInfo;
-      const componentCanRetake = isUndefined(allowRetake) || allowRetake;
-      const isFormative = context === 'formative';
-      return isFormative && componentCanRetake && (!isCorrect || isReflection) && isSaved;
+      const { isFormative, isCorrect, typeInfo, isSaved } = this;
+      const { allowRetake = true } = typeInfo;
+      return allowRetake && isFormative && isSaved && isCorrect;
+    },
+    submissionPayload() {
+      const { id, userAnswer: answer, isReflection, isCorrect: correct } = this;
+      return { data: { id, answer }, isReflection, correct };
     }
   },
   methods: {
     checkAnswer() {
+      if (this.isReflection) return Object.assign(this, { isCorrect: false });
       const strategy = strategies[this.type] || strategies.default;
       this.isCorrect = strategy(this.userAnswer, this.correct);
     },
     reset() {
-      this.isSaved = false;
-      this.retake = true;
-      this.userAnswer = null;
+      Object.assign(this, { isSaved: false, retake: false, userAnswer: null });
     },
-    update(data) {
-      this.retake = false;
-      this.userAnswer = data.userAnswer;
+    update({ userAnswer }) {
+      Object.assign(this, { userAnswer, retake: false });
     },
     validateAnswer({ isValid }) {
       this.isValidAnswer = isValid;
     },
     submit() {
-      this.isReflection
-        ? this.submitReflection()
-        : this.submitAssessment();
-    },
-    submitReflection() {
-      const data = { id: this.id, answer: this.userAnswer };
-      this.$emit('reflectionSubmit', { data, reflection: true });
-      this.isSaved = true;
-    },
-    submitAssessment() {
       this.checkAnswer();
-      this.retake = this.canRetake;
-      const data = { id: this.id, answer: this.userAnswer };
-      this.$emit('assessmentSubmit', { data, correct: this.isCorrect });
-      this.isSaved = true;
+      this.$emit('assessmentSubmit', this.submissionPayload);
+      Object.assign(this, { retake: this.canRetake, isSaved: true });
     }
   },
   components: {

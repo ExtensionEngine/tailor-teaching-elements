@@ -13,10 +13,8 @@
         :count="count"
         :options="options"
         @enablePageBreak="$emit('enablePageBreak')"
-        @assessmentSubmit="data => $emit('assessmentSubmit', data)"
-        @reflectionSubmit="data => $emit('reflectionSubmit', data)"
-        @pageBreakClick="$emit('pageBreakClick')">
-      </component>
+        @assessmentSubmit="$emit('assessmentSubmit', $event)"
+        @pageBreakClick="$emit('pageBreakClick')"/>
     </div>
   </div>
 </template>
