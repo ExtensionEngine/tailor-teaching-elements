@@ -15,6 +15,7 @@ export const TE_TYPE = {
   HTML: 'te-html',
   IMAGE: 'te-image',
   ASSESSMENT: 'te-assessment',
+  REFLECTION: 'te-reflection',
   VIDEO: 'te-video',
   ACCORDION: 'te-accordion',
   CAROUSEL: 'te-carousel',

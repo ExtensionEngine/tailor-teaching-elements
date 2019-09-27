@@ -13,9 +13,8 @@
         :count="count"
         :options="options"
         @enablePageBreak="$emit('enablePageBreak')"
-        @assessmentSubmit="data => $emit('assessmentSubmit', data)"
-        @pageBreakClick="$emit('pageBreakClick')">
-      </component>
+        @assessmentSubmit="$emit('assessmentSubmit', $event)"
+        @pageBreakClick="$emit('pageBreakClick')"/>
     </div>
   </div>
 </template>
@@ -23,6 +22,7 @@
 <script>
 import get from 'lodash/get';
 import TeAssessment from './Assessment/index.vue';
+import TeReflection from './Reflection.vue';
 import TeAccordion from './Accordion/index.vue';
 import TeBreak from './PageBreak.vue';
 import TeBrightcoveVideo from './BrightcoveVideo.vue';
@@ -57,6 +57,7 @@ export default {
   },
   components: {
     TeAssessment,
+    TeReflection,
     TeAccordion,
     TeBreak,
     TeBrightcoveVideo,
