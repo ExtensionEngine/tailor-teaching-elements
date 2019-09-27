@@ -55,6 +55,7 @@ import Draggable from 'vuedraggable';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
+import reduce from 'lodash/reduce';
 import shuffle from 'lodash/shuffle';
 
 const formatAnswers = answers => {
@@ -99,12 +100,15 @@ export default {
     },
     isBoxFull() {
       return this.answersCollection.length === 0;
+    },
+    removeClass() {
+      return get(this.options.dragDrop, 'removeClass', 'mdi mdi-close');
+    },
+    canPartiallyRetake() {
+      return get(this.options.dragDrop, 'partialRetake', false);
     }
   },
   methods: {
-    getResponses(id) {
-      return this.userAnswer[id];
-    },
     answerClasses(groupId, answerId) {
       const { correct, disabled } = this;
       if (!disabled) return;
@@ -117,6 +121,19 @@ export default {
       // Remove from box and add to answers array
       this.userAnswer[id] = this.userAnswer[id].filter(a => a.id !== answer.id);
       this.answersCollection.push(answer);
+    },
+    partiallyRetake() {
+      const { correct, userAnswer } = this;
+      const data = reduce(userAnswer, (acc, group, id) => {
+        acc.userAnswer[id] = [];
+        group.forEach(answer => {
+          const included = includes(correct[id], answer.id);
+          if (included) return acc.userAnswer[id].push(answer);
+          acc.answersCollection.push(answer);
+        });
+        return acc;
+      }, { userAnswer: {}, answersCollection: [] });
+      Object.assign(this, data);
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
@@ -140,6 +157,7 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
+      if (this.canPartiallyRetake) return this.partiallyRetake();
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
     },
