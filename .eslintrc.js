@@ -93,8 +93,5 @@ module.exports = {
         'components'
       ]
     }]
-  },
-  globals: {
-    BRAND_CONFIG: true
   }
 };

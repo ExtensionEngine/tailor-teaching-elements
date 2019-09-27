@@ -7,8 +7,7 @@ const aliases = {
 /** @type {import('poi').Config} */
 module.exports = {
   plugins: [
-    '@poi/eslint',
-    '@poi/bundle-report'
+    '@poi/eslint'
   ],
   entry: 'examples/main.js',
   output: {
