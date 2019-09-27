@@ -29,8 +29,10 @@ import TeBrightcoveVideo from './BrightcoveVideo.vue';
 import TeCarousel from './Carousel/index.vue';
 import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
+import TeFile from './File.vue';
 import TeImage from './Image.vue';
 import TeModal from './Modal/index.vue';
+import TeJoditHtml from './JoditHtml.vue';
 import TePdf from './Pdf.vue';
 import TeTable from './Table.vue';
 import TeVideo from './Video.vue';
@@ -62,8 +64,10 @@ export default {
     TeCarousel,
     TeEmbed,
     TeHtml,
+    TeFile,
     TeImage,
     TeModal,
+    TeJoditHtml,
     TePdf,
     TeTable,
     TeVideo
