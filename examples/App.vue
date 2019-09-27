@@ -1,12 +1,11 @@
 <template>
   <div id="app">
-    <navbar @select="select" :elementType="elementType"></navbar>
+    <navbar :elementType="elementType" @select="select"/>
     <div class="container-fluid">
       <showcase
-        @select="select"
         :elementType="elementType"
-        :elementSubType="elementSubType">
-      </showcase>
+        :elementSubType="elementSubType"
+        @select="select"/>
     </div>
   </div>
 </template>
@@ -18,19 +17,14 @@ import Showcase from './components/Showcase';
 export default {
   data() {
     return {
-      elementType: null,
-      elementSubType: null
+      elementType: '',
+      elementSubType: ''
     };
   },
   methods: {
     select(data) {
-      if (data.elementSubType) {
-        this.elementSubType = data.elementSubType;
-        this.elementType = 'ASSESSMENT';
-      } else {
-        this.elementType = data;
-        this.elementSubType = null;
-      }
+      if (data.elementSubType) return Object.assign(this, data);
+      Object.assign(this, { elementType: data, elementSubType: '' });
     }
   },
   components: {
