@@ -3,18 +3,18 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="(answer, index) in answers"
-        :key="index"
-        :class="{ selected: isSelected(index) }">
+        v-for="({ value, key }, index) in choices"
+        :key="key"
+        :class="{ selected: isSelected(key) }">
         <input
           v-model="userAnswer"
-          :value="index"
+          :value="key"
           :disabled="disabled"
           @change="update"
           class="answers-radio"
           type="radio">
         <span class="order">{{ transform(index) }}.</span>
-        <span>{{ answer }}</span>
+        <span>{{ value }}</span>
       </li>
     </ul>
   </div>
@@ -22,7 +22,9 @@
 
 <script>
 import { rules } from '../../util/listingType';
-const defaults = { type: 'upper-latin' };
+import shuffle from 'lodash/shuffle';
+
+const defaults = { type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -32,13 +34,13 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data() {
-    return { userAnswer: this.submission };
-  },
+  data: () => ({ userAnswer: this.submission || [] }),
   computed: {
-    type() {
-      const options = this.options.singleChoice || defaults;
-      return options.type;
+    config: vm => ({ ...defaults, ...vm.options.singleChoice }),
+    choices() {
+      const { randomize } = this.config;
+      const answers = this.answers.map((value, key) => ({ value, key }));
+      return randomize ? shuffle(answers) : answers;
     }
   },
   methods: {
@@ -49,7 +51,7 @@ export default {
       return index === this.userAnswer;
     },
     transform(index) {
-      return rules[this.type](index);
+      return rules[this.config.type](index);
     }
   },
   watch: {
