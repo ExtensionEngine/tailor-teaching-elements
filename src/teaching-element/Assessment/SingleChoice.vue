@@ -24,7 +24,7 @@
 import { rules } from '../../util/listingType';
 import shuffle from 'lodash/shuffle';
 
-const defaults = { type: 'upper-latin', isRandom: false };
+const defaults = { type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -34,17 +34,13 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data() {
-    return {
-      userAnswer: this.submission
-    };
-  },
+  data: () => ({ userAnswer: this.submission || [] }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
-      const { isRandom } = this.config;
+      const { randomize } = this.config;
       const answers = this.answers.map((value, key) => ({ value, key }));
-      return isRandom ? shuffle(answers) : answers;
+      return randomize ? shuffle(answers) : answers;
     }
   },
   methods: {
