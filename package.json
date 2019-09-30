@@ -40,8 +40,8 @@
     "ie 11"
   ],
   "peerDependencies": {
-    "vue": "^2.6.10",
-    "@mdi/font": "^4.4.95"
+    "vue": "^2.5.x",
+    "@mdi/font": "^3.0.39"
   },
   "dependencies": {
     "lodash": "^4.17.15",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
-    "@mdi/font": "^4.4.95",
+    "@mdi/font": "^3.0.39",
     "@poi/plugin-eslint": "^12.0.0",
     "@types/poi": "^12.5.0",
     "@types/stylelint": "^9.10.1",
@@ -90,7 +90,7 @@
     "stylelint-order": "^3.1.1",
     "stylelint-scss": "^3.11.1",
     "to-title-case": "^1.0.0",
-    "vue": "^2.6.10",
+    "vue": "^2.5.0",
     "vue-template-compiler": "2.6.10"
   },
   "engines": {
