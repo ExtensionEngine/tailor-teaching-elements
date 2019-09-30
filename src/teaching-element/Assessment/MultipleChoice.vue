@@ -35,14 +35,17 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data: () => ({ userAnswer: this.submission || [] }),
+  data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
     choices() {
       const { randomize } = this.config;
       const answers = this.answers.map((value, key) => ({ value, key }));
       return randomize ? shuffle(answers) : answers;
-    }
+    },
+    isValid() {
+      return this.userAnswer.length;
+    },
   },
   methods: {
     update() {
@@ -60,6 +63,9 @@ export default {
       if (!val) return;
       this.userAnswer = [];
       this.update();
+    },
+    isValid(val) {
+      this.$emit('validateAnswer', { isValid: val });
     },
     submission(val) {
       this.userAnswer = val || [];

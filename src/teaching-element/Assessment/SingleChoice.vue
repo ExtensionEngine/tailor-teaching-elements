@@ -34,7 +34,7 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data: () => ({ userAnswer: this.submission || [] }),
+  data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
