@@ -147,7 +147,7 @@ export default {
     canRetake() {
       const { isFormative, isCorrect, typeInfo, isSaved } = this;
       const { allowRetake = true } = typeInfo;
-      return allowRetake && isFormative && isSaved && isCorrect;
+      return allowRetake && isFormative && isSaved && !isCorrect;
     },
     submissionPayload() {
       const { id, userAnswer: answer, isReflection, isCorrect: correct } = this;
@@ -161,7 +161,7 @@ export default {
       this.isCorrect = strategy(this.userAnswer, this.correct);
     },
     reset() {
-      Object.assign(this, { isSaved: false, retake: false, userAnswer: null });
+      Object.assign(this, { isSaved: false, retake: true, userAnswer: null });
     },
     update({ userAnswer }) {
       Object.assign(this, { userAnswer, retake: false });

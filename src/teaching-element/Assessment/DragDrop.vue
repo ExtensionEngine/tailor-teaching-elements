@@ -52,6 +52,7 @@
 
 <script>
 import Draggable from 'vuedraggable';
+import get from 'lodash/get';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
