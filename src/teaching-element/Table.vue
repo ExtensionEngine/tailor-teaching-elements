@@ -3,7 +3,7 @@
     <div v-for="row in table" :key="row.id" class="table-row">
       <div v-for="cell in row.cells" :key="cell.id" class="table-cell">
         <div class="cell col-xs-12">
-          <div v-html="cell.content" class="cell-content"></div>
+          <div class="cell-content" v-html="cell.content"></div>
         </div>
       </div>
     </div>
@@ -62,8 +62,8 @@ export default {
         padding: 12px 15px;
 
         * {
-          padding: 0;
           margin: 0;
+          padding: 0;
         }
       }
     }

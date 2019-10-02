@@ -1,6 +1,6 @@
 <template>
   <div class="jodit_container">
-    <div v-html="content" class="jodit_wysiwyg"></div>
+    <div class="jodit_wysiwyg" v-html="content"></div>
   </div>
 </template>
 

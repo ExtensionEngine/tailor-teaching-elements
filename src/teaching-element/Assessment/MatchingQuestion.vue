@@ -9,9 +9,9 @@
       <div class="col-xs-6 drag-container">
         <draggable
           v-model="source"
-          :options="dragOptions"
           @start="onDragStart($event)"
-          @end="onDragEnd">
+          @end="onDragEnd"
+          :options="dragOptions">
           <div
             v-for="({ dragged, value }, index) in source"
             :key="index"
@@ -24,10 +24,10 @@
         <draggable
           v-for="(item, index) in target"
           :key="index"
+          @add="onAdd"
           :list="item.answers"
           :options="getOptions(item)"
           :class="[{ 'drop-area': isDragging }, answerClasses(item)]"
-          @add="onAdd"
           class="drop-spot">
           <div class="item disabled">{{ item.value }}</div>
           <span v-show="item.answers[0]" class="item disabled">
@@ -139,10 +139,6 @@ export default {
       });
     }
   },
-  created() {
-    this.initialize();
-    this.initializeSubmission(this.submission);
-  },
   watch: {
     retake(val) {
       if (!val) return;
@@ -153,6 +149,10 @@ export default {
       this.$emit('validateAnswer', { isValid: val });
     },
     submission: 'initializeSubmission'
+  },
+  created() {
+    this.initialize();
+    this.initializeSubmission(this.submission);
   },
   components: { Draggable }
 };
@@ -165,16 +165,27 @@ export default {
     cursor: move;
   }
 
+  .item {
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    background-color: #f5f5f5;
+    border: 1px solid grey;
+  }
+
+  .dragged {
+    visibility: hidden;
+  }
+
   .drop-spot {
     margin-bottom: 10px;
     padding: 5px 0;
     border: 1px solid grey;
 
     .item {
-      position: relative;
       display: block;
-      padding: 10px 35px 10px 20px;
+      position: relative;
       margin: 5px 0;
+      padding: 10px 35px 10px 20px;
       background-color: transparent;
       border: none;
 
@@ -182,21 +193,10 @@ export default {
         position: absolute;
         top: 11px;
         right: 17px;
-        pointer-events: all;
         cursor: pointer;
+        pointer-events: all;
       }
     }
-  }
-
-  .item {
-    display: inline-block;
-    padding: 10px 20px 10px 20px;
-    border: 1px solid grey;
-    background-color: #f5f5f5;
-  }
-
-  .dragged {
-     visibility: hidden;
   }
 
   .sortable-drag {
@@ -207,8 +207,8 @@ export default {
     }
   }
 
-  .drag-container .sortable-ghost .item, .cloned .item {
-    border: 1px dashed #cccccc;
+  .cloned .item, .drag-container .sortable-ghost .item {
+    border: 1px dashed #ccc;
   }
 
   .drop-area {

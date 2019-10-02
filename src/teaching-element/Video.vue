@@ -2,7 +2,7 @@
   <div class="te-video">
     <plyrue ref="plyr" :options="options">
       <video v-if="type.isNative">
-        <source :src="url" :type="type.name"/>
+        <source :src="url" :type="type.name">
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
@@ -13,7 +13,7 @@
 
 <script>
 import { extname } from 'path';
-import { Plyrue } from 'plyrue';
+import { PlyrueComponent as Plyrue } from 'plyrue';
 
 const NOT_NATIVE = /youtu\.?be|vimeo|drive.google/;
 
@@ -30,7 +30,7 @@ const defaultPlayerOptions = {
     'settings',
     'fullscreen'
   ]
-}
+};
 
 export default {
   name: 'te-video',
@@ -56,7 +56,7 @@ export default {
       return {
         ...defaultPlayerOptions,
         ...this.playerOptions
-      }
+      };
     }
   },
   components: {

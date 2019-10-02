@@ -4,13 +4,11 @@
       <div class="presentation">
         <select-assessment
           v-if="pickAssessment"
-          @select="select">
-        </select-assessment>
+          @select="select" />
         <teaching-element
           v-else-if="element"
           :element="element"
-          :options="options">
-        </teaching-element>
+          :options="options" />
         <div v-else>Pick an element from the navbar</div>
       </div>
     </div>
@@ -25,7 +23,10 @@ const isAssessment = data => data.type === 'ASSESSMENT' || !data.type;
 const data = importAll(require.context('../data/', true, /\.json$/));
 
 export default {
-  props: ['elementType', 'elementSubType'],
+  props: {
+    elementType: { type: String, default: null },
+    elementSubType: { type: String, default: null }
+  },
   data() {
     return {
       options: { assessmentType: 'formative' }

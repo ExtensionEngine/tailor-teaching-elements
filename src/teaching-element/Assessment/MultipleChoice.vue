@@ -8,9 +8,9 @@
         :class="{ selected: isSelected(index) }">
         <input
           v-model="userAnswer"
+          @change="update"
           :value="index"
           :disabled="disabled"
-          @change="update"
           class="answers-checkbox"
           type="checkbox">
         <span class="order">{{ transform(index) }}.</span>
@@ -84,8 +84,8 @@ export default {
 
     .answers-checkbox {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }
