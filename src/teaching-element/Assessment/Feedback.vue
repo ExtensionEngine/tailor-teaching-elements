@@ -60,8 +60,10 @@ export default {
   methods: {
     order(index) {
       const assessmentType = camelCase(ASSESSMENT_TYPE[this.type]);
-      const order = this.options[assessmentType];
-      const orderType = order ? order.type : defaults[assessmentType].type;
+      const { type: orderType } = ({
+        ...defaults[assessmentType],
+        ...this.options[assessmentType]
+      });
       return rules[orderType](index);
     },
     getData(answer) {
