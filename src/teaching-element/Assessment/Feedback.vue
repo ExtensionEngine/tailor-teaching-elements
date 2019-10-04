@@ -39,6 +39,11 @@ export default {
     userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
   },
   computed: {
+    assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
+    config: vm => ({
+      ...defaults[vm.assessmentType],
+      ...vm.options[vm.assessmentType]
+    }),
     title() {
       return this.type === 'TR' ? 'Suggested Solution' : 'Solution';
     },
@@ -59,12 +64,7 @@ export default {
   },
   methods: {
     order(index) {
-      const assessmentType = camelCase(ASSESSMENT_TYPE[this.type]);
-      const { type: orderType } = ({
-        ...defaults[assessmentType],
-        ...this.options[assessmentType]
-      });
-      return rules[orderType](index);
+      return rules[this.config.type](index);
     },
     getData(answer) {
       answer = isBoolean(answer) ? Number(!answer) : answer;
