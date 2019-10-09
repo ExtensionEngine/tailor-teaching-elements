@@ -9,7 +9,6 @@
 <script>
 import { TE_TYPE } from '../types';
 import TeEmbed from './Embed.vue';
-import TeFile from './File.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
 import TeJoditHtml from './JoditHtml.vue';
@@ -26,7 +25,6 @@ export default {
   methods: { resolveElement },
   components: {
     TeEmbed,
-    TeFile,
     TeHtml,
     TeImage,
     TeJoditHtml
