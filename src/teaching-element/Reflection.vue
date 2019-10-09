@@ -1,5 +1,5 @@
 <template>
-  <assessment v-bind="$attrs" v-on="$listeners" isReflection/>
+  <assessment v-on="$listeners" v-bind="$attrs" is-reflection />
 </template>
 
 <script>

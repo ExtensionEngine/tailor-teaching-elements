@@ -22,8 +22,6 @@
 <script>
 import get from 'lodash/get';
 import { TE_TYPE } from '../types';
-import TeAssessment from './Assessment/index.vue';
-import TeReflection from './Reflection.vue';
 import TeAccordion from './Accordion/index.vue';
 import TeAssessment from './Assessment/index.vue';
 import TeBreak from './PageBreak.vue';
@@ -36,6 +34,7 @@ import TeImage from './Image.vue';
 import TeJoditHtml from './JoditHtml.vue';
 import TeModal from './Modal/index.vue';
 import TePdf from './Pdf.vue';
+import TeReflection from './Reflection.vue';
 import TeTable from './Table.vue';
 import TeVideo from './Video.vue';
 

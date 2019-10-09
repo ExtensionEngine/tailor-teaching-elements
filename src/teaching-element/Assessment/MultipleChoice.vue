@@ -45,7 +45,7 @@ export default {
     },
     isValid() {
       return this.userAnswer.length;
-    },
+    }
   },
   methods: {
     update() {

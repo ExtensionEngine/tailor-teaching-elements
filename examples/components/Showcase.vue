@@ -4,11 +4,11 @@
       <div class="presentation">
         <select-assessment
           v-if="showSubtypes"
-          @select="select"/>
+          @select="select" />
         <teaching-element
           v-else-if="element"
           :element="element"
-          :options="options"/>
+          :options="options" />
         <div v-else>Pick an element from the navbar</div>
       </div>
     </div>
