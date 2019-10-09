@@ -11,6 +11,7 @@ module.exports = {
     moduleName: 'TailorTeachingElements',
     extractCSS: false
   },
+  bundleNodeModules: ['style-inject', 'vue-runtime-helpers'],
   plugins: {
     vue: true,
     babel: {
