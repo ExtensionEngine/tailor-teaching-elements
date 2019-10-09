@@ -3,6 +3,7 @@
     <div v-for="row in table" :key="row.id" class="table-row">
       <div v-for="cell in row.cells" :key="cell.id" class="table-cell">
         <div class="cell col-xs-12">
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div class="cell-content" v-html="cell.content"></div>
         </div>
       </div>

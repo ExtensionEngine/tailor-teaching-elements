@@ -114,7 +114,7 @@ export default {
       return isCorrect ? 'te-correct' : 'te-incorrect';
     },
     remove(item) {
-      let premise = item.answers[0];
+      const premise = item.answers[0];
       premise.dragged = false;
       item.answers = [];
     },
@@ -136,7 +136,7 @@ export default {
       this.$emit('update', { userAnswer: reduce(this.target, reducer, {}) });
     },
     initialize() {
-      let { premises, responses } = this;
+      const { premises, responses } = this;
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
       this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
     },

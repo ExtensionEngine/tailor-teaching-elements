@@ -6,6 +6,7 @@
       :key="index"
       class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="content-row" v-html="content"></span>
     </div>
   </div>

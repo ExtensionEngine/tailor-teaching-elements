@@ -1,5 +1,6 @@
 <template>
   <div class="jodit_container">
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="jodit_wysiwyg" v-html="content"></div>
   </div>
 </template>
