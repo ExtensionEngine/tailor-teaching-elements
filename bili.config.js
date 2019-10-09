@@ -6,10 +6,8 @@ module.exports = {
   },
   output: {
     format: ['cjs', 'es', 'umd', 'umd-min'],
-    moduleName: 'TailorTeachingElements'
-  },
-  postcss: {
-    extract: false
+    moduleName: 'TailorTeachingElements',
+    extractCSS: false
   },
   plugins: {
     vue: true,
@@ -27,7 +25,7 @@ module.exports = {
     'node-builtins': true,
     visualizer: {
       sourceMap: true,
-      open: true
+      open: false
     }
   }
 };
