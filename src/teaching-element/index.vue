@@ -8,7 +8,7 @@
       <component
         :is="type"
         @enablePageBreak="$emit('enablePageBreak')"
-        @assessmentSubmit="data => $emit('assessmentSubmit', data)"
+        @assessmentSubmit="$emit('assessmentSubmit', $event)"
         @pageBreakClick="$emit('pageBreakClick')"
         v-bind="Object.assign({}, element, element.data)"
         :type="element.data.type"
@@ -22,6 +22,8 @@
 <script>
 import get from 'lodash/get';
 import { TE_TYPE } from '../types';
+import TeAssessment from './Assessment/index.vue';
+import TeReflection from './Reflection.vue';
 import TeAccordion from './Accordion/index.vue';
 import TeAssessment from './Assessment/index.vue';
 import TeBreak from './PageBreak.vue';
@@ -58,6 +60,7 @@ export default {
   },
   components: {
     TeAssessment,
+    TeReflection,
     TeAccordion,
     TeBreak,
     TeBrightcoveVideo,

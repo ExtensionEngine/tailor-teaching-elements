@@ -22,7 +22,7 @@
 
 <script>
 import Primitive from '../Primitive.vue';
-import scrollTo from 'vue-scrollto';
+import VueScrollTo from 'vue-scrollto';
 
 const options = {
   container: 'body',
@@ -48,7 +48,7 @@ export default {
       if (this.expanded) this.scroll();
     },
     scroll() {
-      scrollTo(this.$el, 500, options);
+      VueScrollTo.scrollTo(this.$el, 500, options);
     }
   },
   components: { Primitive }

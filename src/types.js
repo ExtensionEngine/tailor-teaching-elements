@@ -16,6 +16,7 @@ export const TE_TYPE = {
   FILE: 'te-file',
   IMAGE: 'te-image',
   ASSESSMENT: 'te-assessment',
+  REFLECTION: 'te-reflection',
   VIDEO: 'te-video',
   ACCORDION: 'te-accordion',
   CAROUSEL: 'te-carousel',

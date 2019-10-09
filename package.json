@@ -1,9 +1,9 @@
 {
   "name": "tailor-teaching-elements",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Tailor teaching elements",
-  "main": "dist/tailor-teaching-elements.min.js",
-  "module": "dist/tailor-teaching-elements.es.js",
+  "main": "dist/tailor-teaching-elements.umd.min.js",
+  "module": "dist/tailor-teaching-elements.esm.js",
   "scripts": {
     "dev": "poi --serve",
     "clean": "rimraf dist",
@@ -35,6 +35,9 @@
     "url": "https://github.com/ExtensionEngine"
   },
   "license": "MIT",
+  "config": {
+    "moduleName": "TailorTeachingElements"
+  },
   "browserslist": [
     "last 2 versions",
     "ie 11"

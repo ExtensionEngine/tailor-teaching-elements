@@ -1,6 +1,6 @@
 <template>
   <div class="select-assessment">
-    <div v-for="(row, index) in rows" :key="index" class="row">
+    <div v-for="(row, index) in rows" :key="`row-${index}`" class="row">
       <div
         v-for="assessment in row"
         :key="assessment.type"

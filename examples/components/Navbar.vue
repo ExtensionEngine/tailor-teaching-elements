@@ -22,9 +22,9 @@
               {{ selected }} <span class="mdi mdi-chevron-down"></span>
             </a>
             <ul class="dropdown-menu">
-              <li v-for="type in elementTypes" :key="type.value">
-                <a @click="select(type.value)" href="#">
-                  {{ type.title }}
+              <li v-for="{ title, value } in elementTypes" :key="value">
+                <a @click="select(value)" href="#">
+                  {{ title }}
                 </a>
               </li>
             </ul>
@@ -53,9 +53,8 @@ export default {
       }));
     },
     selected() {
-      return this.elementType
-        ? toTitleCase(TE_TYPE[this.elementType])
-        : 'Pick element';
+      const title = TE_TYPE[this.elementType] || 'Pick element';
+      return toTitleCase(title);
     }
   },
   methods: {
