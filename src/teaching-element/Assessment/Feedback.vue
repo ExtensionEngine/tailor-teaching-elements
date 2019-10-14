@@ -34,10 +34,10 @@ export default {
   props: {
     correct: { type: [Number, Array, Object, String, Boolean], required: true },
     feedback: { type: Object, default: () => ({}) },
-    sortedResponse: { type: Array, default: () => ([]) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
+    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
+    isUserAnswerParsable: { type: Boolean, required: true }
   },
   computed: {
     assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
@@ -52,9 +52,7 @@ export default {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
 
       if (!this.feedback) return [];
-      const { sortedResponse, userAnswer } = this;
-      const answers = sortedResponse.length ? sortedResponse : userAnswer;
-      return toArray(answers)
+      return toArray(this.userAnswer)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
           if (feedback.content) acc.push(feedback);
@@ -66,15 +64,19 @@ export default {
     }
   },
   methods: {
-    order(index) {
+    getPrefix(answer) {
+      const index = this.isUserAnswerParsable ? answer.index : answer;
       return rules[this.config.type](index);
     },
-    getData(response) {
-      const { sortedResponse, order } = this;
-      let answer = sortedResponse.length ? response.answer : response;
+    getContent(answer) {
+      const index = this.isUserAnswerParsable ? answer.key : answer;
+      return this.feedback[index];
+    },
+    getData(answer) {
       answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = !sortedResponse.length ? order(answer) : order(response.index);
-      return { prefix, content: this.feedback[answer] };
+      const prefix = this.getPrefix(answer);
+      const content = this.getContent(answer);
+      return { prefix, content };
     }
   }
 };

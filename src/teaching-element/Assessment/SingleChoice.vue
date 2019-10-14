@@ -3,18 +3,18 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="({ value, key }, index) in choices"
-        :key="key"
-        :class="{ selected: isSelected(key) }">
+        v-for="choice in choices"
+        :key="choice.key"
+        :class="{ selected: isSelected(choice.key) }">
         <input
           v-model="userAnswer"
-          :value="key"
+          :value="choice"
           :disabled="disabled"
           @change="update"
           class="answers-radio"
           type="radio">
-        <span class="order">{{ transform(index) }}.</span>
-        <span>{{ value }}</span>
+        <span class="order">{{ transform(choice.index) }}.</span>
+        <span>{{ choice.value }}</span>
       </li>
     </ul>
   </div>
@@ -32,16 +32,16 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    submission: { type: Number, default: null },
-    isSubmitting: { type: Boolean, default: false }
+    submission: { type: Number, default: null }
   },
   data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
-      const { randomize } = this.config;
-      const answers = this.answers.map((value, key) => ({ value, key }));
-      return randomize ? shuffle(answers) : answers;
+      const { answers, config } = this;
+      const choices = answers.map((value, key) => ({ value, key, index: key }));
+      if (!config.randomize) return choices;
+      return shuffle(choices).map((it, index) => ({ ...it, index }));
     }
   },
   methods: {
@@ -63,9 +63,6 @@ export default {
     },
     submission(val) {
       this.userAnswer = val;
-    },
-    isSubmitting(val) {
-      if (val && this.config.randomize) this.$emit('matchAnswers', this.choices);
     }
   }
 };
