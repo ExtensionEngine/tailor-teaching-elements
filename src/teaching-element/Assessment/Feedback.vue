@@ -34,6 +34,7 @@ export default {
   props: {
     correct: { type: [Number, Array, Object, String, Boolean], required: true },
     feedback: { type: Object, default: () => ({}) },
+    sortedResponse: { type: Array, default: () => ([]) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
     userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
@@ -51,7 +52,9 @@ export default {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
 
       if (!this.feedback) return [];
-      return toArray(this.userAnswer)
+      const { sortedResponse, userAnswer } = this;
+      const answers = sortedResponse.length ? sortedResponse : userAnswer;
+      return toArray(answers)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
           if (feedback.content) acc.push(feedback);
@@ -66,9 +69,11 @@ export default {
     order(index) {
       return rules[this.config.type](index);
     },
-    getData(answer) {
+    getData(response) {
+      const { sortedResponse, order } = this;
+      let answer = sortedResponse.length ? response.answer : response;
       answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = this.order(answer);
+      const prefix = !sortedResponse.length ? order(answer) : order(response.index);
       return { prefix, content: this.feedback[answer] };
     }
   }

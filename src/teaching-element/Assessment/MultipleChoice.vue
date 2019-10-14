@@ -33,7 +33,8 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    submission: { type: Array, default: () => ([]) }
+    submission: { type: Array, default: () => ([]) },
+    isSubmitting: { type: Boolean, default: false }
   },
   data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
@@ -45,7 +46,7 @@ export default {
     },
     isValid() {
       return this.userAnswer.length;
-    },
+    }
   },
   methods: {
     update() {
@@ -69,6 +70,9 @@ export default {
     },
     submission(val) {
       this.userAnswer = val || [];
+    },
+    isSubmitting(val) {
+      if (val && this.config.randomize) this.$emit('matchAnswers', this.choices);
     }
   }
 };

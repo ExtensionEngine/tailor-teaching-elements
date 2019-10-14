@@ -32,7 +32,8 @@ export default {
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
-    submission: { type: Number, default: null }
+    submission: { type: Number, default: null },
+    isSubmitting: { type: Boolean, default: false }
   },
   data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
@@ -62,6 +63,9 @@ export default {
     },
     submission(val) {
       this.userAnswer = val;
+    },
+    isSubmitting(val) {
+      if (val && this.config.randomize) this.$emit('matchAnswers', this.choices);
     }
   }
 };

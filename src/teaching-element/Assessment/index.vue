@@ -22,6 +22,8 @@
         :options="options"
         :retake="retake"
         :submission="submission"
+        :isSubmitting="isSubmitting"
+        @matchAnswers="matchAnswers"
         @validateAnswer="validateAnswer"
         @update="update"/>
       <hint v-if="showHint" :content="hint"/>
@@ -42,6 +44,7 @@
         :type="type"
         :correct="correct"
         :feedback="feedback"
+        :sortedResponse="sortedResponse"
         :userAnswer="userAnswer"
         :options="options">
       </feedback>
@@ -55,11 +58,13 @@ import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
+import isArray from 'lodash/isArray';
 import MultipleChoice from './MultipleChoice.vue';
 import MatchingQuestion from './MatchingQuestion.vue';
 import NumericalResponse from './NumericalResponse.vue';
 import Question from './Question.vue';
 import SingleChoice from './SingleChoice.vue';
+import sortBy from 'lodash/sortBy';
 import strategies from '@/util/strategies';
 import TextResponse from './TextResponse.vue';
 import TrueFalse from './TrueFalse.vue';
@@ -75,6 +80,8 @@ const answer = {
     note: 'Incorrect answer'
   }
 };
+
+const toArray = arg => isArray(arg) ? arg : [arg];
 
 const CONTEXT_TYPE = {
   FORMATIVE_ASSESSMENT: 'formative',
@@ -100,7 +107,9 @@ export default {
   data() {
     return {
       userAnswer: null,
+      sortedResponse: [],
       retake: false,
+      isSubmitting: false,
       isSaved: false,
       isCorrect: false,
       // TODO: Rename assessmentType prop to context
@@ -161,7 +170,12 @@ export default {
       this.isCorrect = strategy(this.userAnswer, this.correct);
     },
     reset() {
-      Object.assign(this, { isSaved: false, retake: true, userAnswer: null });
+      Object.assign(this, {
+        isSaved: false,
+        retake: true,
+        userAnswer: null,
+        sortedResponse: []
+      });
     },
     update({ userAnswer }) {
       Object.assign(this, { userAnswer, retake: false });
@@ -169,7 +183,21 @@ export default {
     validateAnswer({ isValid }) {
       this.isValidAnswer = isValid;
     },
+    matchAnswers(choices) {
+      if (!this.hasFeedback) return;
+      toArray(this.userAnswer).forEach(answer => {
+        this.sortedResponse.push({
+          answer: answer,
+          index: choices.findIndex(c => { return (c.key === answer); })
+        });
+      });
+      Object.assign(this, {
+        sortedResponse: sortBy(this.sortedResponse, ['index']),
+        isSubmitting: false
+      });
+    },
     submit() {
+      this.isSubmitting = true;
       this.checkAnswer();
       this.$emit('assessmentSubmit', this.submissionPayload);
       Object.assign(this, { retake: this.canRetake, isSaved: true });
