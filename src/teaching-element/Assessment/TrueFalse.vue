@@ -8,9 +8,9 @@
         :class="{ selected: isSelected(value) }">
         <input
           v-model="userAnswer"
+          @change="update"
           :value="value"
           :disabled="disabled"
-          @change="update"
           class="answers-radio"
           type="radio">
         <span class="order">{{ transform(index) }}.</span>
@@ -80,8 +80,8 @@ export default {
 
     .answers-radio {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div
-    :class="{ 'break-hidden': hidden, disabled, last: end }"
     @click="click"
     @mouseenter="hover = true"
     @mouseleave="hover = false"
+    :class="{ 'break-hidden': hidden, disabled, last: end }"
     class="te-break noselect">
     <div :class="{ show: showTooltip }" class="te-break-tooltip">
       {{ tooltip }}
@@ -72,7 +72,7 @@ export default {
 
     &.break-hidden {
       height: 1px;
-      cursor:  default;
+      cursor: default;
 
       > span {
         display: none;
@@ -99,7 +99,7 @@ export default {
 .te-break-tooltip {
   position: absolute;
   opacity: 0;
-  transition: opacity .25s ease-in;
+  transition: opacity 0.25s ease-in;
   z-index: 1000;
   cursor: default;
 

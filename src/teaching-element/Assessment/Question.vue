@@ -7,9 +7,8 @@
           v-for="{ id, data, type } in question"
           :key="id"
           v-bind="data"
-          :assessmentType="assessmentType"
-          :type="type">
-        </primitive>
+          :assessment-type="assessmentType"
+          :type="type" />
       </div>
     </div>
   </div>
@@ -34,9 +33,9 @@ export default {
   text-align: left;
 
   .question {
+    padding: 10px;
     font-size: 22px;
     text-align: center;
-    padding: 10px;
   }
 }
 </style>

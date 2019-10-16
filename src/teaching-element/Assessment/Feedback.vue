@@ -6,7 +6,8 @@
       :key="index"
       class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span v-html="content" class="content-row"></span>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span class="content-row" v-html="content"></span>
     </div>
   </div>
 </template>
@@ -84,41 +85,41 @@ export default {
 
 <style lang="scss">
 .assessment .feedback {
-  position:relative;
+  position: relative;
   border: 1px dotted #ccc;
 
   .form-label {
-    color: #000;
     margin-top: 10px;
+    color: #000;
   }
 
   .form-label, .feedback-content {
-    padding-left: 15px;
     margin-bottom: 10px;
+    padding-left: 15px;
   }
 
   .content-row {
     white-space: pre-wrap;
   }
 
-  &:before {
+  &::before {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color: #ccc transparent transparent transparent;
     top: 0;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: #ccc transparent transparent transparent;
   }
 
-  &:after {
+  &::after {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color:  white transparent transparent transparent;
     top: -1px;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: white transparent transparent transparent;
   }
 }
 </style>
