@@ -9,20 +9,20 @@
 
 <script>
 import Aplayer from 'vue-aplayer';
-Aplayer.disableVersionBadge = true;
 
-const defaultAudioOptions = {
+Aplayer.disableVersionBadge = true;
+const defaultAudioOptions = () => ({
   title: 'Audio track',
   artist: ' ',
   pic: ' '
-};
+});
 
 export default {
-  name: 'te-file',
+  name: 'te-audio',
   inheritAttrs: false,
   props: {
     url: { type: String, required: true },
-    audioOptions: { type: Object, default: () => defaultAudioOptions },
+    audioOptions: { type: Object, default: defaultAudioOptions },
     playerOptions: { type: Object, default: () => ({}) }
   },
   computed: {
