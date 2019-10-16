@@ -13,7 +13,7 @@ export default {
     correct = map(correct, group => map(group, toLower));
     return every(correct, (c, i) => includes(c, answers[i]));
   },
-  NR: (answers, correct) => isEqual(answers, correct),
+  NR: (answers, correct) => isEqual(answers, correct.map(Number)),
   DD: (answers, correct) => every(answers, (a, k) => isEqual(a.sort(), correct[k].sort())),
   MQ: (answers, correct) => isEqual(answers, correct)
 };
