@@ -11,22 +11,21 @@
 import APlayer from 'vue-aplayer';
 
 APlayer.disableVersionBadge = true;
-const defaultAudioOptions = () => ({
+const defaultAudioOptions = {
   title: 'Audio track',
   artist: ' ',
   pic: ' '
-});
+};
 
 export default {
   name: 'te-audio',
   inheritAttrs: false,
   props: {
     url: { type: String, required: true },
-    audioOptions: { type: Object, default: defaultAudioOptions },
     audioPlayerOptions: { type: Object, default: () => ({}) }
   },
   computed: {
-    audio: vm => ({ src: vm.url, ...vm.audioOptions })
+    audio: vm => ({ src: vm.url, ...defaultAudioOptions, ...vm.$attrs })
   },
   components: {
     APlayer
