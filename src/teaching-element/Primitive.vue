@@ -11,6 +11,7 @@ import { TE_TYPE } from '../types';
 import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
+import TeJoditHtml from './JoditHtml.vue';
 
 const resolveElement = type => TE_TYPE[type];
 
@@ -25,7 +26,8 @@ export default {
   components: {
     TeEmbed,
     TeHtml,
-    TeImage
+    TeImage,
+    TeJoditHtml
   }
 };
 </script>

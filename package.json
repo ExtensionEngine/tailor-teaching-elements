@@ -1,40 +1,44 @@
 {
   "name": "tailor-teaching-elements",
-  "version": "1.4.0",
+  "version": "1.5.0-beta.2",
   "description": "Tailor teaching elements",
-  "main": "dist/tailor-teaching-elements.umd.min.js",
-  "module": "dist/tailor-teaching-elements.esm.js",
-  "scripts": {
-    "dev": "poi --serve",
-    "clean": "rimraf dist",
-    "lint:js": "eslint --ext .js,.vue .",
-    "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
-    "lint": "npm run lint:js; npm run lint:scss",
-    "prebuild": "npm run clean",
-    "build": "bili",
-    "prepublishOnly": "npm run build",
-    "release": "np --any-branch --no-cleanup"
+  "keywords": [
+    "content-authoring",
+    "learning",
+    "tailor",
+    "teaching-elements",
+    "vue"
+  ],
+  "bugs": {
+    "url": "https://github.com/ExtensionEngine/tailor-teaching-elements/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ExtensionEngine/tailor-teaching-elements.git"
   },
-  "bugs": {
-    "url": "https://github.com/ExtensionEngine/tailor-teaching-elements/issues"
-  },
-  "keywords": [
-    "vue",
-    "tailor",
-    "teaching-elements",
-    "content-authoring",
-    "learning"
-  ],
+  "license": "MIT",
   "author": {
     "name": "ExtensionEngine",
     "email": "info@extensionengine.com",
     "url": "https://github.com/ExtensionEngine"
   },
-  "license": "MIT",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "main": "dist/tailor-teaching-elements.umd.min.js",
+  "module": "dist/tailor-teaching-elements.esm.js",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "bili",
+    "clean": "rimraf dist",
+    "dev": "poi --serve",
+    "lint": "npm run lint:js; npm run lint:scss",
+    "lint:js": "eslint --ext .js,.vue .",
+    "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
+    "prepublishOnly": "npm run build",
+    "release": "np --any-branch --no-cleanup"
+  },
   "config": {
     "moduleName": "TailorTeachingElements"
   },
@@ -42,10 +46,6 @@
     "last 2 versions",
     "ie 11"
   ],
-  "peerDependencies": {
-    "vue": "^2.5.x",
-    "@mdi/font": "^3.0.39"
-  },
   "dependencies": {
     "hls.js": "^0.12.4",
     "jodit": "^3.2.55",
@@ -98,6 +98,10 @@
     "to-title-case": "^1.0.0",
     "vue": "^2.5.0",
     "vue-template-compiler": "2.6.10"
+  },
+  "peerDependencies": {
+    "@mdi/font": "^3.0.39",
+    "vue": "^2.5.x"
   },
   "engines": {
     "node": ">=8.5.0",
