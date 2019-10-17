@@ -63,10 +63,10 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@extensionengine/eslint-config": "^1.0.1",
+    "@extensionengine/stylelint-config": "^1.0.1",
     "@mdi/font": "^3.0.39",
     "@poi/plugin-eslint": "^12.0.0",
     "@types/poi": "^12.5.0",
-    "@types/stylelint": "^9.10.1",
     "acorn": "^6.3.0",
     "babel-eslint": "^10.0.3",
     "bili": "^4.8.1",
@@ -93,10 +93,7 @@
     "rollup-plugin-visualizer": "^2.6.0",
     "rollup-plugin-vue": "^4.7.2",
     "sass-loader": "^8.0.0",
-    "stylelint": "^11.0.0",
-    "stylelint-config-standard": "^19.0.0",
-    "stylelint-order": "^3.1.1",
-    "stylelint-scss": "^3.11.1",
+    "stylelint": "^11.1.1",
     "to-title-case": "^1.0.0",
     "vue": "^2.5.0",
     "vue-template-compiler": "2.6.10"
