@@ -2,7 +2,7 @@
   <div class="te-audio">
     <a-player
       v-if="url"
-      v-bind="playerOptions"
+      v-bind="audioPlayerOptions"
       :music="audio" />
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   props: {
     url: { type: String, required: true },
     audioOptions: { type: Object, default: defaultAudioOptions },
-    playerOptions: { type: Object, default: () => ({}) }
+    audioPlayerOptions: { type: Object, default: () => ({}) }
   },
   computed: {
     audio: vm => ({ src: vm.url, ...vm.audioOptions })
