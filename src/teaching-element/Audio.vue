@@ -1,16 +1,16 @@
 <template>
   <div class="te-audio">
-    <aplayer
+    <a-player
       v-if="url"
       v-bind="playerOptions"
-      :music="music" />
+      :music="audio" />
   </div>
 </template>
 
 <script>
-import Aplayer from 'vue-aplayer';
+import APlayer from 'vue-aplayer';
 
-Aplayer.disableVersionBadge = true;
+APlayer.disableVersionBadge = true;
 const defaultAudioOptions = () => ({
   title: 'Audio track',
   artist: ' ',
@@ -26,15 +26,10 @@ export default {
     playerOptions: { type: Object, default: () => ({}) }
   },
   computed: {
-    music() {
-      return {
-        url: this.url,
-        ...this.audioOptions
-      };
-    }
+    audio: vm => ({ src: vm.url, ...vm.audioOptions })
   },
   components: {
-    Aplayer
+    APlayer
   }
 };
 </script>
