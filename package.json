@@ -47,6 +47,7 @@
     "ie 11"
   ],
   "dependencies": {
+    "hls.js": "^0.12.4",
     "jodit": "^3.2.55",
     "lodash": "^4.17.15",
     "plyrue": "^2.1.4",
@@ -54,6 +55,7 @@
     "sass-web-fonts": "^2.1.0",
     "url-join": "^4.0.1",
     "video.js": "^7.6.5",
+    "vue-aplayer": "^1.6.1",
     "vue-scrollto": "^2.17.1",
     "vuedraggable": "^2.23.1"
   },

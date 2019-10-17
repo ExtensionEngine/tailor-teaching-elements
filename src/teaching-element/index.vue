@@ -24,6 +24,7 @@ import get from 'lodash/get';
 import { TE_TYPE } from '../types';
 import TeAccordion from './Accordion/index.vue';
 import TeAssessment from './Assessment/index.vue';
+import TeAudio from './Audio.vue';
 import TeBreak from './PageBreak.vue';
 import TeBrightcoveVideo from './BrightcoveVideo.vue';
 import TeCarousel from './Carousel/index.vue';
@@ -61,6 +62,7 @@ export default {
     TeAssessment,
     TeReflection,
     TeAccordion,
+    TeAudio,
     TeBreak,
     TeBrightcoveVideo,
     TeCarousel,
