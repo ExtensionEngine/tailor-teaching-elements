@@ -37,7 +37,8 @@
     "lint:js": "eslint --ext .js,.vue .",
     "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
     "prepublishOnly": "npm run build",
-    "release": "np --any-branch --no-cleanup"
+    "release": "np --any-branch --no-cleanup",
+    "postshrinkwrap": "rewrite-lockfile package-lock.json"
   },
   "config": {
     "moduleName": "TailorTeachingElements"
@@ -47,6 +48,7 @@
     "ie 11"
   ],
   "dependencies": {
+    "hls.js": "^0.12.4",
     "jodit": "^3.2.55",
     "lodash": "^4.17.15",
     "plyrue": "^2.1.4",
@@ -54,6 +56,7 @@
     "sass-web-fonts": "^2.1.0",
     "url-join": "^4.0.1",
     "video.js": "^7.6.5",
+    "vue-aplayer": "^1.6.1",
     "vue-scrollto": "^2.17.1",
     "vuedraggable": "^2.23.1"
   },
@@ -83,6 +86,7 @@
     "np": "^5.1.0",
     "poi": "^12.7.2",
     "poi-preset-sass-resources": "^4.0.2",
+    "rewrite-lockfile": "^1.0.1",
     "rimraf": "^3.0.0",
     "rollup-plugin-alias": "^2.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
