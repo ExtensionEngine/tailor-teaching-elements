@@ -42,7 +42,7 @@
         :correct="correct"
         :feedback="feedback"
         :user-answer="userAnswer"
-        :is-user-answer-parsable="isUserAnswerParsable"
+        :is-randomizable="isRandomizable"
         :options="options" />
     </div>
   </div>
@@ -139,12 +139,12 @@ export default {
     hasUserAnswer() {
       return this.userAnswer !== null;
     },
-    isUserAnswerParsable() {
+    isRandomizable() {
       return PARSABLE_TYPES.includes(this.type);
     },
     parsedUserAnswer() {
-      const { hasUserAnswer, userAnswer, isUserAnswerParsable } = this;
-      if (!hasUserAnswer || !isUserAnswerParsable) return this.userAnswer;
+      const { hasUserAnswer, userAnswer, isRandomizable } = this;
+      if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
       if (!isArray(userAnswer)) return userAnswer.key;
       return userAnswer.map(({ key }) => key).sort();
     },

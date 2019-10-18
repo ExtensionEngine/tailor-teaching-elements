@@ -38,7 +38,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
     userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
-    isUserAnswerParsable: { type: Boolean, required: true }
+    isRandomizable: { type: Boolean, required: true }
   },
   computed: {
     assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
@@ -66,11 +66,11 @@ export default {
   },
   methods: {
     getPrefix(answer) {
-      const index = this.isUserAnswerParsable ? answer.index : answer;
+      const index = this.isRandomizable ? answer.index : answer;
       return rules[this.config.type](index);
     },
     getContent(answer) {
-      const index = this.isUserAnswerParsable ? answer.key : answer;
+      const index = this.isRandomizable ? answer.key : answer;
       return this.feedback[index];
     },
     getData(answer) {
