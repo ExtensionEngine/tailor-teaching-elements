@@ -144,7 +144,7 @@ export default {
     },
     parsedUserAnswer() {
       const { hasUserAnswer, userAnswer, isUserAnswerParsable } = this;
-      if (!(hasUserAnswer && isUserAnswerParsable)) return this.userAnswer;
+      if (!hasUserAnswer || !isUserAnswerParsable) return this.userAnswer;
       if (!isArray(userAnswer)) return userAnswer.key;
       return userAnswer.map(({ key }) => key).sort();
     },
