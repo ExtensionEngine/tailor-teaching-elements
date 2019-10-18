@@ -146,7 +146,7 @@ export default {
       const { hasUserAnswer, userAnswer, isRandomizable } = this;
       if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
       if (!isArray(userAnswer)) return userAnswer.key;
-      return userAnswer.map(({ key }) => key).sort();
+      return userAnswer.map(({ key }) => key);
     },
     hasFeedback() {
       return this.isFormative && this.typeInfo.feedback && this.isSaved;

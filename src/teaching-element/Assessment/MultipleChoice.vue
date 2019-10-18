@@ -24,6 +24,7 @@
 import includes from 'lodash/includes';
 import { rules } from '../../util/listingType';
 import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
 
 const defaults = { type: 'upper-latin', randomize: false };
 
@@ -50,7 +51,8 @@ export default {
   },
   methods: {
     update() {
-      this.$emit('update', { userAnswer: this.userAnswer });
+      const userAnswer = sortBy(this.userAnswer, 'index');
+      this.$emit('update', { userAnswer });
     },
     isSelected(index) {
       return includes(this.userAnswer, index);
