@@ -76,7 +76,7 @@ const answer = {
   }
 };
 
-const PARSABLE_TYPES = ['MC', 'SC'];
+const RANDOMIZABLE_TYPES = ['MC', 'SC'];
 const CONTEXT_TYPE = {
   FORMATIVE_ASSESSMENT: 'formative',
   GOAL: 'goal'
@@ -140,7 +140,7 @@ export default {
       return this.userAnswer !== null;
     },
     isRandomizable() {
-      return PARSABLE_TYPES.includes(this.type);
+      return RANDOMIZABLE_TYPES.includes(this.type);
     },
     parsedUserAnswer() {
       const { hasUserAnswer, userAnswer, isRandomizable } = this;
