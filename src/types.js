@@ -10,6 +10,7 @@ export const ASSESSMENT_TYPE = {
 };
 
 export const TE_TYPE = {
+  AUDIO: 'te-audio',
   BREAK: 'te-break',
   EMBED: 'te-embed',
   HTML: 'te-html',

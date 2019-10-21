@@ -37,7 +37,8 @@ export default {
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
+    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
+    isRandomizable: { type: Boolean, required: true }
   },
   computed: {
     assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
@@ -64,13 +65,19 @@ export default {
     }
   },
   methods: {
-    order(index) {
+    getPrefix(answer) {
+      const index = this.isRandomizable ? answer.index : answer;
       return rules[this.config.type](index);
+    },
+    getContent(answer) {
+      const index = this.isRandomizable ? answer.key : answer;
+      return this.feedback[index];
     },
     getData(answer) {
       answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = this.order(answer);
-      return { prefix, content: this.feedback[answer] };
+      const prefix = this.getPrefix(answer);
+      const content = this.getContent(answer);
+      return { prefix, content };
     }
   }
 };
