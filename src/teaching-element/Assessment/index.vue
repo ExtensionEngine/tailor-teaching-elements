@@ -1,7 +1,7 @@
 <template>
   <div class="assessment-container">
     <div :class="assessmentClasses" class="assessment">
-      <div v-if="context === 'formative'" class="formative-notification">
+      <div v-if="isFormative" class="formative-notification">
         <span>
           Knowledge check
         </span>
@@ -13,59 +13,57 @@
       <div class="exam-order">
         <span>Question {{ position }} of {{ count }}</span>
       </div>
-      <question :question="question" :assessmentType="type"></question>
+      <question :question="question" :assessment-type="type" />
       <component
         :is="component"
+        @validateAnswer="validateAnswer"
+        @update="update"
         v-bind="$attrs"
         :correct="correct"
         :disabled="isSaved"
         :options="options"
         :retake="retake"
-        :submission="submission"
-        @validateAnswer="validateAnswer"
-        @update="update">
-      </component>
-      <hint v-if="hint && showHint" :content="hint"></hint>
+        :submission="submission" />
+      <hint v-if="showHint" :content="hint" />
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
           <span></span>
           {{ answerStatus.note }}
         </div>
         <controls
-          :retake="canRetake"
-          :disabled="!isEditing || !isValidAnswer"
           @reset="reset"
-          @submit="submit">
-        </controls>
+          @submit="submit"
+          :retake="canRetake"
+          :disabled="!isEditing || !isValidAnswer" />
       </div>
       <feedback
         v-if="hasFeedback"
         :type="type"
         :correct="correct"
         :feedback="feedback"
-        :userAnswer="userAnswer"
-        :options="options">
-      </feedback>
+        :user-answer="userAnswer"
+        :is-randomizable="isRandomizable"
+        :options="options" />
     </div>
   </div>
 </template>
 
 <script>
+import { ASSESSMENT_TYPE, subTypeInfo } from '@/types';
 import Controls from './Controls.vue';
 import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
-import isUndefined from 'lodash/isUndefined';
-import MultipleChoice from './MultipleChoice.vue';
+import isArray from 'lodash/isArray';
 import MatchingQuestion from './MatchingQuestion.vue';
+import MultipleChoice from './MultipleChoice.vue';
 import NumericalResponse from './NumericalResponse.vue';
 import Question from './Question.vue';
 import SingleChoice from './SingleChoice.vue';
 import strategies from '@/util/strategies';
 import TextResponse from './TextResponse.vue';
 import TrueFalse from './TrueFalse.vue';
-import { subTypeInfo, ASSESSMENT_TYPE } from '@/types';
 
 const answer = {
   correct: {
@@ -78,6 +76,7 @@ const answer = {
   }
 };
 
+const RANDOMIZABLE_TYPES = ['MC', 'SC'];
 const CONTEXT_TYPE = {
   FORMATIVE_ASSESSMENT: 'formative',
   GOAL: 'goal'
@@ -88,7 +87,7 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
-    correct: { type: [Number, Array, Object, String, Boolean], required: true },
+    correct: { type: [Number, Array, Object, String, Boolean], default: false },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },
@@ -96,6 +95,7 @@ export default {
     position: { type: Number, default: 0 },
     question: { type: Array, required: true },
     submission: { type: [Array, Boolean, Number, Object, String], default: null },
+    isReflection: { type: Boolean, default: false },
     type: { type: String, required: true }
   },
   data() {
@@ -119,10 +119,12 @@ export default {
     assessmentClasses() {
       return [this.typeInfo.class, this.context, this.isSaved ? 'saved' : ''];
     },
+    hasCorrect() {
+      return !(this.type === 'TR' || this.isReflection);
+    },
     showCorrect() {
-      return this.context !== CONTEXT_TYPE.GOAL &&
-        this.type !== 'TR' &&
-        this.isSaved;
+      const { context, hasCorrect, isSaved } = this;
+      return hasCorrect && context !== CONTEXT_TYPE.GOAL && isSaved;
     },
     typeInfo() {
       return subTypeInfo[this.type] || {};
@@ -131,46 +133,56 @@ export default {
       return this.hasUserAnswer && !this.isSaved;
     },
     showHint() {
-      return !this.options.hintOnSubmit || (this.isSaved && !this.isCorrect);
+      const { hint, options, isSaved, isCorrect } = this;
+      return hint && (!options.hintOnSubmit || (isSaved && !isCorrect));
     },
     hasUserAnswer() {
       return this.userAnswer !== null;
     },
+    isRandomizable() {
+      return RANDOMIZABLE_TYPES.includes(this.type);
+    },
+    parsedUserAnswer() {
+      const { hasUserAnswer, userAnswer, isRandomizable } = this;
+      if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
+      if (!isArray(userAnswer)) return userAnswer.key;
+      return userAnswer.map(({ key }) => key);
+    },
     hasFeedback() {
-      return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT &&
-        this.typeInfo.feedback &&
-        this.isSaved;
+      return this.isFormative && this.typeInfo.feedback && this.isSaved;
+    },
+    isFormative() {
+      return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT;
     },
     canRetake() {
-      const { allowRetake } = this.typeInfo;
-      const componentCanRetake = isUndefined(allowRetake) || allowRetake;
-      const isFormative = this.context === 'formative';
-      return isFormative && componentCanRetake && !this.isCorrect && this.isSaved;
+      const { isFormative, isCorrect, typeInfo, isSaved } = this;
+      const { allowRetake = true } = typeInfo;
+      return allowRetake && isFormative && isSaved && !isCorrect;
+    },
+    submissionPayload() {
+      const { id, parsedUserAnswer: answer, isReflection, isCorrect: correct } = this;
+      return { data: { id, answer }, isReflection, correct };
     }
   },
   methods: {
     checkAnswer() {
+      if (this.isReflection) return Object.assign(this, { isCorrect: false });
       const strategy = strategies[this.type] || strategies.default;
-      this.isCorrect = strategy(this.userAnswer, this.correct);
+      this.isCorrect = strategy(this.parsedUserAnswer, this.correct);
     },
     reset() {
-      this.isSaved = false;
-      this.retake = true;
-      this.userAnswer = null;
+      Object.assign(this, { isSaved: false, retake: true, userAnswer: null });
     },
-    update(data) {
-      this.retake = false;
-      this.userAnswer = data.userAnswer;
+    update({ userAnswer }) {
+      Object.assign(this, { userAnswer, retake: false });
     },
     validateAnswer({ isValid }) {
       this.isValidAnswer = isValid;
     },
     submit() {
       this.checkAnswer();
-      this.retake = this.canRetake;
-      const data = { id: this.id, answer: this.userAnswer };
-      this.$emit('assessmentSubmit', { data, correct: this.isCorrect });
-      this.isSaved = true;
+      this.$emit('assessmentSubmit', this.submissionPayload);
+      Object.assign(this, { retake: this.canRetake, isSaved: true });
     }
   },
   components: {

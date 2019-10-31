@@ -1,11 +1,11 @@
 <template>
   <div class="select-assessment">
-    <div v-for="row in rows" class="row">
+    <div v-for="(row, index) in rows" :key="`row-${index}`" class="row">
       <div
         v-for="assessment in row"
         :key="assessment.type"
-        :class="calculateWidth(row)"
         @click="select(assessment.type)"
+        :class="calculateWidth(row)"
         class="btn-base assessment-type">
         <span>{{ assessment.title }}</span>
       </div>
@@ -15,8 +15,8 @@
 
 <script>
 import chunk from 'lodash/chunk';
-import toArray from 'lodash/toArray';
 import { subTypeInfo } from '../../src/types';
+import toArray from 'lodash/toArray';
 
 const ASSESSMENTS_PER_ROW = 6;
 

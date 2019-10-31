@@ -6,7 +6,8 @@
       :key="index"
       class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span v-html="content" class="content-row"></span>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span class="content-row" v-html="content"></span>
     </div>
   </div>
 </template>
@@ -36,9 +37,15 @@ export default {
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
+    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
+    isRandomizable: { type: Boolean, required: true }
   },
   computed: {
+    assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
+    config: vm => ({
+      ...defaults[vm.assessmentType],
+      ...vm.options[vm.assessmentType]
+    }),
     title() {
       return this.type === 'TR' ? 'Suggested Solution' : 'Solution';
     },
@@ -58,16 +65,19 @@ export default {
     }
   },
   methods: {
-    order(index) {
-      const assessmentType = camelCase(ASSESSMENT_TYPE[this.type]);
-      const order = this.options[assessmentType];
-      const orderType = order ? order.type : defaults[assessmentType].type;
-      return rules[orderType](index);
+    getPrefix(answer) {
+      const index = this.isRandomizable ? answer.index : answer;
+      return rules[this.config.type](index);
+    },
+    getContent(answer) {
+      const index = this.isRandomizable ? answer.key : answer;
+      return this.feedback[index];
     },
     getData(answer) {
       answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = this.order(answer);
-      return { prefix, content: this.feedback[answer] };
+      const prefix = this.getPrefix(answer);
+      const content = this.getContent(answer);
+      return { prefix, content };
     }
   }
 };
@@ -75,41 +85,41 @@ export default {
 
 <style lang="scss">
 .assessment .feedback {
-  position:relative;
+  position: relative;
   border: 1px dotted #ccc;
 
   .form-label {
-    color: #000;
     margin-top: 10px;
+    color: #000;
   }
 
   .form-label, .feedback-content {
-    padding-left: 15px;
     margin-bottom: 10px;
+    padding-left: 15px;
   }
 
   .content-row {
     white-space: pre-wrap;
   }
 
-  &:before {
+  &::before {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color: #ccc transparent transparent transparent;
     top: 0;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: #ccc transparent transparent transparent;
   }
 
-  &:after {
+  &::after {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color:  white transparent transparent transparent;
     top: -1px;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: white transparent transparent transparent;
   }
 }
 </style>

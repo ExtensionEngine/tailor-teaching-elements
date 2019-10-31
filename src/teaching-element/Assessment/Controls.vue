@@ -1,9 +1,9 @@
 <template>
   <div class="controls">
     <button
+      @click="onClick"
       :class="{ disabled: disabled && !retake, retake }"
       :disabled="disabled && !retake"
-      @click="onClick"
       class="btn btn-submit">
       {{ btnLabel }}
     </button>
@@ -37,8 +37,8 @@ export default {
   cursor: auto;
 
   .btn-submit {
-    padding: 7px 15px;
     min-width: 85px;
+    padding: 7px 15px;
   }
 
   .btn-submit.retake {

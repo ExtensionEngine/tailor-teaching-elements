@@ -1,86 +1,107 @@
 {
   "name": "tailor-teaching-elements",
-  "version": "1.3.0",
+  "version": "1.5.0-beta.2",
   "description": "Tailor teaching elements",
-  "main": "dist/tailor-teaching-elements.min.js",
-  "module": "dist/tailor-teaching-elements.es.js",
-  "scripts": {
-    "dev": "poi --config config/poi.config.js",
-    "clean": "rimraf dist",
-    "lint": "eslint --ext .js,.vue src",
-    "prebuild": "npm run clean",
-    "build": "bili --config config/bili.config.js",
-    "prepublishOnly": "npm run build",
-    "release": "np --any-branch --no-cleanup"
+  "keywords": [
+    "content-authoring",
+    "learning",
+    "tailor",
+    "teaching-elements",
+    "vue"
+  ],
+  "bugs": {
+    "url": "https://github.com/ExtensionEngine/tailor-teaching-elements/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ExtensionEngine/tailor-teaching-elements.git"
   },
-  "bugs": {
-    "url": "https://github.com/ExtensionEngine/tailor-teaching-elements/issues"
-  },
-  "keywords": [
-    "vue",
-    "tailor",
-    "teaching-elements",
-    "content-authoring",
-    "learning"
-  ],
+  "license": "MIT",
   "author": {
     "name": "ExtensionEngine",
     "email": "info@extensionengine.com",
     "url": "https://github.com/ExtensionEngine"
   },
-  "license": "MIT",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "main": "dist/tailor-teaching-elements.umd.min.js",
+  "module": "dist/tailor-teaching-elements.esm.js",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "bili",
+    "clean": "rimraf dist",
+    "dev": "poi --serve",
+    "lint": "npm run lint:js; npm run lint:scss",
+    "lint:js": "eslint --ext .js,.vue .",
+    "lint:scss": "stylelint \"src/**/*.vue\" \"src/**/*.scss\"",
+    "prepublishOnly": "npm run build",
+    "release": "np --any-branch --no-cleanup",
+    "postshrinkwrap": "rewrite-lockfile package-lock.json"
+  },
+  "config": {
+    "moduleName": "TailorTeachingElements"
+  },
   "browserslist": [
     "last 2 versions",
     "ie 11"
   ],
-  "peerDependencies": {
-    "vue": "^2.5.x",
-    "@mdi/font": "^3.0.39"
-  },
   "dependencies": {
     "cuid": "^2.1.6",
-    "lodash": "^4.17.11",
-    "plyrue": "^1.1.2",
-    "quill": "^1.3.6",
+    "hls.js": "^0.12.4",
+    "jodit": "^3.2.55",
+    "lodash": "^4.17.15",
+    "plyrue": "^2.1.4",
+    "quill": "^1.3.7",
     "sass-web-fonts": "^2.1.0",
-    "url-join": "^4.0.0",
-    "video.js": "^7.2.2",
-    "vue-plyr": "^3.0.0",
-    "vue-scrollto": "^2.13.0",
-    "vuedraggable": "^2.16.0"
+    "url-join": "^4.0.1",
+    "video.js": "^7.6.5",
+    "vue-aplayer": "^1.6.1",
+    "vue-scrollto": "^2.17.1",
+    "vuedraggable": "^2.23.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@extensionengine/eslint-config": "^1.0.1",
+    "@extensionengine/stylelint-config": "^1.0.1",
     "@mdi/font": "^3.0.39",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-2": "^6.24.1",
-    "bili": "^3.1.2",
-    "bootstrap-sass": "^3.3.7",
+    "@poi/plugin-eslint": "^12.0.0",
+    "@types/poi": "^12.5.0",
+    "acorn": "^6.3.0",
+    "babel-eslint": "^10.0.3",
+    "bili": "^4.8.1",
+    "bootstrap-sass": "^3.4.1",
     "bootswatch": "^3.3.7",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.7.1",
+    "eslint": "^6.5.1",
+    "eslint-config-semistandard": "^15.0.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^5.2.3",
     "imports-loader": "^0.8.0",
-    "jquery": "^3.3.1",
-    "node-sass": "^4.9.3",
-    "np": "^3.0.4",
-    "poi": "^9.6.13",
-    "poi-preset-bundle-report": "^2.0.2",
-    "poi-preset-eslint": "^9.1.1",
-    "poi-preset-sass-resources": "^3.0.0",
-    "rimraf": "^2.6.2",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.12.0",
+    "np": "^5.1.0",
+    "poi": "^12.7.2",
+    "poi-preset-sass-resources": "^4.0.2",
+    "rewrite-lockfile": "^1.0.1",
+    "rimraf": "^3.0.0",
+    "rollup-plugin-alias": "^2.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-visualizer": "^0.9.2",
+    "rollup-plugin-visualizer": "^2.6.0",
     "rollup-plugin-vue": "^4.7.2",
-    "sass-loader": "^7.1.0",
-    "to-title-case": "^1.0.0"
+    "sass-loader": "^8.0.0",
+    "stylelint": "^11.1.1",
+    "to-title-case": "^1.0.0",
+    "vue": "^2.5.0",
+    "vue-template-compiler": "2.6.10"
+  },
+  "peerDependencies": {
+    "@mdi/font": "^3.0.39",
+    "vue": "^2.5.x"
   },
   "engines": {
     "node": ">=8.5.0",

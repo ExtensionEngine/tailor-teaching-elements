@@ -4,9 +4,9 @@
     <div class="row answers">
       <draggable
         v-model="answersCollection"
-        :options="draggableOptions"
         @start="dragging = true"
         @end="dragging = false"
+        :options="draggableOptions"
         class="col-xs-12">
         <span
           v-for="{ id, answer } in answersCollection"
@@ -40,7 +40,7 @@
                 v-if="!disabled"
                 @click="removeFromBox(id, response)"
                 class="btn btn-close">
-                <span :class="removeClass"></span>
+                <span :class="config.removeClass"></span>
               </button>
             </div>
           </draggable>
@@ -56,6 +56,7 @@ import get from 'lodash/get';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
+import reduce from 'lodash/reduce';
 import shuffle from 'lodash/shuffle';
 
 const formatAnswers = answers => {
@@ -63,7 +64,7 @@ const formatAnswers = answers => {
   return shuffle(grouped);
 };
 
-const DEFAULT_GROUPS_PER_ROW = 3;
+const defaults = { groupsPerRow: 3, removeClass: 'mdi mdi-close' };
 
 export default {
   props: {
@@ -76,19 +77,15 @@ export default {
     submission: { type: Object, default: () => ({}) }
   },
   data() {
-    const { dragDrop } = this.options;
-
     return {
       dragging: false,
-      groupsPerRow: get(dragDrop, 'groupsPerRow', DEFAULT_GROUPS_PER_ROW),
       userAnswer: mapValues(this.groups, () => []),
       answersCollection: formatAnswers(this.answers)
     };
   },
   computed: {
-    colWidth() {
-      return 12 / this.groupsPerRow;
-    },
+    config: vm => ({ ...defaults, ...vm.options.dragDrop }),
+    colWidth: vm => 12 / vm.config.groupsPerRow,
     draggableOptions() {
       return {
         animation: 150,
@@ -107,12 +104,12 @@ export default {
     },
     removeClass() {
       return get(this.options.dragDrop, 'removeClass', 'mdi mdi-close');
+    },
+    canPartiallyRetake() {
+      return get(this.options.dragDrop, 'partialRetake', false);
     }
   },
   methods: {
-    getResponses(id) {
-      return this.userAnswer[id];
-    },
     answerClasses(groupId, answerId) {
       const { correct, disabled } = this;
       if (!disabled) return;
@@ -125,6 +122,19 @@ export default {
       // Remove from box and add to answers array
       this.userAnswer[id] = this.userAnswer[id].filter(a => a.id !== answer.id);
       this.answersCollection.push(answer);
+    },
+    partiallyRetake() {
+      const { correct, userAnswer } = this;
+      const data = reduce(userAnswer, (acc, group, id) => {
+        acc.userAnswer[id] = [];
+        group.forEach(answer => {
+          const included = includes(correct[id], answer.id);
+          if (included) return acc.userAnswer[id].push(answer);
+          acc.answersCollection.push(answer);
+        });
+        return acc;
+      }, { userAnswer: {}, answersCollection: [] });
+      Object.assign(this, data);
     },
     update(userAnswer) {
       this.$emit('update', { userAnswer });
@@ -148,6 +158,7 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
+      if (this.canPartiallyRetake) return this.partiallyRetake();
       this.answersCollection = formatAnswers(this.answers);
       this.userAnswer = mapValues(this.groups, () => []);
     },
@@ -174,23 +185,27 @@ export default {
 </script>
 
 <style lang="scss">
+.ghost {
+  opacity: 0.5;
+}
+
 .answers {
   min-height: 100px;
 
   .answer {
-    cursor: default;
     display: inline-block;
-    padding: 10px 20px;
     margin: 0 10px 10px 0;
+    padding: 10px 20px;
+    cursor: default;
   }
 }
 
 .group > .box {
   .ghost, .response {
-    cursor: default;
     display: inline-block;
-    padding: 5px 20px;
     margin: 5px;
+    padding: 5px 20px;
+    cursor: default;
   }
 
   .response {
@@ -198,8 +213,8 @@ export default {
 
     .btn-close {
       position: absolute;
-      right: 0;
       top: 0;
+      right: 0;
       margin: 0;
       padding: 0;
       font-size: 12px;
@@ -214,13 +229,9 @@ export default {
   }
 }
 
-.ghost {
-  opacity: .5;
-}
-
 .row.groups {
- display: flex;
- flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
   .group-container {
     display: flex;

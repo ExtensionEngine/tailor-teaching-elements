@@ -9,14 +9,14 @@
       <div class="col-xs-6 drag-container">
         <draggable
           v-model="source"
-          :options="dragOptions"
           @start="onDragStart($event)"
-          @end="onDragEnd">
+          @end="onDragEnd"
+          :options="dragOptions">
           <div
             v-for="({ dragged, value }, index) in source"
             :key="index"
             class="drag-spot">
-            <span :class="{ dragged }" class="item">{{ value }}</span>
+            <span v-if="!dragged" class="item">{{ value }}</span>
           </div>
         </draggable>
       </div>
@@ -24,10 +24,10 @@
         <draggable
           v-for="(item, index) in target"
           :key="index"
+          @add="onAdd"
           :list="item.answers"
           :options="getOptions(item)"
           :class="[{ 'drop-area': isDragging }, answerClasses(item)]"
-          @add="onAdd"
           class="drop-spot">
           <div class="item disabled">{{ item.value }}</div>
           <span v-show="item.answers[0]" class="item disabled">
@@ -54,6 +54,7 @@ export default {
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
     headings: { type: Object, required: true },
+    options: { type: Object, default: () => ({}) },
     premises: { type: Array, required: true },
     responses: { type: Array, required: true },
     retake: { type: Boolean, default: false },
@@ -82,6 +83,9 @@ export default {
     },
     isValid() {
       return this.source.every(({ dragged }) => dragged);
+    },
+    canPartiallyRetake() {
+      return get(this.options.matchingQuestions, 'partialRetake', false);
     }
   },
   methods: {
@@ -103,29 +107,36 @@ export default {
       this.source[this.draggingItem].dragged = true;
       this.update();
     },
-    answerClasses(item) {
-      if (!this.disabled) return;
-      return item.key === this.correct[item.answers[0].key]
-        ? 'te-correct'
-        : 'te-incorrect';
+    answerClasses({ key, answers }) {
+      const { disabled, correct } = this;
+      if (!disabled) return;
+      const isCorrect = key === correct[answers[0].key];
+      return isCorrect ? 'te-correct' : 'te-incorrect';
     },
     remove(item) {
-      let premise = item.answers[0];
+      const premise = item.answers[0];
       premise.dragged = false;
       item.answers = [];
     },
     draggable(item) {
       return get(item.answers, '0.value', '');
     },
+    partiallyRetake() {
+      const { correct, target } = this;
+      target.forEach(response => {
+        const key = response.answers[0].key;
+        if (correct[key] !== response.key) this.remove(response);
+      });
+    },
     update() {
-      const reducer = (acc, it) => {
-        if (it.answers.length) acc[it.answers[0].key] = it.key;
+      const reducer = (acc, { answers, key }) => {
+        if (answers.length) acc[answers[0].key] = key;
         return acc;
       };
       this.$emit('update', { userAnswer: reduce(this.target, reducer, {}) });
     },
     initialize() {
-      let { premises, responses } = this;
+      const { premises, responses } = this;
       this.source = shuffle(premises.map(it => ({ ...it, dragged: false })));
       this.target = sortBy(responses.map(it => ({ ...it, answers: [] })), 'key');
     },
@@ -139,13 +150,10 @@ export default {
       });
     }
   },
-  created() {
-    this.initialize();
-    this.initializeSubmission(this.submission);
-  },
   watch: {
     retake(val) {
       if (!val) return;
+      if (this.canPartiallyRetake) return this.partiallyRetake();
       this.initialize();
       this.update();
     },
@@ -153,6 +161,10 @@ export default {
       this.$emit('validateAnswer', { isValid: val });
     },
     submission: 'initializeSubmission'
+  },
+  created() {
+    this.initialize();
+    this.initializeSubmission(this.submission);
   },
   components: { Draggable }
 };
@@ -165,16 +177,27 @@ export default {
     cursor: move;
   }
 
+  .item {
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    background-color: #f5f5f5;
+    border: 1px solid grey;
+  }
+
+  .dragged {
+    visibility: hidden;
+  }
+
   .drop-spot {
     margin-bottom: 10px;
     padding: 5px 0;
     border: 1px solid grey;
 
     .item {
-      position: relative;
       display: block;
-      padding: 10px 35px 10px 20px;
+      position: relative;
       margin: 5px 0;
+      padding: 10px 35px 10px 20px;
       background-color: transparent;
       border: none;
 
@@ -182,21 +205,10 @@ export default {
         position: absolute;
         top: 11px;
         right: 17px;
-        pointer-events: all;
         cursor: pointer;
+        pointer-events: all;
       }
     }
-  }
-
-  .item {
-    display: inline-block;
-    padding: 10px 20px 10px 20px;
-    border: 1px solid grey;
-    background-color: #f5f5f5;
-  }
-
-  .dragged {
-     visibility: hidden;
   }
 
   .sortable-drag {
@@ -207,8 +219,8 @@ export default {
     }
   }
 
-  .drag-container .sortable-ghost .item, .cloned .item {
-    border: 1px dashed #cccccc;
+  .cloned .item, .drag-container .sortable-ghost .item {
+    border: 1px dashed #ccc;
   }
 
   .drop-area {

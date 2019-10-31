@@ -3,18 +3,21 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="({ answer, id }, index) in mappedAnswers"
-        :key="id"
+        v-for="choice in choices"
+        :key="choice.id"
         :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
-          :id="id"
-          :value="index"
-          :disabled="disabled"
           @change="update"
+          :id="id"
+          :value="choice"
+          :disabled="disabled"
           class="answers-radio"
           type="radio">
-        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
+        <label :for="id">
+          <span class="order">{{ transform(choice.index) }}.</span>
+          <span>{{ choice.value }}</span>
+        </label>
       </li>
     </ul>
   </div>
@@ -23,7 +26,9 @@
 <script>
 import cuid from 'cuid';
 import { rules } from '../../util/listingType';
-const defaults = { type: 'upper-latin' };
+import shuffle from 'lodash/shuffle';
+
+const defaults = { type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -34,22 +39,20 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data() {
-    return { userAnswer: this.submission };
-  },
+  data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
-    mappedAnswers() {
-      return this.answers.map(answer => ({
-        answer,
-        id: cuid()
-      }));
-    },
-    type() {
-      const options = this.options.singleChoice || defaults;
-      return options.type;
+    config: vm => ({ ...defaults, ...vm.options.singleChoice }),
+    choices() {
+      const { answers, config } = this;
+      const choices = answers.map(this.buildChoices);
+      if (!config.randomize) return choices;
+      return shuffle(choices).map((it, index) => ({ ...it, index }));
     }
   },
   methods: {
+    update() {
+      this.$emit('update', { userAnswer: this.userAnswer });
+    },
     getAnswerClass(index) {
       const { correct, userAnswer, disabled, options } = this;
       const selected = index === userAnswer ? 'selected' : '';
@@ -57,11 +60,12 @@ export default {
       const isAnswerCorrect = !(index === correct ^ index === userAnswer);
       return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
     },
-    transform(index) {
-      return rules[this.type](index);
+    buildChoices(value, key) {
+      const id = cuid();
+      return { id, key, index: key, value };
     },
-    update() {
-      this.$emit('update', { userAnswer: this.userAnswer });
+    transform(index) {
+      return rules[this.config.type](index);
     }
   },
   watch: {
@@ -91,8 +95,8 @@ export default {
 
     .answers-radio {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }

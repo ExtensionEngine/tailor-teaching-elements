@@ -110,12 +110,6 @@ export default {
       this.error = err;
     }
   },
-  mounted() {
-    this.initPlayer();
-  },
-  beforeDestroy() {
-    this.destroyPlayer();
-  },
   watch: {
     playerUrl() {
       if (!this.$el) return;
@@ -125,6 +119,12 @@ export default {
       if (!this.$el) return;
       this.initPlayer();
     }
+  },
+  mounted() {
+    this.initPlayer();
+  },
+  beforeDestroy() {
+    this.destroyPlayer();
   }
 };
 
@@ -160,7 +160,7 @@ function empty(el) {
   .error {
     position: relative;
     height: 100%;
-    background: rgba(0,0,0,.9);
+    background: rgba(0,0,0,0.9);
   }
 
   .error .message {

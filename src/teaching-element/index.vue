@@ -1,40 +1,43 @@
 <template>
   <div
-    :class="containerClasses"
     @mousedown="$emit('elementInteraction', element)"
+    :class="containerClasses"
     class="te-container">
     <div class="teaching-element">
       <!-- TODO: Cleanup when element props get sorted-->
       <component
         :is="type"
+        @enablePageBreak="$emit('enablePageBreak')"
+        @assessmentSubmit="$emit('assessmentSubmit', $event)"
+        @pageBreakClick="$emit('pageBreakClick')"
         v-bind="Object.assign({}, element, element.data)"
         :type="element.data.type"
         :position="position"
         :count="count"
-        :options="options"
-        @enablePageBreak="$emit('enablePageBreak')"
-        @assessmentSubmit="data => $emit('assessmentSubmit', data)"
-        @pageBreakClick="$emit('pageBreakClick')">
-      </component>
+        :options="options" />
     </div>
   </div>
 </template>
 
 <script>
 import get from 'lodash/get';
-import TeAssessment from './Assessment/index.vue';
+import { TE_TYPE } from '../types';
 import TeAccordion from './Accordion/index.vue';
+import TeAssessment from './Assessment/index.vue';
+import TeAudio from './Audio.vue';
 import TeBreak from './PageBreak.vue';
 import TeBrightcoveVideo from './BrightcoveVideo.vue';
 import TeCarousel from './Carousel/index.vue';
 import TeEmbed from './Embed.vue';
+import TeFile from './File.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
+import TeJoditHtml from './JoditHtml.vue';
 import TeModal from './Modal/index.vue';
 import TePdf from './Pdf.vue';
+import TeReflection from './Reflection.vue';
 import TeTable from './Table.vue';
 import TeVideo from './Video.vue';
-import { TE_TYPE } from '../types';
 
 export default {
   name: 'teaching-element',
@@ -57,14 +60,18 @@ export default {
   },
   components: {
     TeAssessment,
+    TeReflection,
     TeAccordion,
+    TeAudio,
     TeBreak,
     TeBrightcoveVideo,
     TeCarousel,
     TeEmbed,
     TeHtml,
+    TeFile,
     TeImage,
     TeModal,
+    TeJoditHtml,
     TePdf,
     TeTable,
     TeVideo
@@ -77,17 +84,17 @@ export default {
   text-align: left;
 }
 
- div[class*="col-xs-"].te-container {
-   padding: 0;
- }
+div[class*="col-xs-"].te-container {
+  padding: 0;
+}
 
- .noselect {
+.noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
 </style>

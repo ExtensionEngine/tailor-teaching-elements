@@ -3,18 +3,21 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="({ answer, id }, index) in mappedAnswers"
-        :key="id"
+        v-for="choice in choices"
+        :key="choice.id"
         :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
-          :id="id"
-          :disabled="disabled"
-          :value="index"
           @change="update"
+          :id="choice.id"
+          :value="choice"
+          :disabled="disabled"
           class="answers-checkbox"
           type="checkbox">
-        <label :for="id">{{ transform(index) }}. {{ answer }}</label>
+        <label :for="id">
+          <span class="order">{{ transform(choice.index) }}.</span>
+          <span>{{ choice.value }}</span>
+        </label>
       </li>
     </ul>
   </div>
@@ -22,9 +25,12 @@
 
 <script>
 import cuid from 'cuid';
+import includes from 'lodash/includes';
 import { rules } from '../../util/listingType';
+import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
 
-const defaults = { type: 'upper-latin' };
+const defaults = { type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -35,45 +41,42 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data() {
-    return {
-      userAnswer: this.submission || []
-    };
-  },
+  data: vm => ({ userAnswer: vm.submission || [] }),
   computed: {
-    mappedAnswers() {
-      return this.answers.map((answer, index) => ({
-        answer,
-        correct: this.correct.includes(index),
-        id: cuid()
-      }));
+    config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
+    choices() {
+      const { answers, config } = this;
+      const choices = answers.map((value, key) => this.buildChoices(value, key));
+      if (!config.randomize) return choices;
+      return shuffle(choices).map((it, index) => ({ ...it, index }));
     },
-    type() {
-      const options = this.options.multipleChoice || defaults;
-      return options.type;
+    isValid() {
+      return this.userAnswer.length;
     }
   },
   methods: {
+    update() {
+      const userAnswer = sortBy(this.userAnswer, 'index');
+      this.$emit('update', { userAnswer });
+    },
+    buildChoices(value, key) {
+      const id = cuid();
+      const correct = this.correct.includes(key);
+      return { id, key, index: key, value, correct };
+    },
     getAnswerClass(index) {
-      const { disabled, options, userAnswer, isAnswerCorrect } = this;
-      const selected = userAnswer.includes(index) ? 'selected' : '';
-      if (!disabled || !options.enableHighlighting) return [selected];
-      return [
-        selected,
-        isAnswerCorrect(index) ? 'te-correct' : 'te-incorrect'
-      ];
+      const { disabled, config, userAnswer, isAnswerCorrect } = this;
+      const classes = [includes(userAnswer, index) ? 'selected' : ''];
+      if (!disabled || !config.enableHighlighting) return classes;
+      classes.push(isAnswerCorrect(index) ? 'te-correct' : 'te-incorrect');
+      return classes;
     },
     isAnswerCorrect(index) {
       const { userAnswer, mappedAnswers } = this;
-      return !(userAnswer.includes(index) ^ mappedAnswers[index].correct);
+      return !(includes(userAnswer, index) ^ mappedAnswers[index].correct);
     },
     transform(index) {
-      return rules[this.type](index);
-    },
-    update() {
-      let { userAnswer } = this;
-      userAnswer = userAnswer.length ? userAnswer.sort() : null;
-      this.$emit('update', { userAnswer });
+      return rules[this.config.type](index);
     }
   },
   watch: {
@@ -81,6 +84,9 @@ export default {
       if (!val) return;
       this.userAnswer = [];
       this.update();
+    },
+    isValid(val) {
+      this.$emit('validateAnswer', { isValid: val });
     },
     submission(val) {
       this.userAnswer = val || [];
@@ -103,8 +109,8 @@ export default {
 
     .answers-checkbox {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }
