@@ -1,7 +1,7 @@
 <template>
   <div class="te-modal">
     <button @click="showDialog = true" class="btn btn-primary btn-open">
-      {{ title }}
+      {{ title || 'Open modal' }}
     </button>
     <modal
       v-show="showDialog"
