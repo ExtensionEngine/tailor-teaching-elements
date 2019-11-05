@@ -1,7 +1,7 @@
 <template>
   <div class="te-modal">
     <button @click="showDialog = true" class="btn btn-primary btn-open">
-      {{ title || 'Open modal' }}
+      {{ title }}
     </button>
     <modal
       v-show="showDialog"
@@ -14,10 +14,12 @@
 import Modal from './Modal.vue';
 import sortBy from 'lodash/sortBy';
 
+const DEFAULT_TITLE = 'Open modal';
+
 export default {
   name: 'te-modal',
+  inheritAttrs: false,
   props: {
-    title: { type: String, default: 'Open modal' },
     embeds: { type: Object, default: () => ({}) }
   },
   data() {
@@ -26,7 +28,8 @@ export default {
   computed: {
     elements() {
       return sortBy(this.embeds, 'position');
-    }
+    },
+    title: vm => vm.$attrs.title || DEFAULT_TITLE
   },
   watch: {
     showDialog(val) {
