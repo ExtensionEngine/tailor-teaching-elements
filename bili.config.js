@@ -1,14 +1,16 @@
 'use strict';
 
+const { config } = require('./package.json');
 const path = require('path');
 
+/** @type {import('bili').Config} */
 module.exports = {
   input: {
     'tailor-teaching-elements': 'src/index.js'
   },
   output: {
     format: ['cjs', 'es', 'umd', 'umd-min'],
-    moduleName: 'TailorTeachingElements',
+    moduleName: config.moduleName,
     extractCSS: false
   },
   bundleNodeModules: ['style-inject', 'vue-runtime-helpers'],
@@ -30,5 +32,8 @@ module.exports = {
       sourceMap: true,
       open: false
     }
+  },
+  resolvePlugins: {
+    alias: require('@rollup/plugin-alias')
   }
 };
