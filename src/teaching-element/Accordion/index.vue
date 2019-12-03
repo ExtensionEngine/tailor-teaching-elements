@@ -3,6 +3,7 @@
     <accordion-item
       v-for="item in embeddedItems"
       :key="item.id"
+      :options="itemOptions"
       v-bind="item" />
   </ul>
 </template>
@@ -10,10 +11,19 @@
 <script>
 import AccordionItem from './Item.vue';
 import embedHost from '@/mixin/embedHost';
+import get from 'lodash/get';
 
 export default {
   name: 'te-accordion',
   mixins: [embedHost],
+  props: {
+    options: { type: Object, default: () => ({}) }
+  },
+  computed: {
+    itemOptions() {
+      return get(this.options, 'accordion.item');
+    }
+  },
   components: { AccordionItem }
 };
 </script>
