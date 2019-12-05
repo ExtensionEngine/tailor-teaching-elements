@@ -24,7 +24,7 @@
 import Primitive from '../Primitive.vue';
 import VueScrollTo from 'vue-scrollto';
 
-const DEFAULT_OPTIONS = {
+const DEFAULT_SCROLL_OPTIONS = {
   container: 'body',
   easing: 'ease',
   cancelable: true,
@@ -49,7 +49,7 @@ export default {
       if (this.expanded) this.scroll();
     },
     scroll() {
-      const options = Object.assign({}, DEFAULT_OPTIONS, this.options);
+      const options = Object.assign({}, DEFAULT_SCROLL_OPTIONS, this.options.scroll);
       VueScrollTo.scrollTo(this.$el, 500, options);
     }
   },
