@@ -1,12 +1,9 @@
 <template>
   <div class="te-modal">
-    <button @click="showDialog = true" class="btn btn-primary btn-open">
+    <modal v-show="showDialog" @close="toggleDialog" :elements="elements" />
+    <button @click="toggleDialog" class="btn btn-primary btn-open">
       {{ buttonLabel }}
     </button>
-    <modal
-      v-show="showDialog"
-      @close="showDialog = false"
-      :elements="elements" />
   </div>
 </template>
 
@@ -14,6 +11,8 @@
 import Modal from './Modal.vue';
 import sortBy from 'lodash/sortBy';
 
+const CLASS_ACTIONS = { ADD: 'add', REMOVE: 'remove' };
+const MODAL_OPEN_CLASS = 'modal-open';
 const DEFAULT_LABEL = 'Open modal';
 
 export default {
@@ -23,17 +22,16 @@ export default {
     title: { type: String, default: '' },
     embeds: { type: Object, default: () => ({}) }
   },
-  data() {
-    return { showDialog: false };
-  },
+  data: () => ({ showDialog: false }),
   computed: {
     elements: ({ embeds }) => sortBy(embeds, 'position'),
     buttonLabel: ({ title }) => title || DEFAULT_LABEL
   },
-  watch: {
-    showDialog(val) {
-      if (val) return document.body.classList.add('modal-open');
-      return document.body.classList.remove('modal-open');
+  methods: {
+    toggleDialog() {
+      this.showDialog = !this.showDialog;
+      const action = this.showDialog ? CLASS_ACTIONS.ADD : CLASS_ACTIONS.REMOVE;
+      document.body.classList[action](MODAL_OPEN_CLASS);
     }
   },
   components: { Modal }
