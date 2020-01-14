@@ -95,8 +95,8 @@
     "sass-loader": "^8.0.0",
     "stylelint": "^11.1.1",
     "to-title-case": "^1.0.0",
-    "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10"
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   },
   "peerDependencies": {
     "@mdi/font": "^3.0.39",
