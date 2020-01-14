@@ -3,20 +3,20 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="choice in choices"
-        :key="choice.id"
+        v-for="{ id, key, index, value } in choices"
+        :key="id"
         :class="getAnswerClass(index)">
         <input
           v-model="userAnswer"
           @change="update"
-          :id="choice.id"
-          :value="choice"
+          :id="id"
+          :value="key"
           :disabled="disabled"
           class="answers-checkbox"
           type="checkbox">
         <label :for="id">
-          <span class="order">{{ transform(choice.index) }}.</span>
-          <span>{{ choice.value }}</span>
+          <span class="order">{{ transform(index) }}.</span>
+          <span>{{ value }}</span>
         </label>
       </li>
     </ul>
