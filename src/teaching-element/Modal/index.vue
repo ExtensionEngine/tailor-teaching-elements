@@ -15,6 +15,8 @@ const CLASS_ACTIONS = { ADD: 'add', REMOVE: 'remove' };
 const MODAL_OPEN_CLASS = 'modal-open';
 const DEFAULT_LABEL = 'Open modal';
 
+const bodyClassList = document.body.classList;
+
 export default {
   name: 'te-modal',
   inheritAttrs: false,
@@ -31,7 +33,7 @@ export default {
     toggleDialog() {
       this.showDialog = !this.showDialog;
       const action = this.showDialog ? CLASS_ACTIONS.ADD : CLASS_ACTIONS.REMOVE;
-      document.body.classList[action](MODAL_OPEN_CLASS);
+      bodyClassList[action](MODAL_OPEN_CLASS);
     }
   },
   components: { Modal }
