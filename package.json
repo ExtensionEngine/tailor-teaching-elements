@@ -48,7 +48,6 @@
     "ie 11"
   ],
   "dependencies": {
-    "cuid": "^2.1.6",
     "hls.js": "^0.12.4",
     "jodit": "^3.2.55",
     "lodash": "^4.17.15",

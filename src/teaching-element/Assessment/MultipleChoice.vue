@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import cuid from 'cuid';
+import getUniqueId from '@/util/getUniqueId';
 import includes from 'lodash/includes';
-import { rules } from '../../util/listingType';
+import { rules } from '@/util/listingType';
 import shuffle from 'lodash/shuffle';
 import sortBy from 'lodash/sortBy';
 
@@ -60,7 +60,7 @@ export default {
       this.$emit('update', { userAnswer });
     },
     buildChoices(value, key) {
-      const id = cuid();
+      const id = getUniqueId();
       const correct = this.correct.includes(key);
       return { id, key, index: key, value, correct };
     },

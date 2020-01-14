@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import cuid from 'cuid';
+import getUniqueId from '@/util/getUniqueId';
 import { rules } from '../../util/listingType';
 import shuffle from 'lodash/shuffle';
 
@@ -61,7 +61,7 @@ export default {
       return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
     },
     buildChoices(value, key) {
-      const id = cuid();
+      const id = getUniqueId();
       return { id, key, index: key, value };
     },
     transform(index) {
