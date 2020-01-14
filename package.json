@@ -100,7 +100,7 @@
   },
   "peerDependencies": {
     "@mdi/font": "^3.0.39",
-    "vue": "^2.6.10"
+    "vue": "^2.5.x"
   },
   "engines": {
     "node": ">=8.5.0",
