@@ -25,17 +25,19 @@ const HAS_SUBTYPE = [TYPES.ASSESSMENT, TYPES.REFLECTION];
 const isAssessment = ({ type }) => HAS_SUBTYPE.includes(type) || !type;
 const data = importAll(require.context('../data/', true, /\.json$/));
 
+const ASSESSMENT_OPTIONS = {
+  assessmentType: 'formative',
+  singleChoice: { highlighting: { enabled: true } },
+  multipleChoice: { highlighting: { enabled: true } }
+};
+
 export default {
   props: {
     elementType: { type: String, default: null },
     elementSubType: { type: String, default: null }
   },
-  data() {
-    return {
-      options: { assessmentType: 'formative', enableHighlighting: true }
-    };
-  },
   computed: {
+    options: () => ASSESSMENT_OPTIONS,
     isReflection() {
       return this.elementType === TYPES.REFLECTION;
     },
