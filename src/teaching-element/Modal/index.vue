@@ -11,11 +11,8 @@
 import Modal from './Modal.vue';
 import sortBy from 'lodash/sortBy';
 
-const CLASS_ACTIONS = { ADD: 'add', REMOVE: 'remove' };
 const DEFAULT_BUTTON_TEXT = 'Open modal';
 const MODAL_OPEN_CLASS = 'modal-open';
-
-const bodyClassList = document.body.classList;
 
 export default {
   name: 'te-modal',
@@ -30,10 +27,9 @@ export default {
     buttonText: ({ title }) => title || DEFAULT_BUTTON_TEXT
   },
   methods: {
-    toggleDialog() {
-      this.showDialog = !this.showDialog;
-      const action = this.showDialog ? CLASS_ACTIONS.ADD : CLASS_ACTIONS.REMOVE;
-      bodyClassList[action](MODAL_OPEN_CLASS);
+    toggleDialog(state = !this.showDialog) {
+      document.body.classList.toggle(MODAL_OPEN_CLASS, state);
+      this.showDialog = state;
     }
   },
   components: { Modal }
