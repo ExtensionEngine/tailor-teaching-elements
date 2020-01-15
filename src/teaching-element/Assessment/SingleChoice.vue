@@ -5,7 +5,7 @@
       <li
         v-for="{ id, key, index, value } in choices"
         :key="id"
-        :class="getAnswerClass(index)">
+        :class="getAnswerClass(key)">
         <input
           v-model="userAnswer"
           @change="update"
@@ -25,10 +25,11 @@
 
 <script>
 import getUniqueId from '@/util/getUniqueId';
-import { rules } from '../../util/listingType';
+import { rules } from '@/util/listingType';
 import shuffle from 'lodash/shuffle';
 
-const defaults = { type: 'upper-latin', randomize: false };
+const highlighting = { enabled: false, all: false };
+const defaults = { highlighting, type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -39,12 +40,12 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data: vm => ({ userAnswer: vm.submission || [] }),
+  data: vm => ({ userAnswer: vm.submission || null }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
-      const { answers, config } = this;
-      const choices = answers.map(this.buildChoices);
+      const { answers, buildChoices, config } = this;
+      const choices = answers.map(buildChoices);
       if (!config.randomize) return choices;
       return shuffle(choices).map((it, index) => ({ ...it, index }));
     }
@@ -54,11 +55,11 @@ export default {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
     getAnswerClass(index) {
-      const { correct, userAnswer, disabled, options } = this;
+      const { correct, userAnswer, disabled, config: { highlighting } } = this;
       const selected = index === userAnswer ? 'selected' : '';
-      if (!disabled || !options.enableHighlighting) return [selected];
-      const isAnswerCorrect = !(index === correct ^ index === userAnswer);
-      return [selected, isAnswerCorrect ? 'te-correct' : 'te-incorrect'];
+      if (!disabled || !highlighting.enabled) return selected;
+      const statusClass = index === correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
     },
     buildChoices(value, key) {
       const id = getUniqueId();

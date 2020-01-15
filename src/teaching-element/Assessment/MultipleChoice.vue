@@ -5,7 +5,7 @@
       <li
         v-for="{ id, key, index, value } in choices"
         :key="id"
-        :class="getAnswerClass(index)">
+        :class="getAnswerClass(key, index)">
         <input
           v-model="userAnswer"
           @change="update"
@@ -30,7 +30,8 @@ import { rules } from '@/util/listingType';
 import shuffle from 'lodash/shuffle';
 import sortBy from 'lodash/sortBy';
 
-const defaults = { type: 'upper-latin', randomize: false };
+const highlighting = { enabled: false, all: false };
+const defaults = { highlighting, type: 'upper-latin', randomize: false };
 
 export default {
   props: {
@@ -64,16 +65,12 @@ export default {
       const correct = this.correct.includes(key);
       return { id, key, index: key, value, correct };
     },
-    getAnswerClass(index) {
-      const { disabled, config, userAnswer, isAnswerCorrect } = this;
-      const classes = [includes(userAnswer, index) ? 'selected' : ''];
-      if (!disabled || !config.enableHighlighting) return classes;
-      classes.push(isAnswerCorrect(index) ? 'te-correct' : 'te-incorrect');
-      return classes;
-    },
-    isAnswerCorrect(index) {
-      const { userAnswer, mappedAnswers } = this;
-      return !(includes(userAnswer, index) ^ mappedAnswers[index].correct);
+    getAnswerClass(key, index) {
+      const { disabled, choices, userAnswer, config: { highlighting } } = this;
+      const selected = includes(userAnswer, key) ? 'selected' : '';
+      if (!disabled || !highlighting.enabled) return selected;
+      const statusClass = choices[index].correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
     },
     transform(index) {
       return rules[this.config.type](index);
