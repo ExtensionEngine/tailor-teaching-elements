@@ -24,7 +24,7 @@
 import Primitive from '../Primitive.vue';
 import VueScrollTo from 'vue-scrollto';
 
-const options = {
+const DEFAULT_SCROLL_OPTIONS = {
   container: 'body',
   easing: 'ease',
   cancelable: true,
@@ -37,7 +37,8 @@ export default {
   name: 'te-accordion-item',
   props: {
     elements: { type: Array, required: true },
-    heading: { type: String, required: true }
+    heading: { type: String, required: true },
+    options: { type: Object, default: () => ({}) }
   },
   data() {
     return { expanded: false };
@@ -48,6 +49,7 @@ export default {
       if (this.expanded) this.scroll();
     },
     scroll() {
+      const options = Object.assign({}, DEFAULT_SCROLL_OPTIONS, this.options.scroll);
       VueScrollTo.scrollTo(this.$el, 500, options);
     }
   },
