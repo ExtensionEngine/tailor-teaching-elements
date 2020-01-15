@@ -2,7 +2,7 @@
   <div class="te-modal">
     <modal v-show="showDialog" @close="toggleDialog" :elements="elements" />
     <button @click="toggleDialog" class="btn btn-primary btn-open">
-      {{ buttonLabel }}
+      {{ buttonText }}
     </button>
   </div>
 </template>
@@ -12,8 +12,8 @@ import Modal from './Modal.vue';
 import sortBy from 'lodash/sortBy';
 
 const CLASS_ACTIONS = { ADD: 'add', REMOVE: 'remove' };
+const DEFAULT_BUTTON_TEXT = 'Open modal';
 const MODAL_OPEN_CLASS = 'modal-open';
-const DEFAULT_LABEL = 'Open modal';
 
 const bodyClassList = document.body.classList;
 
@@ -27,7 +27,7 @@ export default {
   data: () => ({ showDialog: false }),
   computed: {
     elements: ({ embeds }) => sortBy(embeds, 'position'),
-    buttonLabel: ({ title }) => title || DEFAULT_LABEL
+    buttonText: ({ title }) => title || DEFAULT_BUTTON_TEXT
   },
   methods: {
     toggleDialog() {
