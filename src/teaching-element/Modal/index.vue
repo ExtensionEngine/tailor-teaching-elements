@@ -1,12 +1,9 @@
 <template>
   <div class="te-modal">
-    <button @click="showDialog = true" class="btn btn-primary btn-open">
-      {{ title }}
+    <modal v-show="showDialog" @close="toggleDialog" :elements="elements" />
+    <button @click="toggleDialog" class="btn btn-primary btn-open">
+      {{ buttonText }}
     </button>
-    <modal
-      v-show="showDialog"
-      @close="showDialog = false"
-      :elements="elements" />
   </div>
 </template>
 
@@ -14,24 +11,25 @@
 import Modal from './Modal.vue';
 import sortBy from 'lodash/sortBy';
 
+const DEFAULT_BUTTON_TEXT = 'Open modal';
+const MODAL_OPEN_CLASS = 'modal-open';
+
 export default {
   name: 'te-modal',
+  inheritAttrs: false,
   props: {
-    title: { type: String, default: 'Open modal' },
+    title: { type: String, default: '' },
     embeds: { type: Object, default: () => ({}) }
   },
-  data() {
-    return { showDialog: false };
-  },
+  data: () => ({ showDialog: false }),
   computed: {
-    elements() {
-      return sortBy(this.embeds, 'position');
-    }
+    elements: ({ embeds }) => sortBy(embeds, 'position'),
+    buttonText: ({ title }) => title || DEFAULT_BUTTON_TEXT
   },
-  watch: {
-    showDialog(val) {
-      if (val) return document.body.classList.add('modal-open');
-      return document.body.classList.remove('modal-open');
+  methods: {
+    toggleDialog(state = !this.showDialog) {
+      document.body.classList.toggle(MODAL_OPEN_CLASS, state);
+      this.showDialog = state;
     }
   },
   components: { Modal }

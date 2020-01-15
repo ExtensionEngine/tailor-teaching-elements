@@ -13,7 +13,11 @@ module.exports = {
     moduleName: config.moduleName,
     extractCSS: false
   },
-  bundleNodeModules: ['style-inject', 'vue-runtime-helpers'],
+  bundleNodeModules: [
+    'rollup-plugin-vue',
+    'style-inject',
+    'vue-runtime-helpers'
+  ],
   plugins: {
     vue: true,
     babel: {
