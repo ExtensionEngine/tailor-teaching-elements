@@ -13,22 +13,22 @@
 </template>
 
 <script>
-import { ASSESSMENT_TYPE } from '../../types';
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import { ASSESSMENT_TYPE } from '@/types';
 import camelCase from 'lodash/camelCase';
 import includes from 'lodash/includes';
 import isArray from 'lodash/isArray';
 import isBoolean from 'lodash/isBoolean';
-import { rules } from '../../util/listingType';
 
 const toArray = arg => isArray(arg) ? arg : [arg];
 
 const noFeedback = ['TR', 'NR'];
 const defaults = {
-  multipleChoice: { type: 'upper-latin' },
-  numericalResponse: { type: 'none' },
-  singleChoice: { type: 'upper-latin' },
-  textResponse: { type: 'none' },
-  trueFalse: { type: 'upper-latin' }
+  multipleChoice: { type: LISTING_TYPES.LATIN.UPPER },
+  numericalResponse: { type: LISTING_TYPES.NONE },
+  singleChoice: { type: LISTING_TYPES.LATIN.UPPER },
+  textResponse: { type: LISTING_TYPES.NONE },
+  trueFalse: { type: LISTING_TYPES.LATIN.UPPER }
 };
 
 export default {

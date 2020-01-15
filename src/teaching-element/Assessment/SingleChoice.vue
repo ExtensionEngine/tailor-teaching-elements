@@ -24,12 +24,15 @@
 </template>
 
 <script>
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
 import getUniqueId from '@/util/getUniqueId';
-import { rules } from '@/util/listingType';
 import shuffle from 'lodash/shuffle';
 
-const highlighting = { enabled: false, all: false };
-const defaults = { highlighting, type: 'upper-latin', randomize: false };
+const defaults = {
+  highlighting: { enabled: false, all: false },
+  type: LISTING_TYPES.LATIN.UPPER,
+  randomize: false
+};
 
 export default {
   props: {
