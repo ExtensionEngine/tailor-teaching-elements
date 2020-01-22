@@ -3,43 +3,52 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="choice in choices"
-        :key="choice.key"
-        :class="{ selected: isSelected(choice.key) }">
+        v-for="{ id, key, index, value } in choices"
+        :key="id"
+        :class="getAnswerClass(key)">
         <input
           v-model="userAnswer"
           @change="update"
-          :value="choice"
+          :id="id"
+          :value="key"
           :disabled="disabled"
           class="answers-radio"
           type="radio">
-        <span class="order">{{ transform(choice.index) }}.</span>
-        <span>{{ choice.value }}</span>
+        <label :for="id">
+          <span class="order">{{ transform(index) }}.</span>
+          <span>{{ value }}</span>
+        </label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { rules } from '../../util/listingType';
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import getUniqueId from '@/util/getUniqueId';
 import shuffle from 'lodash/shuffle';
 
-const defaults = { type: 'upper-latin', randomize: false };
+const defaults = {
+  highlighting: { enabled: false, all: false },
+  type: LISTING_TYPES.LATIN.UPPER,
+  randomize: false
+};
 
 export default {
   props: {
     answers: { type: Array, required: true },
+    correct: { type: Number, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data: vm => ({ userAnswer: vm.submission || [] }),
+  data: vm => ({ userAnswer: vm.submission || null }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
-      const { answers, config } = this;
-      const choices = answers.map((value, key) => ({ value, key, index: key }));
+      const { answers, buildChoices, config } = this;
+      const choices = answers.map(buildChoices);
       if (!config.randomize) return choices;
       return shuffle(choices).map((it, index) => ({ ...it, index }));
     }
@@ -48,8 +57,16 @@ export default {
     update() {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
-    isSelected(index) {
-      return index === this.userAnswer;
+    getAnswerClass(index) {
+      const { correct, userAnswer, disabled, config: { highlighting } } = this;
+      const selected = index === userAnswer ? 'selected' : '';
+      if (!disabled || !highlighting.enabled) return selected;
+      const statusClass = index === correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
+    },
+    buildChoices(value, key) {
+      const id = getUniqueId();
+      return { id, key, index: key, value };
     },
     transform(index) {
       return rules[this.config.type](index);

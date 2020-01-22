@@ -3,34 +3,43 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="choice in choices"
-        :key="choice.key"
-        :class="{ selected: isSelected(choice.key) }">
+        v-for="{ id, key, index, value } in choices"
+        :key="id"
+        :class="getAnswerClass(key, index)">
         <input
           v-model="userAnswer"
           @change="update"
-          :value="choice"
+          :id="id"
+          :value="key"
           :disabled="disabled"
           class="answers-checkbox"
           type="checkbox">
-        <span class="order">{{ transform(choice.index) }}.</span>
-        <span>{{ choice.value }}</span>
+        <label :for="id">
+          <span class="order">{{ transform(index) }}.</span>
+          <span>{{ value }}</span>
+        </label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import getUniqueId from '@/util/getUniqueId';
 import includes from 'lodash/includes';
-import { rules } from '../../util/listingType';
 import shuffle from 'lodash/shuffle';
 import sortBy from 'lodash/sortBy';
 
-const defaults = { type: 'upper-latin', randomize: false };
+const defaults = {
+  highlighting: { enabled: false, all: false },
+  type: LISTING_TYPES.LATIN.UPPER,
+  randomize: false
+};
 
 export default {
   props: {
     answers: { type: Array, required: true },
+    correct: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
@@ -41,7 +50,7 @@ export default {
     config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
     choices() {
       const { answers, config } = this;
-      const choices = answers.map((value, key) => ({ value, key, index: key }));
+      const choices = answers.map((value, key) => this.buildChoices(value, key));
       if (!config.randomize) return choices;
       return shuffle(choices).map((it, index) => ({ ...it, index }));
     },
@@ -54,8 +63,17 @@ export default {
       const userAnswer = sortBy(this.userAnswer, 'index');
       this.$emit('update', { userAnswer });
     },
-    isSelected(index) {
-      return includes(this.userAnswer, index);
+    buildChoices(value, key) {
+      const id = getUniqueId();
+      const correct = this.correct.includes(key);
+      return { id, key, index: key, value, correct };
+    },
+    getAnswerClass(key, index) {
+      const { disabled, choices, userAnswer, config: { highlighting } } = this;
+      const selected = includes(userAnswer, key) ? 'selected' : '';
+      if (!disabled || !highlighting.enabled) return selected;
+      const statusClass = choices[index].correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
     },
     transform(index) {
       return rules[this.config.type](index);

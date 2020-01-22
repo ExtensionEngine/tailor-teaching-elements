@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import { rules } from '../../util/listingType';
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
 
-const defaults = { type: 'upper-latin' };
+const defaults = { type: LISTING_TYPES.LATIN.UPPER };
 
 export default {
   props: {

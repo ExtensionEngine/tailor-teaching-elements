@@ -55,7 +55,6 @@ import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
-import isArray from 'lodash/isArray';
 import MatchingQuestion from './MatchingQuestion.vue';
 import MultipleChoice from './MultipleChoice.vue';
 import NumericalResponse from './NumericalResponse.vue';
@@ -142,12 +141,6 @@ export default {
     isRandomizable() {
       return RANDOMIZABLE_TYPES.includes(this.type);
     },
-    parsedUserAnswer() {
-      const { hasUserAnswer, userAnswer, isRandomizable } = this;
-      if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
-      if (!isArray(userAnswer)) return userAnswer.key;
-      return userAnswer.map(({ key }) => key);
-    },
     hasFeedback() {
       return this.isFormative && this.typeInfo.feedback && this.isSaved;
     },
@@ -160,7 +153,7 @@ export default {
       return allowRetake && isFormative && isSaved && !isCorrect;
     },
     submissionPayload() {
-      const { id, parsedUserAnswer: answer, isReflection, isCorrect: correct } = this;
+      const { id, userAnswer: answer, isReflection, isCorrect: correct } = this;
       return { data: { id, answer }, isReflection, correct };
     }
   },
@@ -168,7 +161,7 @@ export default {
     checkAnswer() {
       if (this.isReflection) return Object.assign(this, { isCorrect: false });
       const strategy = strategies[this.type] || strategies.default;
-      this.isCorrect = strategy(this.parsedUserAnswer, this.correct);
+      this.isCorrect = strategy(this.userAnswer, this.correct);
     },
     reset() {
       Object.assign(this, { isSaved: false, retake: true, userAnswer: null });
