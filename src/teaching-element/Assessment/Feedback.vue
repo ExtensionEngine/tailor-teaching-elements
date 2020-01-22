@@ -58,10 +58,13 @@ export default {
         return acc;
       }, []);
     },
+    hasRandomResponses() {
+      return this.isRandomizable && this.config.randomize;
+    },
     feedbacks() {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
       if (!this.feedback) return [];
-      if (this.options.isPrintView) return this.allFeedback;
+      if (this.options.isPrintView && !this.hasRandomResponses) return this.allFeedback;
       return toArray(this.userAnswer)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
