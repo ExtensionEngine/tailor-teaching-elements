@@ -151,7 +151,9 @@ export default {
       return userAnswer.map(({ key }) => key);
     },
     hasFeedback() {
-      return this.isFormative && this.typeInfo.feedback && this.isSaved;
+      return this.isFormative &&
+      this.typeInfo.feedback &&
+      (this.options.isPrintView || this.isSaved);
     },
     isFormative() {
       return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT;
