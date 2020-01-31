@@ -39,7 +39,8 @@ const defaults = {
 export default {
   props: {
     answers: { type: Array, required: true },
-    correct: { type: Array, required: true },
+    isReflection: { type: Boolean, required: true },
+    correct: { type: Array, default: () => [] },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
@@ -65,13 +66,16 @@ export default {
     },
     buildChoices(value, key) {
       const id = getUniqueId();
+      const choice = { id, key, index: key, value };
+      if (this.isReflection) return choice;
       const correct = this.correct.includes(key);
-      return { id, key, index: key, value, correct };
+      return Object.assign(choice, { correct });
     },
     getAnswerClass(key, index) {
-      const { disabled, choices, userAnswer, config: { highlighting } } = this;
+      const { highlighting } = this.config;
+      const { disabled, choices, userAnswer, isReflection } = this;
       const selected = includes(userAnswer, key) ? 'selected' : '';
-      if (!disabled || !highlighting.enabled) return selected;
+      if (!disabled || isReflection || !highlighting.enabled) return selected;
       const statusClass = choices[index].correct ? 'te-correct' : 'te-incorrect';
       if (selected || highlighting.all) return [selected, statusClass];
     },

@@ -37,6 +37,7 @@ const defaults = {
 export default {
   props: {
     answers: { type: Array, required: true },
+    isReflection: { type: Boolean, required: true },
     correct: { type: Number, required: true },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
@@ -58,9 +59,10 @@ export default {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
     getAnswerClass(index) {
-      const { correct, userAnswer, disabled, config: { highlighting } } = this;
+      const { highlighting } = this.config;
+      const { correct, userAnswer, disabled, isReflection } = this;
       const selected = index === userAnswer ? 'selected' : '';
-      if (!disabled || !highlighting.enabled) return selected;
+      if (!disabled || isReflection || !highlighting.enabled) return selected;
       const statusClass = index === correct ? 'te-correct' : 'te-incorrect';
       if (selected || highlighting.all) return [selected, statusClass];
     },
