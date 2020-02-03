@@ -143,7 +143,7 @@ export default {
     },
     parsedUserAnswer() {
       const { hasUserAnswer, userAnswer, isRandomizable } = this;
-      if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
+      if (!hasUserAnswer || !isRandomizable) return userAnswer;
       if (!Array.isArray(userAnswer)) return userAnswer.key;
       return userAnswer.map(({ key }) => key);
     },
