@@ -55,7 +55,6 @@ import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
 import FillBlank from './FillBlank.vue';
 import Hint from './Hint.vue';
-import isArray from 'lodash/isArray';
 import MatchingQuestion from './MatchingQuestion.vue';
 import MultipleChoice from './MultipleChoice.vue';
 import NumericalResponse from './NumericalResponse.vue';
@@ -145,7 +144,7 @@ export default {
     parsedUserAnswer() {
       const { hasUserAnswer, userAnswer, isRandomizable } = this;
       if (!hasUserAnswer || !isRandomizable) return this.userAnswer;
-      if (!isArray(userAnswer)) return userAnswer.key;
+      if (!Array.isArray(userAnswer)) return userAnswer.key;
       return userAnswer.map(({ key }) => key);
     },
     hasFeedback() {
