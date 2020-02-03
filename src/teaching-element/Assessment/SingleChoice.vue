@@ -25,6 +25,7 @@
 
 <script>
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import get from 'lodash/get';
 import getUniqueId from '@/util/getUniqueId';
 import shuffle from 'lodash/shuffle';
 
@@ -60,7 +61,7 @@ export default {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
     isSelected(key) {
-      return this.userAnswer.key === key;
+      return get(this.userAnswer, 'key') === key;
     },
     getAnswerClass(index) {
       const { correct, disabled, config: { highlighting } } = this;
