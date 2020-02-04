@@ -54,6 +54,10 @@ export default {
     padding: 10px;
     font-size: 22px;
     text-align: center;
+
+    .blank {
+      white-space: initial;
+    }
   }
 }
 </style>
