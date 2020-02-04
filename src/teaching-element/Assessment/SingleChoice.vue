@@ -38,7 +38,7 @@ export default {
   props: {
     answers: { type: Array, required: true },
     isReflection: { type: Boolean, required: true },
-    correct: { type: Number, required: true },
+    correct: { type: Number, default: null },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
