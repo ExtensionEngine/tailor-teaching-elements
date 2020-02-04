@@ -4,10 +4,9 @@
     <div class="question">
       <div class="row">
         <primitive
-          v-for="{ id, data, type } in question"
+          v-for="{ id, data, type } in parsedQuestion"
           :key="id"
           v-bind="data"
-          :assessment-type="assessmentType"
           :type="type" />
       </div>
     </div>
@@ -17,11 +16,29 @@
 <script>
 import Primitive from '../Primitive.vue';
 
+function insertBlankLine() {
+  let counter = 1;
+  return () => `<span class='blank'>
+                  <span>${counter++}</span>
+                  <span class="blank-line"></span>
+                </span>`;
+}
+
 export default {
   name: 'te-question',
   props: {
     assessmentType: { type: String, required: true },
     question: { type: Array, required: true }
+  },
+  computed: {
+    parsedQuestion() {
+      if (this.assessmentType !== 'FB') return this.question;
+      return this.question.map(({ id, data, type }) => {
+        if (!type.includes('HTML')) return { id, data, type };
+        const content = data.content.replace(/@blank/g, insertBlankLine());
+        return { id, data: { ...data, content }, type };
+      });
+    }
   },
   components: { Primitive }
 };
