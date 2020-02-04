@@ -16,7 +16,7 @@
 <script>
 import Primitive from '../Primitive.vue';
 
-function insertBlankLine() {
+function buildBlankReplacer() {
   let counter = 1;
   return () => `<span class='blank'>
                   <span>${counter++}</span>
@@ -33,9 +33,10 @@ export default {
   computed: {
     parsedQuestion() {
       if (this.assessmentType !== 'FB') return this.question;
+      const blankReplacer = buildBlankReplacer();
       return this.question.map(({ id, data, type }) => {
         if (!type.includes('HTML')) return { id, data, type };
-        const content = data.content.replace(/@blank/g, insertBlankLine());
+        const content = data.content.replace(/@blank/g, blankReplacer);
         return { id, data: { ...data, content }, type };
       });
     }
