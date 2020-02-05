@@ -1,7 +1,7 @@
 <template>
   <div class="ql-container te-html">
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="ql-editor content" v-html="html"></div>
+    <div class="ql-editor content" v-html="content"></div>
   </div>
 </template>
 
@@ -11,27 +11,7 @@ import 'quill/dist/quill.core.css';
 export default {
   name: 'te-html',
   props: {
-    assessmentType: { type: String, default: '' },
     content: { type: String, required: true }
-  },
-  data() {
-    return {
-      counter: 1
-    };
-  },
-  computed: {
-    html() {
-      if (this.assessmentType !== 'FB') return this.content;
-      return this.content.replace(/@blank/g, this.insertBlankLine);
-    }
-  },
-  methods: {
-    insertBlankLine() {
-      return `<span class='blank'>
-                <span>${this.counter++}</span>
-                <span class="blank-line"></span>
-              </span>`;
-    }
   }
 };
 </script>
