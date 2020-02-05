@@ -23,6 +23,7 @@
         :disabled="isSaved"
         :options="options"
         :retake="retake"
+        :is-reflection="isReflection"
         :submission="submission" />
       <hint v-if="showHint" :content="hint" />
       <div class="assessment-footer clearfix">
@@ -86,7 +87,7 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
-    correct: { type: [Number, Array, Object, String, Boolean], default: false },
+    correct: { type: [Number, Array, Object, String, Boolean], default: null },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },

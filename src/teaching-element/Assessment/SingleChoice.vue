@@ -40,7 +40,8 @@ const buildSubmission = val => val ? { key: val, index: val } : {};
 export default {
   props: {
     answers: { type: Array, required: true },
-    correct: { type: Number, required: true },
+    isReflection: { type: Boolean, required: true },
+    correct: { type: Number, default: null },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
@@ -64,9 +65,10 @@ export default {
       return get(this.userAnswer, 'key') === key;
     },
     getAnswerClass(index) {
-      const { correct, disabled, config: { highlighting } } = this;
+      const { highlighting } = this.config;
+      const { correct, disabled, isReflection } = this;
       const selected = this.isSelected(index) ? 'selected' : '';
-      if (!disabled || !highlighting.enabled) return selected;
+      if (!disabled || isReflection || !highlighting.enabled) return selected;
       const statusClass = index === correct ? 'te-correct' : 'te-incorrect';
       if (selected || highlighting.all) return [selected, statusClass];
     },
