@@ -10,7 +10,7 @@
           v-model="userAnswer"
           @change="update"
           :id="id"
-          :value="key"
+          :value="{ key, index }"
           :disabled="disabled"
           class="answers-radio"
           type="radio">
@@ -25,6 +25,7 @@
 
 <script>
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import get from 'lodash/get';
 import getUniqueId from '@/util/getUniqueId';
 import shuffle from 'lodash/shuffle';
 
@@ -33,6 +34,8 @@ const defaults = {
   type: LISTING_TYPES.LATIN.UPPER,
   randomize: false
 };
+
+const buildSubmission = val => val ? { key: val, index: val } : {};
 
 export default {
   props: {
@@ -43,7 +46,7 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data: vm => ({ userAnswer: vm.submission || null }),
+  data: vm => ({ userAnswer: buildSubmission(vm.submission) }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
@@ -57,9 +60,12 @@ export default {
     update() {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
+    isSelected(key) {
+      return get(this.userAnswer, 'key') === key;
+    },
     getAnswerClass(index) {
-      const { correct, userAnswer, disabled, config: { highlighting } } = this;
-      const selected = index === userAnswer ? 'selected' : '';
+      const { correct, disabled, config: { highlighting } } = this;
+      const selected = this.isSelected(index) ? 'selected' : '';
       if (!disabled || !highlighting.enabled) return selected;
       const statusClass = index === correct ? 'te-correct' : 'te-incorrect';
       if (selected || highlighting.all) return [selected, statusClass];
@@ -79,7 +85,7 @@ export default {
       this.update();
     },
     submission(val) {
-      this.userAnswer = val;
+      this.userAnswer = buildSubmission(val);
     }
   }
 };
