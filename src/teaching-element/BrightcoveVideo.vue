@@ -66,12 +66,20 @@ export default {
       // Clear errors.
       this.error = null;
       // Remove player assets.
-      if (this.script) this.$el.removeChild(this.script);
-      this.script = null;
-      if (this.style) document.head.removeChild(this.style);
-      this.style = null;
+      this.removePlayerAssets();
       // Wipe wrapper contents.
       empty(this.$refs.videoWrapper);
+    },
+    removePlayerAssets() {
+      let { script, style, $el } = this;
+      if (script && $el.contains(script)) {
+        $el.removeChild(script);
+        script = null;
+      }
+      if (style && document.head.contains(style)) {
+        document.head.removeChild(style);
+        style = null;
+      }
     },
     initPlayer(playerUrl = this.playerUrl) {
       // Cleanup previous instance.
