@@ -71,14 +71,14 @@ export default {
       empty(this.$refs.videoWrapper);
     },
     removePlayerAssets() {
-      let { script, style, $el } = this;
+      const { script, style, $el } = this;
       if (script && $el.contains(script)) {
         $el.removeChild(script);
-        script = null;
+        this.script = null;
       }
       if (style && document.head.contains(style)) {
         document.head.removeChild(style);
-        style = null;
+        this.style = null;
       }
     },
     initPlayer(playerUrl = this.playerUrl) {
