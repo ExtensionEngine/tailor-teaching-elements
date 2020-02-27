@@ -33,7 +33,7 @@ const defaults = {
 
 export default {
   props: {
-    correct: { type: [Number, Array, Object, String, Boolean], required: true },
+    correct: { type: [Number, Array, Object, String, Boolean], default: null },
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },

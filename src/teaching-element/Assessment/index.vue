@@ -13,7 +13,7 @@
       <div class="exam-order">
         <span>Question {{ position }} of {{ count }}</span>
       </div>
-      <question :question="question" :assessment-type="type" />
+      <question :question="parsedQuestion" :assessment-type="type" />
       <component
         :is="component"
         @validateAnswer="validateAnswer"
@@ -23,7 +23,9 @@
         :disabled="isSaved"
         :options="options"
         :retake="retake"
-        :submission="submission" />
+        :is-reflection="isReflection"
+        :submission="submission"
+        :question="parsedQuestion" />
       <hint v-if="showHint" :content="hint" />
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
@@ -50,6 +52,7 @@
 
 <script>
 import { ASSESSMENT_TYPE, subTypeInfo } from '@/types';
+import buildBlankReplacer from '@/util/buildBlankReplacer';
 import Controls from './Controls.vue';
 import DragDrop from './DragDrop.vue';
 import Feedback from './Feedback.vue';
@@ -86,7 +89,7 @@ export default {
   inheritAttrs: false,
   props: {
     id: { type: Number, required: true },
-    correct: { type: [Number, Array, Object, String, Boolean], default: false },
+    correct: { type: [Number, Array, Object, String, Boolean], default: null },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },
@@ -141,6 +144,12 @@ export default {
     isRandomizable() {
       return RANDOMIZABLE_TYPES.includes(this.type);
     },
+    parsedUserAnswer() {
+      const { hasUserAnswer, userAnswer, isRandomizable } = this;
+      if (!hasUserAnswer || !isRandomizable) return userAnswer;
+      if (!Array.isArray(userAnswer)) return userAnswer.key;
+      return userAnswer.map(({ key }) => key);
+    },
     hasFeedback() {
       return this.isFormative && this.typeInfo.feedback && this.isSaved;
     },
@@ -153,15 +162,27 @@ export default {
       return allowRetake && isFormative && isSaved && !isCorrect;
     },
     submissionPayload() {
-      const { id, userAnswer: answer, isReflection, isCorrect: correct } = this;
+      const { id, parsedUserAnswer: answer, isReflection, isCorrect: correct } = this;
       return { data: { id, answer }, isReflection, correct };
+    },
+    parsedQuestion() {
+      if (this.type !== 'FB') return this.question;
+      const counter = { val: 0 };
+      const blankReplacer = buildBlankReplacer(counter);
+      return this.question.map(({ id, data, type }) => {
+        if (!type.includes('HTML')) return { id, data, type };
+        const prevTotal = counter.val;
+        const content = data.content.replace(/@blank/g, blankReplacer);
+        const count = counter.val - prevTotal;
+        return { id, count, data: { ...data, content }, type };
+      });
     }
   },
   methods: {
     checkAnswer() {
       if (this.isReflection) return Object.assign(this, { isCorrect: false });
       const strategy = strategies[this.type] || strategies.default;
-      this.isCorrect = strategy(this.userAnswer, this.correct);
+      this.isCorrect = strategy(this.parsedUserAnswer, this.correct);
     },
     reset() {
       Object.assign(this, { isSaved: false, retake: true, userAnswer: null });

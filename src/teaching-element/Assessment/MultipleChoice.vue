@@ -10,7 +10,7 @@
           v-model="userAnswer"
           @change="update"
           :id="id"
-          :value="key"
+          :value="{ index, key }"
           :disabled="disabled"
           class="answers-checkbox"
           type="checkbox">
@@ -25,8 +25,9 @@
 
 <script>
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import find from 'lodash/find';
 import getUniqueId from '@/util/getUniqueId';
-import includes from 'lodash/includes';
+import map from 'lodash/map';
 import shuffle from 'lodash/shuffle';
 import sortBy from 'lodash/sortBy';
 
@@ -36,16 +37,19 @@ const defaults = {
   randomize: false
 };
 
+const buildSubmission = val => map(val, key => ({ key, index: key }));
+
 export default {
   props: {
     answers: { type: Array, required: true },
-    correct: { type: Array, required: true },
+    isReflection: { type: Boolean, required: true },
+    correct: { type: Array, default: () => [] },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data: vm => ({ userAnswer: vm.submission || [] }),
+  data: vm => ({ userAnswer: buildSubmission(vm.submission) }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
     choices() {
@@ -65,13 +69,19 @@ export default {
     },
     buildChoices(value, key) {
       const id = getUniqueId();
+      const choice = { id, key, index: key, value };
+      if (this.isReflection) return choice;
       const correct = this.correct.includes(key);
-      return { id, key, index: key, value, correct };
+      return Object.assign(choice, { correct });
+    },
+    isSelected(key) {
+      return find(this.userAnswer, { key });
     },
     getAnswerClass(key, index) {
-      const { disabled, choices, userAnswer, config: { highlighting } } = this;
-      const selected = includes(userAnswer, key) ? 'selected' : '';
-      if (!disabled || !highlighting.enabled) return selected;
+      const { highlighting } = this.config;
+      const { disabled, choices, isReflection } = this;
+      const selected = this.isSelected(key) ? 'selected' : '';
+      if (!disabled || isReflection || !highlighting.enabled) return selected;
       const statusClass = choices[index].correct ? 'te-correct' : 'te-incorrect';
       if (selected || highlighting.all) return [selected, statusClass];
     },
@@ -89,7 +99,7 @@ export default {
       this.$emit('validateAnswer', { isValid: val });
     },
     submission(val) {
-      this.userAnswer = val || [];
+      this.userAnswer = buildSubmission(val);
     }
   }
 };
