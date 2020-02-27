@@ -27,6 +27,7 @@
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
 import get from 'lodash/get';
 import getUniqueId from '@/util/getUniqueId';
+import isNumber from 'lodash/isNumber';
 import shuffle from 'lodash/shuffle';
 
 const defaults = {
@@ -35,7 +36,7 @@ const defaults = {
   randomize: false
 };
 
-const buildSubmission = val => val ? { key: val, index: val } : {};
+const buildSubmission = val => isNumber(val) ? { key: val, index: val } : {};
 
 export default {
   props: {
