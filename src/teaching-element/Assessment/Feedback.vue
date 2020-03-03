@@ -38,7 +38,7 @@ export default {
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
+    userAnswer: { type: [Number, String, Array, Object, Boolean], default: null },
     isRandomizable: { type: Boolean, required: true }
   },
   computed: {
@@ -61,8 +61,8 @@ export default {
     feedbacks() {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
       if (!this.feedback) return [];
-      const { config, hasRandomResponses, allFeedback } = this;
-      if (config.showFeedback && !hasRandomResponses) return allFeedback;
+      const { options, hasRandomResponses, allFeedback } = this;
+      if (options.showFeedback && !hasRandomResponses) return allFeedback;
       return toArray(this.userAnswer)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
