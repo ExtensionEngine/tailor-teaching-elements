@@ -27,6 +27,7 @@
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
 import get from 'lodash/get';
 import getUniqueId from '@/util/getUniqueId';
+import isNumber from 'lodash/isNumber';
 import shuffle from 'lodash/shuffle';
 
 const defaults = {
@@ -35,7 +36,7 @@ const defaults = {
   randomize: false
 };
 
-const buildSubmission = val => val ? { key: val, index: val } : {};
+const buildUserAnswer = val => isNumber(val) ? { key: val, index: val } : {};
 
 export default {
   props: {
@@ -47,7 +48,7 @@ export default {
     retake: { type: Boolean, default: false },
     submission: { type: Number, default: null }
   },
-  data: vm => ({ userAnswer: buildSubmission(vm.submission) }),
+  data: vm => ({ userAnswer: buildUserAnswer(vm.submission) }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.singleChoice }),
     choices() {
@@ -83,11 +84,11 @@ export default {
   watch: {
     retake(val) {
       if (!val) return;
-      this.userAnswer = null;
+      this.userAnswer = buildUserAnswer();
       this.update();
     },
     submission(val) {
-      this.userAnswer = buildSubmission(val);
+      this.userAnswer = buildUserAnswer(val);
     }
   }
 };
