@@ -39,7 +39,7 @@
           :disabled="!isEditing || !isValidAnswer" />
       </div>
       <feedback
-        v-if="hasFeedback"
+        v-if="isFeedbackVisible"
         :type="type"
         :correct="correct"
         :feedback="feedback"
@@ -150,8 +150,10 @@ export default {
       if (!Array.isArray(userAnswer)) return userAnswer.key;
       return userAnswer.map(({ key }) => key);
     },
-    hasFeedback() {
-      return this.isFormative && this.typeInfo.feedback && this.isSaved;
+    isFeedbackVisible() {
+      const { isFormative, typeInfo, options, isSaved } = this;
+      if (!isFormative || !typeInfo.feedback) return false;
+      return options.showFeedback || isSaved;
     },
     isFormative() {
       return this.context === CONTEXT_TYPE.FORMATIVE_ASSESSMENT;
