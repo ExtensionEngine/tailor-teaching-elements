@@ -26,13 +26,14 @@ module.exports = {
       extensions: ['.js', '.vue']
     },
     alias: {
-      resolve: ['.vue', '.js'],
-      entries: [
-        { find: '@', replacement: path.resolve(__dirname, './src') }
-      ]
+      entries: [{
+        find: '@',
+        replacement: path.resolve(__dirname, './src')
+      }]
     },
     'node-builtins': true,
     visualizer: {
+      template: 'sunburst',
       sourceMap: true,
       open: false
     }
