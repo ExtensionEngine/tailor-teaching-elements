@@ -5,6 +5,7 @@ const path = require('path');
 
 /** @type {import('bili').Config} */
 module.exports = {
+  externals: ['vue'],
   input: {
     'tailor-teaching-elements': 'src/index.js'
   },
