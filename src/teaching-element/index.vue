@@ -14,7 +14,13 @@
         :type="element.data.type"
         :position="position"
         :count="count"
-        :options="options" />
+        :options="options">
+        <template v-for="(_, slot) in $slots">
+          <template :slot="slot">
+            <slot :name="slot"></slot>
+          </template>
+        </template>
+      </component>
     </div>
   </div>
 </template>
