@@ -4,7 +4,13 @@
       v-for="item in embeddedItems"
       :key="item.id"
       :options="itemOptions"
-      v-bind="item" />
+      v-bind="item">
+      <template v-for="(_, slot) in $slots">
+        <template :slot="slot">
+          <slot :name="slot"></slot>
+        </template>
+      </template>
+    </accordion-item>
   </ul>
 </template>
 
