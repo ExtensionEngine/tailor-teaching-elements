@@ -5,7 +5,9 @@
       :disabled="!hasPrevious"
       aria-label="Previous slide"
       class="btn btn-link btn-slide previous">
-      <span class="icon"></span>
+      <slot name="buttonPreviousIcon">
+        <span class="icon"></span>
+      </slot>
     </button>
     <ul :style="{ height: `${itemsHeight}px` }" class="carousel-items">
       <carousel-item
@@ -19,7 +21,9 @@
       :disabled="!hasNext"
       aria-label="Next slide"
       class="btn btn-link btn-slide next">
-      <span class="icon"></span>
+      <slot name="buttonNextIcon">
+        <span class="icon"></span>
+      </slot>
     </button>
     <ul class="indicators">
       <li
