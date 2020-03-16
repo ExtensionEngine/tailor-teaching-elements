@@ -4,7 +4,9 @@
       <div class="contents">
         <span class="title">{{ heading }}</span>
       </div>
-      <span class="icon"></span>
+      <slot name="accordionHeaderIcon">
+        <span class="icon"></span>
+      </slot>
     </div>
     <transition name="slide-fade">
       <div v-show="expanded" class="accordion-body">
