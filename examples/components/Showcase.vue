@@ -4,11 +4,11 @@
       <div class="presentation">
         <select-assessment
           v-if="showSubtypes"
-          @select="select"/>
+          @select="select" />
         <teaching-element
           v-else-if="element"
           :element="element"
-          :options="options"/>
+          :options="options" />
         <div v-else>Pick an element from the navbar</div>
       </div>
     </div>
@@ -25,17 +25,19 @@ const HAS_SUBTYPE = [TYPES.ASSESSMENT, TYPES.REFLECTION];
 const isAssessment = ({ type }) => HAS_SUBTYPE.includes(type) || !type;
 const data = importAll(require.context('../data/', true, /\.json$/));
 
+const ASSESSMENT_OPTIONS = {
+  assessmentType: 'formative',
+  singleChoice: { highlighting: { enabled: true } },
+  multipleChoice: { highlighting: { enabled: true } }
+};
+
 export default {
   props: {
-    elementType: { type: String, required: true },
-    elementSubType: { type: String, default: '' }
-  },
-  data() {
-    return {
-      options: { assessmentType: 'formative' }
-    };
+    elementType: { type: String, default: null },
+    elementSubType: { type: String, default: null }
   },
   computed: {
+    options: () => ASSESSMENT_OPTIONS,
     isReflection() {
       return this.elementType === TYPES.REFLECTION;
     },

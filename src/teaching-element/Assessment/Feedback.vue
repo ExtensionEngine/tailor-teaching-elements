@@ -6,37 +6,40 @@
       :key="index"
       class="ql-editor feedback-content">
       <span v-if="prefix" class="prefix">{{ prefix }}.</span>
-      <span v-html="content" class="content-row"></span>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <span class="content-row" v-html="content"></span>
     </div>
   </div>
 </template>
 
 <script>
-import { ASSESSMENT_TYPE } from '../../types';
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import { ASSESSMENT_TYPE } from '@/types';
 import camelCase from 'lodash/camelCase';
 import includes from 'lodash/includes';
 import isArray from 'lodash/isArray';
 import isBoolean from 'lodash/isBoolean';
-import { rules } from '../../util/listingType';
+import map from 'lodash/map';
 
 const toArray = arg => isArray(arg) ? arg : [arg];
 
 const noFeedback = ['TR', 'NR'];
 const defaults = {
-  multipleChoice: { type: 'upper-latin' },
-  numericalResponse: { type: 'none' },
-  singleChoice: { type: 'upper-latin' },
-  textResponse: { type: 'none' },
-  trueFalse: { type: 'upper-latin' }
+  multipleChoice: { type: LISTING_TYPES.LATIN.UPPER },
+  numericalResponse: { type: LISTING_TYPES.NONE },
+  singleChoice: { type: LISTING_TYPES.LATIN.UPPER },
+  textResponse: { type: LISTING_TYPES.NONE },
+  trueFalse: { type: LISTING_TYPES.LATIN.UPPER }
 };
 
 export default {
   props: {
-    correct: { type: [Number, Array, Object, String, Boolean], required: true },
+    correct: { type: [Number, Array, Object, String, Boolean], default: null },
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true }
+    userAnswer: { type: [Number, String, Array, Object, Boolean], default: null },
+    isRandomizable: { type: Boolean, required: true }
   },
   computed: {
     assessmentType: vm => camelCase(ASSESSMENT_TYPE[vm.type]),
@@ -47,10 +50,19 @@ export default {
     title() {
       return this.type === 'TR' ? 'Suggested Solution' : 'Solution';
     },
+    allFeedback() {
+      const { config, feedback } = this;
+      const rule = rules[config.type];
+      return map(feedback, (content, key) => ({ prefix: rule(key), content }));
+    },
+    hasRandomResponses() {
+      return this.isRandomizable && this.config.randomize;
+    },
     feedbacks() {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
-
       if (!this.feedback) return [];
+      const { options, hasRandomResponses, allFeedback } = this;
+      if (options.showFeedback && !hasRandomResponses) return allFeedback;
       return toArray(this.userAnswer)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
@@ -63,13 +75,19 @@ export default {
     }
   },
   methods: {
-    order(index) {
+    getPrefix(answer) {
+      const index = this.isRandomizable ? answer.index : answer;
       return rules[this.config.type](index);
+    },
+    getContent(answer) {
+      const index = this.isRandomizable ? answer.key : answer;
+      return this.feedback[index];
     },
     getData(answer) {
       answer = isBoolean(answer) ? Number(!answer) : answer;
-      const prefix = this.order(answer);
-      return { prefix, content: this.feedback[answer] };
+      const prefix = this.getPrefix(answer);
+      const content = this.getContent(answer);
+      return { prefix, content };
     }
   }
 };
@@ -77,41 +95,41 @@ export default {
 
 <style lang="scss">
 .assessment .feedback {
-  position:relative;
+  position: relative;
   border: 1px dotted #ccc;
 
   .form-label {
-    color: #000;
     margin-top: 10px;
+    color: #000;
   }
 
   .form-label, .feedback-content {
-    padding-left: 15px;
     margin-bottom: 10px;
+    padding-left: 15px;
   }
 
   .content-row {
     white-space: pre-wrap;
   }
 
-  &:before {
+  &::before {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color: #ccc transparent transparent transparent;
     top: 0;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: #ccc transparent transparent transparent;
   }
 
-  &:after {
+  &::after {
     content: "";
     display: inline-block;
     position: absolute;
-    border: 9px dotted #ccc;
-    border-color:  white transparent transparent transparent;
     top: -1px;
     left: 50%;
+    border: 9px dotted #ccc;
+    border-color: white transparent transparent transparent;
   }
 }
 </style>

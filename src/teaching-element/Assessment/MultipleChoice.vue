@@ -3,56 +3,87 @@
     <span class="form-label">Solution</span>
     <ul class="answers">
       <li
-        v-for="({ value, key }, index) in choices"
-        :key="key"
-        :class="{ selected: isSelected(key) }">
+        v-for="{ id, key, index, value } in choices"
+        :key="id"
+        :class="getAnswerClass(key, index)">
         <input
           v-model="userAnswer"
-          :value="key"
-          :disabled="disabled"
           @change="update"
+          :id="id"
+          :value="{ index, key }"
+          :disabled="disabled"
           class="answers-checkbox"
           type="checkbox">
-        <span class="order">{{ transform(index) }}.</span>
-        <span>{{ value }}</span>
+        <label :for="id">
+          <span class="order">{{ transform(index) }}.</span>
+          <span>{{ value }}</span>
+        </label>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import includes from 'lodash/includes';
-import { rules } from '../../util/listingType';
+import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
+import find from 'lodash/find';
+import getUniqueId from '@/util/getUniqueId';
+import map from 'lodash/map';
 import shuffle from 'lodash/shuffle';
+import sortBy from 'lodash/sortBy';
 
-const defaults = { type: 'upper-latin', randomize: false };
+const defaults = {
+  highlighting: { enabled: false, all: false },
+  type: LISTING_TYPES.LATIN.UPPER,
+  randomize: false
+};
+
+const buildSubmission = val => map(val, key => ({ key, index: key }));
 
 export default {
   props: {
     answers: { type: Array, required: true },
+    isReflection: { type: Boolean, required: true },
+    correct: { type: Array, default: () => [] },
     disabled: { type: Boolean, default: false },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) }
   },
-  data: vm => ({ userAnswer: vm.submission || [] }),
+  data: vm => ({ userAnswer: buildSubmission(vm.submission) }),
   computed: {
     config: vm => ({ ...defaults, ...vm.options.multipleChoice }),
     choices() {
-      const { randomize } = this.config;
-      const answers = this.answers.map((value, key) => ({ value, key }));
-      return randomize ? shuffle(answers) : answers;
+      const { answers, config } = this;
+      const choices = answers.map((value, key) => this.buildChoices(value, key));
+      if (!config.randomize) return choices;
+      return shuffle(choices).map((it, index) => ({ ...it, index }));
     },
     isValid() {
       return this.userAnswer.length;
-    },
+    }
   },
   methods: {
     update() {
-      this.$emit('update', { userAnswer: this.userAnswer.sort() });
+      const userAnswer = sortBy(this.userAnswer, 'index');
+      this.$emit('update', { userAnswer });
     },
-    isSelected(index) {
-      return includes(this.userAnswer, index);
+    buildChoices(value, key) {
+      const id = getUniqueId();
+      const choice = { id, key, index: key, value };
+      if (this.isReflection) return choice;
+      const correct = this.correct.includes(key);
+      return Object.assign(choice, { correct });
+    },
+    isSelected(key) {
+      return find(this.userAnswer, { key });
+    },
+    getAnswerClass(key, index) {
+      const { highlighting } = this.config;
+      const { disabled, choices, isReflection } = this;
+      const selected = this.isSelected(key) ? 'selected' : '';
+      if (!disabled || isReflection || !highlighting.enabled) return selected;
+      const statusClass = choices[index].correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
     },
     transform(index) {
       return rules[this.config.type](index);
@@ -68,7 +99,7 @@ export default {
       this.$emit('validateAnswer', { isValid: val });
     },
     submission(val) {
-      this.userAnswer = val || [];
+      this.userAnswer = buildSubmission(val);
     }
   }
 };
@@ -88,8 +119,8 @@ export default {
 
     .answers-checkbox {
       position: absolute;
-      left: 31px;
       top: 10px;
+      left: 31px;
     }
   }
 }

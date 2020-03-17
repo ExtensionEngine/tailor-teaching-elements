@@ -1,5 +1,5 @@
-import Vue from 'vue';
 import App from './App';
+import Vue from 'vue';
 import VueScrollTo from 'vue-scrollto';
 
 Vue.use(VueScrollTo);

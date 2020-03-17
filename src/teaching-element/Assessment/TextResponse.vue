@@ -4,8 +4,8 @@
     <span class="answer">
       <textarea
         v-model="userAnswer"
-        :disabled="disabled"
         :id="uniqueId"
+        :disabled="disabled"
         class="form-control"
         rows="6"
         type="text">
@@ -55,9 +55,9 @@ export default {
 <style lang="scss">
 .assessment.text-response {
   .answer {
+    margin: 10px 0;
     padding: 10px 0 0 50px;
     font-size: 16px;
-    margin: 10px 0;
   }
 }
 </style>

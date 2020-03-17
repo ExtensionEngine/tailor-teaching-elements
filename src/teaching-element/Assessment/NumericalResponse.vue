@@ -9,8 +9,8 @@
         <div v-if="it.prefix" class="input-group-addon">{{ it.prefix }}</div>
         <input
           v-model.trim="it.answer"
-          :disabled="disabled"
           @input="update"
+          :disabled="disabled"
           type="text"
           class="form-control"
           placeholder="Solution...">
@@ -55,16 +55,16 @@ export default {
       this.$emit('update', { userAnswer });
     }
   },
-  created() {
-    this.items = zipWith(this.prefixes, this.suffixes,
-      (prefix, suffix) => ({ prefix, suffix }));
-    this.initializeSubmission(this.submission);
-  },
   watch: {
     retake(val) {
       if (val) this.items.forEach(it => (it.answer = null));
     },
     submission: 'initializeSubmission'
+  },
+  created() {
+    this.items = zipWith(this.prefixes, this.suffixes,
+      (prefix, suffix) => ({ prefix, suffix }));
+    this.initializeSubmission(this.submission);
   }
 };
 </script>

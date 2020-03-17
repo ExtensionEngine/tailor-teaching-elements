@@ -13,7 +13,7 @@
 
 <script>
 import { extname } from 'path';
-import { Plyrue } from 'plyrue';
+import { PlyrueComponent as Plyrue } from 'plyrue';
 
 const MIMETYPE = {
   m4v: 'video/mp4',

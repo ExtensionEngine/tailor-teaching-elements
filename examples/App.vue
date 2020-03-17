@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <navbar :elementType="elementType" @select="select"/>
+    <navbar @select="select" :element-type="elementType" />
     <div class="container-fluid">
       <showcase
-        :elementType="elementType"
-        :elementSubType="elementSubType"
-        @select="select"/>
+        @select="select"
+        :element-type="elementType"
+        :element-sub-type="elementSubType" />
     </div>
   </div>
 </template>

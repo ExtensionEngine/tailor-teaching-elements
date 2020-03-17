@@ -7,9 +7,7 @@
           v-for="{ id, data, type } in question"
           :key="id"
           v-bind="data"
-          :assessmentType="assessmentType"
-          :type="type">
-        </primitive>
+          :type="type" />
       </div>
     </div>
   </div>
@@ -21,7 +19,6 @@ import Primitive from '../Primitive.vue';
 export default {
   name: 'te-question',
   props: {
-    assessmentType: { type: String, required: true },
     question: { type: Array, required: true }
   },
   components: { Primitive }
@@ -34,9 +31,13 @@ export default {
   text-align: left;
 
   .question {
+    padding: 10px;
     font-size: 22px;
     text-align: center;
-    padding: 10px;
+
+    .blank {
+      white-space: initial;
+    }
   }
 }
 </style>

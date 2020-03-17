@@ -10,15 +10,18 @@ export const ASSESSMENT_TYPE = {
 };
 
 export const TE_TYPE = {
+  AUDIO: 'te-audio',
   BREAK: 'te-break',
   EMBED: 'te-embed',
   HTML: 'te-html',
+  FILE: 'te-file',
   IMAGE: 'te-image',
   ASSESSMENT: 'te-assessment',
   REFLECTION: 'te-reflection',
   VIDEO: 'te-video',
   ACCORDION: 'te-accordion',
   CAROUSEL: 'te-carousel',
+  JODIT_HTML: 'te-jodit-html',
   MODAL: 'te-modal',
   TABLE: 'te-table',
   PDF: 'te-pdf',

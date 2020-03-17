@@ -1,5 +1,5 @@
 <template>
-  <li :class="{ 'accordion-active': expanded }" @scroll="scroll">
+  <li @scroll="scroll" :class="{ 'accordion-active': expanded }">
     <div @click="toggle" class="accordion-header">
       <div class="contents">
         <span class="title">{{ heading }}</span>
@@ -13,8 +13,7 @@
             v-for="{ id, type, data } in elements"
             :key="id"
             :type="type"
-            v-bind="data">
-          </primitive>
+            v-bind="data" />
         </div>
       </div>
     </transition>
@@ -25,7 +24,7 @@
 import Primitive from '../Primitive.vue';
 import VueScrollTo from 'vue-scrollto';
 
-const options = {
+const DEFAULT_SCROLL_OPTIONS = {
   container: 'body',
   easing: 'ease',
   cancelable: true,
@@ -38,7 +37,8 @@ export default {
   name: 'te-accordion-item',
   props: {
     elements: { type: Array, required: true },
-    heading: { type: String, required: true }
+    heading: { type: String, required: true },
+    options: { type: Object, default: () => ({}) }
   },
   data() {
     return { expanded: false };
@@ -49,6 +49,7 @@ export default {
       if (this.expanded) this.scroll();
     },
     scroll() {
+      const options = Object.assign({}, DEFAULT_SCROLL_OPTIONS, this.options.scroll);
       VueScrollTo.scrollTo(this.$el, 500, options);
     }
   },
@@ -58,32 +59,32 @@ export default {
 
 <style lang="scss">
 .accordion-header {
+  position: relative;
   height: 60px;
   font-size: 16px;
-  text-align: justify;
   cursor: pointer;
-  position: relative;
+  text-align: justify;
 
   .accordion-active & { font-weight: 500; }
 
   .contents {
-    line-height: 34px;
     padding: 12px;
+    line-height: 34px;
 
     .title {
       display: inline-block;
       width: 90%;
       max-width: 90%;
       padding-top: 1px;
-      vertical-align: middle;
       line-height: 1em;
+      vertical-align: middle;
     }
   }
 
   .icon {
     position: absolute;
-    right: 25px;
     top: 50%;
+    right: 25px;
     transform: translateY(-50%);
     font-size: 16px;
   }

@@ -38,12 +38,12 @@
 <script>
 import 'bootstrap-sass/assets/javascripts/bootstrap/dropdown';
 import keys from 'lodash/keys';
-import toTitleCase from 'to-title-case';
 import { TE_TYPE } from '../../src/types';
+import toTitleCase from 'to-title-case';
 
 export default {
   props: {
-    elementType: { type: String, default: '' }
+    elementType: { type: String, default: null }
   },
   computed: {
     elementTypes() {

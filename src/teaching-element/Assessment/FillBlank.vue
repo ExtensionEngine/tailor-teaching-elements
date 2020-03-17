@@ -2,15 +2,15 @@
   <div class="form-group">
     <span class="form-label">Solution</span>
     <div
-      v-for="(_, index) in correct"
+      v-for="index in blankCount"
       :key="index"
       class="answer-group">
       <ul>
         <li>
           <div class="input-group">
-            <div class="input-group-addon">{{ index + 1 }}</div>
+            <div class="input-group-addon">{{ index }}</div>
             <input
-              v-model="userAnswer[index]"
+              v-model="userAnswer[index - 1]"
               :disabled="disabled"
               type="text"
               class="form-control"
@@ -25,7 +25,7 @@
 <script>
 export default {
   props: {
-    correct: { type: Array, required: true },
+    question: { type: Array, required: true },
     disabled: { type: Boolean, default: false },
     submission: { type: Array, default: () => ([]) },
     retake: { type: Boolean, default: false }
@@ -33,10 +33,15 @@ export default {
   data() {
     return { userAnswer: this.submission || [] };
   },
+  computed: {
+    blankCount() {
+      return this.question.reduce((total, { count = 0 }) => total + count, 0);
+    }
+  },
   methods: {
     update() {
-      let userAnswer = this.userAnswer.map(it => it.trim()).filter(it => !!it);
-      if (userAnswer.length !== this.correct.length) userAnswer = null;
+      let userAnswer = this.userAnswer.filter(it => !!it.trim());
+      if (userAnswer.length !== this.blankCount) userAnswer = null;
       this.$emit('update', { userAnswer });
     }
   },
@@ -47,9 +52,7 @@ export default {
     submission(val) {
       this.userAnswer = val || [];
     },
-    userAnswer() {
-      this.update();
-    }
+    userAnswer: 'update'
   }
 };
 </script>
