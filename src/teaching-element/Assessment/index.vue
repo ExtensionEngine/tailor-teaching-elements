@@ -29,7 +29,9 @@
       <hint v-if="showHint" :content="hint" />
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
-          <span></span>
+          <slot name="assessmentAnswerIcon">
+            <span></span>
+          </slot>
           {{ answerStatus.note }}
         </div>
         <controls
