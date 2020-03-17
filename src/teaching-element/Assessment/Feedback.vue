@@ -19,6 +19,7 @@ import camelCase from 'lodash/camelCase';
 import includes from 'lodash/includes';
 import isArray from 'lodash/isArray';
 import isBoolean from 'lodash/isBoolean';
+import map from 'lodash/map';
 
 const toArray = arg => isArray(arg) ? arg : [arg];
 
@@ -37,7 +38,7 @@ export default {
     feedback: { type: Object, default: () => ({}) },
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
-    userAnswer: { type: [Number, String, Array, Object, Boolean], required: true },
+    userAnswer: { type: [Number, String, Array, Object, Boolean], default: null },
     isRandomizable: { type: Boolean, required: true }
   },
   computed: {
@@ -49,10 +50,19 @@ export default {
     title() {
       return this.type === 'TR' ? 'Suggested Solution' : 'Solution';
     },
+    allFeedback() {
+      const { config, feedback } = this;
+      const rule = rules[config.type];
+      return map(feedback, (content, key) => ({ prefix: rule(key), content }));
+    },
+    hasRandomResponses() {
+      return this.isRandomizable && this.config.randomize;
+    },
     feedbacks() {
       if (includes(noFeedback, this.type)) return [{ content: this.correct }];
-
       if (!this.feedback) return [];
+      const { options, hasRandomResponses, allFeedback } = this;
+      if (options.showFeedback && !hasRandomResponses) return allFeedback;
       return toArray(this.userAnswer)
         .reduce((acc, it) => {
           const feedback = this.getData(it);
