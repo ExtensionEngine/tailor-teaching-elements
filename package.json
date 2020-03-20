@@ -91,7 +91,7 @@
     "rewrite-lockfile": "^1.0.1",
     "rimraf": "^3.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-visualizer": "^3.3.1",
+    "rollup-plugin-visualizer": "^3.3.2",
     "rollup-plugin-vue": "^5.1.6",
     "sass-loader": "^8.0.0",
     "stylelint": "^11.1.1",
