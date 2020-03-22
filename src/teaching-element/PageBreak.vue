@@ -9,7 +9,9 @@
       {{ tooltip }}
     </div>
     <span>
-      <span class="mdi mdi-chevron-down"></span>
+      <slot name="pageBreakIcon">
+        <span class="mdi mdi-chevron-down"></span>
+      </slot>
       <span>{{ btnLabel }}</span>
     </span>
   </div>
