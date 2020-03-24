@@ -4,10 +4,10 @@
       <div class="contents">
         <span class="title">{{ heading }}</span>
       </div>
-      <slot v-if="!expanded" name="accordionHeaderClosedIcon">
+      <slot v-show="!expanded" name="accordionHeaderClosedIcon">
         <span class="closed-icon"></span>
       </slot>
-      <slot v-if="expanded" name="accordionHeaderOpenIcon">
+      <slot v-show="expanded" name="accordionHeaderOpenIcon">
         <span class="open-icon"></span>
       </slot>
     </div>
