@@ -4,11 +4,11 @@
       <div class="contents">
         <span class="title">{{ heading }}</span>
       </div>
-      <slot v-show="!expanded" name="accordionHeaderClosedIcon">
-        <span class="closed-icon"></span>
-      </slot>
-      <slot v-show="expanded" name="accordionHeaderOpenIcon">
+      <slot v-if="expanded" name="accordionHeaderOpenIcon">
         <span class="open-icon"></span>
+      </slot>
+      <slot v-else name="accordionHeaderClosedIcon">
+        <span class="closed-icon"></span>
       </slot>
     </div>
     <transition name="slide-fade">
