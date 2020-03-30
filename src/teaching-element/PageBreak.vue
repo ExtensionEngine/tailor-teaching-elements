@@ -80,10 +80,6 @@ export default {
         display: none;
       }
     }
-
-    .mdi-arrow-right {
-      display: none;
-    }
   }
 
   &.last {
