@@ -32,7 +32,10 @@
           <div class="item disabled">{{ item.value }}</div>
           <span v-show="item.answers[0]" class="item disabled">
             {{ draggable(item) }}
-            <span v-if="!disabled" @click="remove(item)" class="mdi mdi-close">
+            <span v-if="!disabled" @click="remove(item)" class="remove-icon">
+              <slot name="matchingQuestionCloseIcon">
+                <span class="mdi mdi-close"></span>
+              </slot>
             </span>
           </span>
         </draggable>
@@ -201,7 +204,7 @@ export default {
       background-color: transparent;
       border: none;
 
-      .mdi-close {
+      .remove-icon {
         position: absolute;
         top: 11px;
         right: 17px;
