@@ -9,9 +9,11 @@
       {{ tooltip }}
     </div>
     <span>
-      <slot name="pageBreakIcon">
-        <span class="mdi mdi-chevron-down"></span>
-      </slot>
+      <span class="break-icon">
+        <slot name="pageBreakIcon">
+          <span class="mdi mdi-chevron-down"></span>
+        </slot>
+      </span>
       <span>{{ btnLabel }}</span>
     </span>
   </div>
@@ -83,7 +85,7 @@ export default {
   }
 
   &.last {
-    .mdi-chevron-down {
+    .break-icon {
       display: none;
     }
 
