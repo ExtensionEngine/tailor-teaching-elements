@@ -4,7 +4,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <button @click="$emit('close')" aria-label="Close">
-            <span aria-hidden="true" class="mdi mdi-close"></span>
+            <slot name="modalCloseIcon">
+              <span aria-hidden="true" class="mdi mdi-close"></span>
+            </slot>
           </button>
         </div>
         <div class="modal-body">

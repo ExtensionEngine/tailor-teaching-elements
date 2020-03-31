@@ -1,6 +1,12 @@
 <template>
   <div class="te-modal">
-    <modal v-show="showDialog" @close="toggleDialog" :elements="elements" />
+    <modal v-show="showDialog" @close="toggleDialog" :elements="elements">
+      <template v-for="(_, slot) in $slots">
+        <template :slot="slot">
+          <slot :name="slot"></slot>
+        </template>
+      </template>
+    </modal>
     <button @click="toggleDialog" class="btn btn-primary btn-open">
       {{ buttonText }}
     </button>

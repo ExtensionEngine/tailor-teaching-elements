@@ -4,7 +4,9 @@
       v-if="url"
       @click="download"
       class="btn btn-primary download-button">
-      <span class="mdi mdi-file-download download-icon"></span>
+      <slot name="fileDownloadIcon">
+        <span class="mdi mdi-file-download download-icon"></span>
+      </slot>
       <span class="file-name">{{ label || name }}</span>
     </button>
   </div>

@@ -40,7 +40,7 @@
                 v-if="!disabled"
                 @click="removeFromBox(id, response)"
                 class="btn btn-close">
-                <span :class="config.removeClass"></span>
+                <slot name="dragDropRemoveIcon"></slot>
               </button>
             </div>
           </draggable>
@@ -64,7 +64,7 @@ const formatAnswers = answers => {
   return shuffle(grouped);
 };
 
-const defaults = { groupsPerRow: 3, removeClass: 'mdi mdi-close' };
+const defaults = { groupsPerRow: 3 };
 
 export default {
   props: {
@@ -101,9 +101,6 @@ export default {
     },
     isBoxFull() {
       return this.answersCollection.length === 0;
-    },
-    removeClass() {
-      return get(this.options.dragDrop, 'removeClass', 'mdi mdi-close');
     },
     canPartiallyRetake() {
       return get(this.options.dragDrop, 'partialRetake', false);
