@@ -12,11 +12,14 @@
       class="interactive">
     </div>
     <div class="te-embed-toolbar">
-      <span
-        @click="toggleExpand"
-        :class="expanded ? 'mdi-close' : 'mdi-arrow-expand-all'"
-        class="mdi tes-icon">
-      </span>
+      <button @click="toggleExpand" class="btn tes-icon">
+        <slot v-if="expanded" name="embedCloseIcon">
+          <span class="mdi mdi-close"></span>
+        </slot>
+        <slot v-else name="embedExpandIcon">
+          <span class="mdi mdi-arrow-expand-all"></span>
+        </slot>
+      </button>
     </div>
   </div>
 </template>
@@ -69,7 +72,7 @@ export default {
     font-size: 16px;
     transition: opacity 0.7s;
 
-    .tes-icon {
+    .btn.tes-icon {
       padding: 3px 6px;
       background-color: #e0e0e0;
       cursor: pointer;

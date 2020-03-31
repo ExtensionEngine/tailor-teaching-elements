@@ -1,7 +1,12 @@
 <template>
   <div class="hint">
     <button @click="show = !show" class="btn btn-hint">
-      <span :class="`mdi mdi-chevron-${icon}`"></span>
+      <slot v-if="show" name="hintCloseIcon">
+        <span class="mdi mdi-chevron-up"></span>
+      </slot>
+      <slot v-else name="hintShowIcon">
+        <span class="mdi mdi-chevron-down"></span>
+      </slot>
       Hint
     </button>
     <p v-show="show" class="hint-content">{{ content }}</p>
@@ -15,11 +20,6 @@ export default {
   },
   data() {
     return { show: false };
-  },
-  computed: {
-    icon() {
-      return this.show ? 'up' : 'down';
-    }
   }
 };
 </script>

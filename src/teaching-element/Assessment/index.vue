@@ -25,8 +25,20 @@
         :retake="retake"
         :is-reflection="isReflection"
         :submission="submission"
-        :question="parsedQuestion" />
-      <hint v-if="showHint" :content="hint" />
+        :question="parsedQuestion">
+        <template v-for="(_, slot) in $slots">
+          <template :slot="slot">
+            <slot :name="slot"></slot>
+          </template>
+        </template>
+      </component>
+      <hint v-if="showHint" :content="hint">
+        <template v-for="(_, slot) in $slots">
+          <template :slot="slot">
+            <slot :name="slot"></slot>
+          </template>
+        </template>
+      </hint>
       <div class="assessment-footer clearfix">
         <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
           <slot name="assessmentAnswerIcon">
