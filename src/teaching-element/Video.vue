@@ -6,10 +6,7 @@
         <track
           v-for="caption in captions"
           :key="caption.srclang"
-          :label="caption.label"
-          :srclang="caption.srclang"
-          :src="caption.src"
-          :default="caption.default"
+          v-bind="caption"
           kind="captions">
       </video>
       <div v-else class="plyr__video-embed">
@@ -51,7 +48,7 @@ export default {
   props: {
     url: { type: String, required: true },
     playerOptions: { type: Object, default: () => defaultPlayerOptions },
-    captions: { type: Array, default: () => ([]) }
+    captions: { type: Array, default: () => [] }
   },
   computed: {
     video: ({ url }) => {
