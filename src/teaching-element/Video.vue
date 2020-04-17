@@ -1,6 +1,6 @@
 <template>
   <div class="te-video">
-    <plyrue :options="options">
+    <plyrue v-on="$listeners" :emit="activeEventListeners" :options="options">
       <video v-if="video.native">
         <source :src="video.url" :type="video.mime">
       </video>
@@ -50,7 +50,8 @@ export default {
       if (isShareLink(url)) return { url: url.href, native: false };
       return { url: url.href, native: true, mime: mimetype(url) };
     },
-    options: ({ playerOptions }) => ({ ...defaultPlayerOptions, ...playerOptions })
+    options: ({ playerOptions }) => ({ ...defaultPlayerOptions, ...playerOptions }),
+    activeEventListeners: ({ $listeners }) => Object.keys($listeners)
   },
   components: { Plyrue }
 };
