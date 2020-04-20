@@ -1,6 +1,6 @@
 <template>
   <div class="te-video">
-    <plyrue :options="options">
+    <plyrue v-on="$listeners" :options="options">
       <video v-if="video.native" crossorigin>
         <source :src="video.url" :type="video.mime">
         <track
