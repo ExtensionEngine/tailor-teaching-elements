@@ -28,7 +28,8 @@ const data = importAll(require.context('../data/', true, /\.json$/));
 const ASSESSMENT_OPTIONS = {
   assessmentType: 'formative',
   singleChoice: { highlighting: { enabled: true } },
-  multipleChoice: { highlighting: { enabled: true } }
+  multipleChoice: { highlighting: { enabled: true } },
+  trueFalse: { highlighting: { enabled: true } }
 };
 
 export default {
