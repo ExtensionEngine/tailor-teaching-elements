@@ -58,6 +58,7 @@
         :correct="correct"
         :feedback="feedback"
         :user-answer="userAnswer"
+        :is-correct="isCorrect"
         :is-randomizable="isRandomizable"
         :options="options" />
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="ql-container feedback">
+  <div v-if="show" class="ql-container feedback" :class="{ correct: isCorrect }">
     <div class="form-label">{{ title }}</div>
     <div
       v-for="({ prefix, content }, index) in feedbacks"
@@ -39,6 +39,7 @@ export default {
     options: { type: Object, default: () => ({}) },
     type: { type: String, required: true },
     userAnswer: { type: [Number, String, Array, Object, Boolean], default: null },
+    isCorrect: { type: Boolean, default: false },
     isRandomizable: { type: Boolean, required: true }
   },
   computed: {
