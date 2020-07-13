@@ -44,7 +44,7 @@
           <slot name="assessmentAnswerIcon">
             <span></span>
           </slot>
-          {{ answerStatus.note }}
+          <span class="answer-status">{{ answerStatus.note }}</span>
         </div>
         <controls
           @reset="reset"
@@ -58,7 +58,7 @@
         :correct="correct"
         :feedback="feedback"
         :user-answer="userAnswer"
-        :is-correct="isCorrect"
+        :status="answerStatus"
         :is-randomizable="isRandomizable"
         :options="options" />
     </div>
