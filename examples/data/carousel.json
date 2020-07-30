@@ -33,6 +33,16 @@
         "id": "cj2g7puau00373q5yce85vpf4",
         "position": 1,
         "type": "HTML"
+      },
+      "cj2g7puau00373q5yce85vpf5": {
+        "position": 1,
+        "type": "VIDEO",
+        "embedded": true,
+        "id": "cj2g7puau00373q5yce85vpf5",
+        "data": {
+          "url": "https://www.youtube.com/watch?v=oRdxUFDoQe0",
+          "width": 12
+        }
       }
     },
     "height": 750,
@@ -54,6 +64,12 @@
           "cj2g7ponm00353q5yt03njycd": true
         },
         "id": 3
+      },
+      "4": {
+        "body": {
+          "cj2g7puau00373q5yce85vpf5": true
+        },
+        "id": 4
       }
     }
   }
