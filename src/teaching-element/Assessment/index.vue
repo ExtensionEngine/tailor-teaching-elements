@@ -52,8 +52,10 @@
         <controls
           @reset="reset"
           @submit="submit"
+          :show-message="showNoAnswerMessage"
+          :no-answer-message="options.noAnswerMessage"
           :retake="canRetake"
-          :disabled="!isEditing || !isValidAnswer" />
+          :disabled="!options.noAnswerMessage && (!isEditing || !isValidAnswer)" />
       </div>
       <feedback
         v-if="isFeedbackVisible"
@@ -114,8 +116,10 @@ export default {
       retake: false,
       isSaved: false,
       isCorrect: false,
-      context: this.options.context,
-      isValidAnswer: true
+      // TODO: remove assessmentType in 2.0
+      context: this.options.context || this.options.assessmentType,
+      isValidAnswer: true,
+      showNoAnswerMessage: false
     };
   },
   computed: {
@@ -200,7 +204,12 @@ export default {
       this.isValidAnswer = isValid;
     },
     submit() {
+      if (!this.hasUserAnswer) {
+        this.showNoAnswerMessage = true;
+        return;
+      }
       this.checkAnswer();
+      this.showNoAnswerMessage = false;
       this.$emit('assessmentSubmit', this.submissionPayload);
       Object.assign(this, { retake: this.canRetake, isSaved: true });
     }

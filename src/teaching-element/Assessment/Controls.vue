@@ -1,9 +1,12 @@
 <template>
   <div class="controls">
+    <div v-if="showMessage && noAnswerMessage" class="no-answer-message">
+      {{ noAnswerMessage }}
+    </div>
     <button
       @click="onClick"
       :class="{ disabled: disabled && !retake, retake }"
-      :disabled="disabled && !retake"
+      :disabled="!noAnswerMessage && disabled && !retake"
       class="btn btn-submit">
       {{ btnLabel }}
     </button>
@@ -14,7 +17,9 @@
 export default {
   props: {
     disabled: { type: Boolean, default: false },
-    retake: { type: Boolean, default: false }
+    retake: { type: Boolean, default: false },
+    noAnswerMessage: { type: String, default: null },
+    showMessage: { type: Boolean, default: false }
   },
   computed: {
     btnLabel() {
@@ -35,6 +40,10 @@ export default {
   float: right;
   text-align: right;
   cursor: auto;
+
+  .no-answer-message {
+    float: left;
+  }
 
   .btn-submit {
     min-width: 85px;
