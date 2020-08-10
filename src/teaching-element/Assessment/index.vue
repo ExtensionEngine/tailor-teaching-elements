@@ -40,11 +40,14 @@
         </template>
       </hint>
       <div class="assessment-footer clearfix">
-        <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
+        <div
+          v-if="showCorrect"
+          :class="isCorrect ? 'correct' : 'incorrect'"
+          class="answer-status">
           <slot name="assessmentAnswerIcon">
             <span></span>
           </slot>
-          {{ answerStatus.note }}
+          {{ isCorrect ? correctNote : incorrectNote }}
         </div>
         <controls
           @reset="reset"
@@ -81,17 +84,6 @@ import strategies from '@/util/strategies';
 import TextResponse from './TextResponse.vue';
 import TrueFalse from './TrueFalse.vue';
 
-const answer = {
-  correct: {
-    type: 'correct',
-    note: 'Correct answer'
-  },
-  incorrect: {
-    type: 'incorrect',
-    note: 'Incorrect answer'
-  }
-};
-
 const RANDOMIZABLE_TYPES = ['MC', 'SC'];
 const CONTEXT_TYPE = {
   FORMATIVE_ASSESSMENT: 'formative',
@@ -104,6 +96,8 @@ export default {
   props: {
     id: { type: Number, required: true },
     correct: { type: [Number, Array, Object, String, Boolean], default: null },
+    correctNote: { type: String, default: 'Correct answer' },
+    incorrectNote: { type: String, default: 'Incorrect answer' },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },
@@ -120,17 +114,13 @@ export default {
       retake: false,
       isSaved: false,
       isCorrect: false,
-      // TODO: Rename assessmentType prop to context
-      context: this.options.assessmentType,
+      context: this.options.context,
       isValidAnswer: true
     };
   },
   computed: {
     component(type) {
       return ASSESSMENT_TYPE[this.type];
-    },
-    answerStatus() {
-      return this.isCorrect ? answer.correct : answer.incorrect;
     },
     assessmentClasses() {
       return [this.typeInfo.class, this.context, this.isSaved ? 'saved' : ''];
