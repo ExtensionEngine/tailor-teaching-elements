@@ -40,22 +40,29 @@
         </template>
       </hint>
       <div class="assessment-footer clearfix">
-        <div
-          v-if="showCorrect"
-          :class="isCorrect ? 'correct' : 'incorrect'"
-          class="answer-status">
-          <slot name="assessmentAnswerIcon">
-            <span></span>
-          </slot>
-          {{ isCorrect ? correctNote : incorrectNote }}
-        </div>
-        <controls
-          @reset="reset"
-          @submit="submit"
-          :show-message="showNoAnswerMessage"
-          :no-answer-message="options.noAnswerMessage"
-          :retake="canRetake"
-          :disabled="!options.noAnswerMessage && (!isEditing || !isValidAnswer)" />
+        <slot name="answer-status" v-bind="{ showCorrect, isCorrect }">
+          <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
+            <slot name="assessmentAnswerIcon">
+              <span></span>
+            </slot>
+            {{ answerStatus.note }}
+          </div>
+        </slot>
+        <slot
+          name="controls"
+          :submit="submit"
+          :reset="reset"
+          :can-retake="canRetake"
+          :is-editing="isEditing"
+          :is-valid-answer="isValidAnswer"
+          :has-user-answer="hasUserAnswer"
+          :is-saved="isSaved">
+          <controls
+            @reset="reset"
+            @submit="submit"
+            :retake="canRetake"
+            :disabled="!isEditing || !isValidAnswer" />
+        </slot>
       </div>
       <feedback
         v-if="isFeedbackVisible"
@@ -86,6 +93,17 @@ import strategies from '@/util/strategies';
 import TextResponse from './TextResponse.vue';
 import TrueFalse from './TrueFalse.vue';
 
+const answer = {
+  correct: {
+    type: 'correct',
+    note: 'Correct answer'
+  },
+  incorrect: {
+    type: 'incorrect',
+    note: 'Incorrect answer'
+  }
+};
+
 const RANDOMIZABLE_TYPES = ['MC', 'SC'];
 const CONTEXT_TYPE = {
   FORMATIVE_ASSESSMENT: 'formative',
@@ -98,8 +116,6 @@ export default {
   props: {
     id: { type: Number, required: true },
     correct: { type: [Number, Array, Object, String, Boolean], default: null },
-    correctNote: { type: String, default: 'Correct answer' },
-    incorrectNote: { type: String, default: 'Incorrect answer' },
     count: { type: Number, default: 0 },
     feedback: { type: Object, default: () => ({}) },
     hint: { type: String, default: '' },
@@ -118,13 +134,15 @@ export default {
       isCorrect: false,
       // TODO: remove assessmentType in 2.0
       context: this.options.context || this.options.assessmentType,
-      isValidAnswer: true,
-      showNoAnswerMessage: false
+      isValidAnswer: true
     };
   },
   computed: {
     component(type) {
       return ASSESSMENT_TYPE[this.type];
+    },
+    answerStatus() {
+      return this.isCorrect ? answer.correct : answer.incorrect;
     },
     assessmentClasses() {
       return [this.typeInfo.class, this.context, this.isSaved ? 'saved' : ''];
@@ -204,12 +222,7 @@ export default {
       this.isValidAnswer = isValid;
     },
     submit() {
-      if (!this.hasUserAnswer) {
-        this.showNoAnswerMessage = true;
-        return;
-      }
       this.checkAnswer();
-      this.showNoAnswerMessage = false;
       this.$emit('assessmentSubmit', this.submissionPayload);
       Object.assign(this, { retake: this.canRetake, isSaved: true });
     }
