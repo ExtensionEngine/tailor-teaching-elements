@@ -5,6 +5,7 @@ const path = require('path');
 
 /** @type {import('bili').Config} */
 module.exports = {
+  externals: ['vue'],
   input: {
     'tailor-teaching-elements': 'src/index.js'
   },
@@ -26,13 +27,14 @@ module.exports = {
       extensions: ['.js', '.vue']
     },
     alias: {
-      resolve: ['.vue', '.js'],
-      entries: [
-        { find: '@', replacement: path.resolve(__dirname, './src') }
-      ]
+      entries: [{
+        find: '@',
+        replacement: path.resolve(__dirname, './src')
+      }]
     },
     'node-builtins': true,
     visualizer: {
+      template: 'sunburst',
       sourceMap: true,
       open: false
     }

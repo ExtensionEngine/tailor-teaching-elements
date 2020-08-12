@@ -48,6 +48,7 @@
     "ie 11"
   ],
   "dependencies": {
+    "@ungap/global-this": "^0.3.1",
     "hls.js": "^0.12.4",
     "jodit": "^3.2.65",
     "lodash": "^4.17.19",
@@ -66,7 +67,7 @@
     "@extensionengine/stylelint-config": "^1.1.0",
     "@mdi/font": "^3.0.39",
     "@poi/plugin-eslint": "^12.0.0",
-    "@rollup/plugin-alias": "^2.2.0",
+    "@rollup/plugin-alias": "^3.0.1",
     "@types/poi": "^12.5.0",
     "babel-eslint": "^10.0.3",
     "bili": "^4.8.1",
@@ -90,8 +91,8 @@
     "rewrite-lockfile": "^1.0.1",
     "rimraf": "^3.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-visualizer": "^2.7.2",
-    "rollup-plugin-vue": "^5.1.4",
+    "rollup-plugin-visualizer": "^3.3.2",
+    "rollup-plugin-vue": "^5.1.6",
     "sass-loader": "^8.0.0",
     "stylelint": "^11.1.1",
     "to-title-case": "^1.0.0",
