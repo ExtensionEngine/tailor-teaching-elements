@@ -40,17 +40,29 @@
         </template>
       </hint>
       <div class="assessment-footer clearfix">
-        <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
-          <slot name="assessmentAnswerIcon">
-            <span></span>
-          </slot>
-          {{ answerStatus.note }}
-        </div>
-        <controls
-          @reset="reset"
-          @submit="submit"
-          :retake="canRetake"
-          :disabled="!isEditing || !isValidAnswer" />
+        <slot name="answer-status" v-bind="{ showCorrect, isCorrect }">
+          <div v-if="showCorrect" :class="answerStatus.type" class="answer-status">
+            <slot name="assessmentAnswerIcon">
+              <span></span>
+            </slot>
+            {{ answerStatus.note }}
+          </div>
+        </slot>
+        <slot
+          name="controls"
+          :submit="submit"
+          :reset="reset"
+          :can-retake="canRetake"
+          :is-editing="isEditing"
+          :is-valid-answer="isValidAnswer"
+          :has-user-answer="hasUserAnswer"
+          :is-saved="isSaved">
+          <controls
+            @reset="reset"
+            @submit="submit"
+            :retake="canRetake"
+            :disabled="!isEditing || !isValidAnswer" />
+        </slot>
       </div>
       <feedback
         v-if="isFeedbackVisible"
@@ -120,8 +132,8 @@ export default {
       retake: false,
       isSaved: false,
       isCorrect: false,
-      // TODO: Rename assessmentType prop to context
-      context: this.options.assessmentType,
+      // TODO: remove assessmentType in 2.0
+      context: this.options.context || this.options.assessmentType,
       isValidAnswer: true
     };
   },
