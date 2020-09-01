@@ -6,7 +6,6 @@
           Knowledge check
         </span>
       </div>
-      <div class="type-helper-text"><i>{{ typeInfo.helperText }}</i></div>
       <div class="type-title">
         <span>{{ typeInfo.title }}</span>
       </div>
@@ -14,6 +13,7 @@
         <span>Question {{ position }} of {{ count }}</span>
       </div>
       <question :question="parsedQuestion" :assessment-type="type" />
+      <div class="type-helper-text"><i>{{ typeInfo.helperText }}</i></div>
       <component
         :is="component"
         @validateAnswer="validateAnswer"
