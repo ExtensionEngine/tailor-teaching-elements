@@ -33,21 +33,21 @@ export const subTypeInfo = {
     type: 'MC',
     title: 'Multiple choice',
     class: 'multiple-choice',
-    helperText: 'Select the choice(s) that best answers the question below.',
+    helperText: 'Choose from the options below. Select all that apply.',
     feedback: true
   },
   SC: {
     type: 'SC',
     title: 'Single choice',
     class: 'single-choice',
-    helperText: 'Select one choice that best answers the question below.',
+    helperText: 'Select the one option below that best answers the question.',
     feedback: true
   },
   TR: {
     type: 'TR',
     title: 'Text response',
     class: 'text-response',
-    helperText: 'Enter text into the empty field below and submit your answer to see the suggested answer.',
+    helperText: 'Type your response in the box below.',
     feedback: true,
     allowRetake: false
   },
@@ -55,32 +55,32 @@ export const subTypeInfo = {
     type: 'NR',
     title: 'Numerical response',
     class: 'numerical-response',
-    helperText: 'Enter a number in the field below.',
+    helperText: 'Enter a number in the box below. Note: use only whole numbers or decimals (e.g, 3.14); do not use commas.',
     feedback: false
   },
   TF: {
     type: 'TF',
     title: 'True - false',
     class: 'true-false',
-    helperText: 'Answer the question with true or false.',
+    helperText: 'Select true or false.',
     feedback: true
   },
   FB: {
     type: 'FB',
     title: 'Fill in the blank',
     class: 'fill-blank',
-    helperText: 'Enter text into the empty field(s) below and submit your answer for feedback.'
+    helperText: 'To fill in a blank, type your response in the corresponding box below.'
   },
   DD: {
     type: 'DD',
     title: 'Drag & Drop',
     class: 'drag-drop',
-    helperText: 'Group items by dragging them into their corresponding boxes.'
+    helperText: 'Drag items into the appropriate boxes below to group them.'
   },
   MQ: {
     type: 'MQ',
     title: 'Matching question',
     class: 'matching-question',
-    helperText: 'Match items by dragging and dropping each item into the corresponding box.'
+    helperText: 'Match items by dragging each item on the left to its pair on the right.'
   }
 };
