@@ -18,8 +18,7 @@
       </li>
     </ul>
     <span class="help-block">
-      Only numerical input allowed, if decimal number is needed please
-      use '.' to separate numbers (e.g. '3.14', '1000' not '1,000').
+      <!--Use if helper text neeeded -->
     </span>
   </div>
 </template>
