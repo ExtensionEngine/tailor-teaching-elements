@@ -1,0 +1,12 @@
+%blank {
+  .blank {
+    display: inline-block;
+    margin: 0 5px;
+
+    .blank-line {
+      display: inline-block;
+      width: 50px;
+      border-bottom: 1px solid black;
+    }
+  }
+}
