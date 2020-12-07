@@ -13,8 +13,7 @@
               v-model="userAnswer[index - 1]"
               :disabled="disabled"
               type="text"
-              class="form-control"
-              placeholder="Solution...">
+              class="form-control">
           </div>
         </li>
       </ul>
