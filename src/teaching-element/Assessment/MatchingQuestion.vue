@@ -56,6 +56,7 @@ export default {
   props: {
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
+    isReflection: { type: Boolean, required: true },
     headings: { type: Object, required: true },
     options: { type: Object, default: () => ({}) },
     premises: { type: Array, required: true },
@@ -111,8 +112,8 @@ export default {
       this.update();
     },
     answerClasses({ key, answers }) {
-      const { disabled, correct } = this;
-      if (!disabled) return;
+      const { disabled, correct, isReflection } = this;
+      if (!disabled || isReflection) return;
       const isCorrect = key === correct[answers[0].key];
       return isCorrect ? 'te-correct' : 'te-incorrect';
     },

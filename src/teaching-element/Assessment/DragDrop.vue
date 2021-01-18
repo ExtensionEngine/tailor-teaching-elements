@@ -71,6 +71,7 @@ export default {
     answers: { type: Object, required: true },
     correct: { type: Object, required: true },
     disabled: { type: Boolean, default: false },
+    isReflection: { type: Boolean, required: true },
     groups: { type: Object, required: true },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
@@ -108,8 +109,8 @@ export default {
   },
   methods: {
     answerClasses(groupId, answerId) {
-      const { correct, disabled } = this;
-      if (!disabled) return;
+      const { correct, disabled, isReflection } = this;
+      if (!disabled || isReflection) return;
       return includes(correct[groupId], answerId)
         ? 'te-correct'
         : 'te-incorrect';
