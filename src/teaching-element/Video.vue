@@ -1,8 +1,13 @@
 <template>
   <div class="te-video">
-    <plyrue :options="options">
-      <video v-if="video.native">
+    <plyrue v-on="$listeners" :options="options">
+      <video v-if="video.native" crossorigin>
         <source :src="video.url" :type="video.mime">
+        <track
+          v-for="caption in captions"
+          :key="caption.srclang"
+          v-bind="caption"
+          kind="captions">
       </video>
       <div v-else class="plyr__video-embed">
         <iframe :src="url" allowfullscreen></iframe>
@@ -32,6 +37,7 @@ const defaultPlayerOptions = {
     'play',
     'progress',
     'volume',
+    'captions',
     'settings',
     'fullscreen'
   ]
@@ -41,7 +47,8 @@ export default {
   name: 'te-video',
   props: {
     url: { type: String, required: true },
-    playerOptions: { type: Object, default: () => defaultPlayerOptions }
+    playerOptions: { type: Object, default: () => defaultPlayerOptions },
+    captions: { type: Array, default: () => [] }
   },
   computed: {
     video: ({ url }) => {

@@ -5,7 +5,7 @@
       <li
         v-for="(value, index) in values"
         :key="index"
-        :class="{ selected: isSelected(value) }">
+        :class="getAnswerClass(value)">
         <input
           v-model="userAnswer"
           @change="update"
@@ -23,11 +23,15 @@
 <script>
 import { TYPES as LISTING_TYPES, rules } from '@/util/listingType';
 
-const defaults = { type: LISTING_TYPES.LATIN.UPPER };
+const defaults = {
+  highlighting: { enabled: false, all: false },
+  type: LISTING_TYPES.LATIN.UPPER
+};
 
 export default {
   props: {
     disabled: { type: Boolean, default: false },
+    correct: { type: Boolean, default: null },
     options: { type: Object, default: () => ({}) },
     retake: { type: Boolean, default: false },
     submission: { type: Boolean, default: null }
@@ -45,8 +49,16 @@ export default {
     update() {
       this.$emit('update', { userAnswer: this.userAnswer });
     },
-    isSelected(val) {
-      return val === this.userAnswer;
+    isSelected(value) {
+      return value === this.userAnswer;
+    },
+    getAnswerClass(value) {
+      const { highlighting } = this.config;
+      const { disabled, correct } = this;
+      const selected = this.isSelected(value) ? 'selected' : '';
+      if (!disabled || !highlighting.enabled) return selected;
+      const statusClass = value === correct ? 'te-correct' : 'te-incorrect';
+      if (selected || highlighting.all) return [selected, statusClass];
     },
     transform(index) {
       return rules[this.config.type](index);
