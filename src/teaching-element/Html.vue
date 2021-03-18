@@ -17,20 +17,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import './stylesheets/common';
+
 .te-html {
+  @extend %blank;
+
   .content {
     padding: 12px 15px;
-  }
-
-  .blank {
-    display: inline-block;
-    margin: 0 5px;
-
-    .blank-line {
-      display: inline-block;
-      width: 50px;
-      border-bottom: 1px solid black;
-    }
   }
 }
 </style>

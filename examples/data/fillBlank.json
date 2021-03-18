@@ -25,6 +25,14 @@
       "embedded": true,
       "id": "cj3cryx0c002x3k5yord8kf6lwe",
       "type": "HTML"
+    }, {
+      "data": {
+        "content": "<p>yet another @blank field in JODIT_HTML question</p>",
+        "width": 12
+      },
+      "embedded": true,
+      "id": "ckh0o64i6000038qydms55q26",
+      "type": "JODIT_HTML"
     }],
     "type": "FB",
     "width": 12

@@ -17,11 +17,15 @@ export default {
 </script>
 
 <style lang="scss">
+@import './stylesheets/common';
+
 $borderSize: 6px;
 $tooltipColor: #455a64;
 
 .te-jodit-html-content {
   .jodit_wysiwyg {
+    @extend %blank;
+
     overflow: visible !important;
   }
 
