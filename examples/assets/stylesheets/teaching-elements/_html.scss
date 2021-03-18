@@ -1,27 +1,28 @@
-.te-html {
+.te-html, .te-jodit-html-content:not(.jodit_inline) .jodit_wysiwyg {
   h1 {
+    margin: 35px 0 20px;
     font-size: 26px;
     font-weight: 500;
-    margin: 35px 0 20px;
   }
 
   h2 {
+    margin: 25px 0 15px;
     font-size: 24px;
     font-weight: 500;
-    margin: 25px 0 15px;
   }
 
   h3 {
+    margin: 20px 0 10px;
     font-size: 22px;
     font-weight: 400;
-    margin: 20px 0 10px;
   }
 
   p {
+    margin: 0;
+    padding: 10px 0;
     font-size: 18px;
     font-weight: 400;
     line-height: 30px;
-    padding: 10px 0;
   }
 
   strong {

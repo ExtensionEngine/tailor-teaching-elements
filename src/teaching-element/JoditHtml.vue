@@ -21,6 +21,8 @@ $borderSize: 6px;
 $tooltipColor: #455a64;
 
 .te-jodit-html-content {
+  min-height: unset;
+
   .jodit_wysiwyg {
     overflow: visible !important;
   }
