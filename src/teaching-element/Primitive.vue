@@ -12,6 +12,7 @@ import TeEmbed from './Embed.vue';
 import TeHtml from './Html.vue';
 import TeImage from './Image.vue';
 import TeJoditHtml from './JoditHtml.vue';
+import TeVideo from './Video.vue';
 
 const resolveElement = type => TE_TYPE[type];
 
@@ -27,7 +28,8 @@ export default {
     TeEmbed,
     TeHtml,
     TeImage,
-    TeJoditHtml
+    TeJoditHtml,
+    TeVideo
   }
 };
 </script>
