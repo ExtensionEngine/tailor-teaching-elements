@@ -5,6 +5,7 @@ export const ASSESSMENT_TYPE = {
   TF: 'true-false',
   NR: 'numerical-response',
   TR: 'text-response',
+  STR: 'short-text-response',
   FB: 'fill-blank',
   DD: 'drag-drop'
 };
@@ -50,6 +51,13 @@ export const subTypeInfo = {
     helperText: 'Type your response in the box below.',
     feedback: true,
     allowRetake: false
+  },
+  STR: {
+    type: 'STR',
+    title: 'Short text response',
+    class: 'short-text-response',
+    helperText: 'Enter your answer below.',
+    feedback: false
   },
   NR: {
     type: 'NR',
