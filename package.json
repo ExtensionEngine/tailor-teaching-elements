@@ -85,7 +85,7 @@
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "np": "^6.3.2",
-    "poi": "^12.7.5",
+    "poi": "^12.8.0",
     "poi-preset-sass-resources": "^4.1.0",
     "rewrite-lockfile": "^1.0.1",
     "rimraf": "^3.0.0",
