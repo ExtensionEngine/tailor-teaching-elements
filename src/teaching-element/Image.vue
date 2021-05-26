@@ -2,7 +2,7 @@
   <figure class="te-image">
     <img :src="url" :alt="alt" :title="alt">
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <figcaption v-if="caption" v-html="caption"></figcaption>
+    <figcaption v-if="caption" class="ql-editor" v-html="caption"></figcaption>
   </figure>
 </template>
 
@@ -24,10 +24,6 @@ export default {
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-  }
-
-  figcaption {
-    text-align: center;
   }
 }
 </style>
