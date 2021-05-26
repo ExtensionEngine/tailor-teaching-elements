@@ -78,8 +78,7 @@ export default {
   }
 
   .form-control {
-    flex-basis: 20rem;
-    flex-shrink: 1;
+    flex: 0 1 20rem;
   }
 }
 </style>
