@@ -12,8 +12,7 @@
           @input="update"
           :disabled="disabled"
           type="text"
-          class="form-control"
-          placeholder="Solution...">
+          class="form-control">
         <div v-if="it.suffix" class="input-group-addon">{{ it.suffix }}</div>
       </li>
     </ul>
