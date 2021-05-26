@@ -76,5 +76,10 @@ export default {
       padding: 5px 0;
     }
   }
+
+  .form-control {
+    flex-basis: 20rem;
+    flex-shrink: 1;
+  }
 }
 </style>
