@@ -68,7 +68,8 @@ export default {
     return {
       dragOptions: {
         group: { name: `match-${this._uid}`, pull: 'clone', put: false, revertClone: true },
-        sort: false
+        sort: false,
+        disabled: this.disabled
       },
       source: [],
       target: [],
@@ -97,7 +98,8 @@ export default {
       return {
         group: { name: `match-${this._uid}`, put: item.answers.length < 1 },
         sort: false,
-        filter: '.disabled'
+        filter: '.disabled',
+        disabled: this.disabled
       };
     },
     onDragStart(e) {
@@ -113,7 +115,7 @@ export default {
     },
     answerClasses({ key, answers }) {
       const { disabled, correct, isReflection } = this;
-      if (!disabled || isReflection) return;
+      if (!disabled || isReflection || !answers.length) return;
       const isCorrect = key === correct[answers[0].key];
       return isCorrect ? 'te-correct' : 'te-incorrect';
     },
