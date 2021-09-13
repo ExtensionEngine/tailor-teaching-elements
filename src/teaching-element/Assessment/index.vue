@@ -20,7 +20,7 @@
         @update="update"
         v-bind="$attrs"
         :correct="correct"
-        :disabled="isSaved"
+        :disabled="readOnly || isSaved"
         :options="options"
         :retake="retake"
         :is-reflection="isReflection"
@@ -61,7 +61,7 @@
             @reset="reset"
             @submit="submit"
             :retake="canRetake"
-            :disabled="!isEditing || !isValidAnswer" />
+            :disabled="readOnly || !isEditing || !isValidAnswer" />
         </slot>
       </div>
       <feedback
@@ -136,7 +136,8 @@ export default {
       isCorrect: false,
       // TODO: remove assessmentType in 2.0
       context: this.options.context || this.options.assessmentType,
-      isValidAnswer: true
+      isValidAnswer: true,
+      readOnly: this.options.readOnly
     };
   },
   computed: {
