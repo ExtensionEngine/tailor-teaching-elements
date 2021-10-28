@@ -93,7 +93,7 @@
     "rollup-plugin-visualizer": "^2.7.2",
     "rollup-plugin-vue": "^5.1.4",
     "sass-loader": "^8.0.0",
-    "stylelint": "^11.1.1",
+    "stylelint": "^13.3.1",
     "to-title-case": "^1.0.0",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
