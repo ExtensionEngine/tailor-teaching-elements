@@ -1,0 +1,130 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.22.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - '@babel/core > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - eslint > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - node-sass > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helper-module-transforms > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/core > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @poi/plugin-html-entry > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@extensionengine/stylelint-config > stylelint-order > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - eslint > table > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > table > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@poi/plugin-eslint > eslint > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - babel-eslint > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - eslint > inquirer > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - eslint-plugin-vue > vue-eslint-parser > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - node-sass > sass-graph > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - np > inquirer > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > html-webpack-plugin > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > webpack-merge > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-reporter > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helpers > @babel/traverse > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-block-scoping > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/preset-env > @babel/plugin-transform-block-scoping > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@extensionengine/stylelint-config > stylelint-order > postcss-sorting > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@poi/plugin-eslint > eslint > inquirer > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@poi/plugin-eslint > eslint > table > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - babel-eslint > @babel/traverse > @babel/generator > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - node-sass > gaze > globule > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - np > listr-input > inquirer > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > thread-loader > async > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi-preset-sass-resources > sass-resources-loader > async > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > webpack-dev-server > http-proxy-middleware > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/plugin-transform-runtime > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helper-module-transforms > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - np > listr-input > inquirer-autosubmit-prompt > inquirer > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > rollup-plugin-babel > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > webpack-dev-server > portfinder > async > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/types > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-parameters > @babel/helper-call-delegate > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helpers > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/generator > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - rollup-plugin-vue > @vue/component-compiler > pug > pug-code-gen > constantinople > babel-types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - rollup-plugin-vue > @vue/component-compiler > pug > pug-filters > constantinople > babel-types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/generator > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - '@babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
+        patched: '2022-03-25T23:00:27.927Z'
+    - rollup-plugin-vue > @vue/component-compiler > pug > pug-code-gen > pug-attrs > constantinople > babel-types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - stylelint > postcss-jsx > @babel/core > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - bili > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
+    - poi > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-25T23:00:27.927Z'
