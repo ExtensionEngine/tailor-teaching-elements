@@ -84,7 +84,7 @@
     "imports-loader": "^0.8.0",
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
-    "np": "^6.3.2",
+    "np": "^8.0.0",
     "poi": "^12.7.5",
     "poi-preset-sass-resources": "^4.1.0",
     "rewrite-lockfile": "^1.0.1",
