@@ -61,7 +61,7 @@
     "vuedraggable": "^2.23.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.22.6",
     "@extensionengine/eslint-config": "^1.1.0",
     "@extensionengine/stylelint-config": "^1.1.0",
     "@mdi/font": "^3.0.39",
