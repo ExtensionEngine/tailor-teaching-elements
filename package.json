@@ -69,7 +69,7 @@
     "@rollup/plugin-alias": "^2.2.0",
     "@types/poi": "^12.5.0",
     "babel-eslint": "^10.0.3",
-    "bili": "^4.8.1",
+    "bili": "^4.9.1",
     "bootstrap-sass": "^3.4.1",
     "bootswatch": "^3.3.7",
     "del-cli": "^3.0.1",
